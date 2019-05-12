@@ -5,16 +5,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import ua.step.bookshop.repositories.GenreRepository;
+import ua.step.bookshop.repositories.BookRepository;
 
 @Controller
-public class GenreController {
+public class BookController {
 	@Autowired
-	private GenreRepository repo;
+	private BookRepository repo;
 	
-	@GetMapping("/genres")
-	public String getGenres(Model model) {
-		model.addAttribute("genres", repo.findAll());	
-		return "genres";
+	@GetMapping("/books")
+	private String getBooks(Model model) {
+		model.addAttribute("books", repo.findAll());
+		return "books";
 	}
 }

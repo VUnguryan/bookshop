@@ -1,4 +1,4 @@
-package ua.step.bookshop.controllers;
+package ua.step.bookshop.controllers.names;
 
 public class Cheromushev {
 	
