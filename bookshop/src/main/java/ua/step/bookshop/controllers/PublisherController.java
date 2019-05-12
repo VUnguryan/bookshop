@@ -16,7 +16,7 @@ public class PublisherController {
 	
 	@GetMapping("/publishers")
 	public String getController(Model model) {
-		model.addAttribute("genres", repo.findAll());
+		model.addAttribute("publishers", repo.findAll());
 		return "publishers";
 	}
 
