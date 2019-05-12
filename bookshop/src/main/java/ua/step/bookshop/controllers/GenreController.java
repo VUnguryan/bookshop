@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ua.step.bookshop.repositories.GenreRepository;
 
 @Controller
-public class GenereController {
+public class GenreController {
 	@Autowired
 	private GenreRepository repo;
 	@GetMapping("/genres")
