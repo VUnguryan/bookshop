@@ -59,8 +59,8 @@ public class Book {
 	public void setPublisher_id(Integer publisher_id) {
 		this.publisher_id = publisher_id;
 	}
-	public Integer getPrice() {
-		return price;
+	public Double getPrice() {
+		return (double) price / (double) 100;
 	}
 	public void setPrice(Integer price) {
 		this.price = price;

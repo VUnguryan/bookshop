@@ -21,8 +21,8 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="alert alert-dark" th:each="publishers : ${publishers}">
-		<a href="#" th:text="${publishers.name}"></a>
+	<div class="alert alert-dark" th:each="publisher : ${publishers}">
+		<a href="#" th:text="${publisher.name}"></a>
 	</div>
 </body>
 </html>
