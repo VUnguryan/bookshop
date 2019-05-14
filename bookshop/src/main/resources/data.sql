@@ -5,7 +5,7 @@ INSERT INTO Genres (id, name) VALUES (4, 'Сказки');
 INSERT INTO Genres (id, name) VALUES (5, 'Публицистика');
 INSERT INTO Genres (id, name) VALUES (6, 'Учебники');
 INSERT INTO Genres (id, name) VALUES (7, 'Научная');
-INSERT INTO Genres (id, name) VALUES (7, 'Научно-популярная');
+INSERT INTO Genres (id, name) VALUES (8, 'Научно-популярная');
 
 
 INSERT INTO Publishers (id, name) VALUES (1, 'Эксмо');
