@@ -22,7 +22,7 @@ public class BookController {
 	@GetMapping("/hello")
 	private String getHello(Model m) {
 		Book b = new Book();
-		b.getAdmin_id();
+		b.getAdminId();
 
 		return new String("helloWorld");
 	}

@@ -14,13 +14,13 @@ public class Book {
 	@Id
 	private Integer id;
 	private String name;
-	private Integer author_id;
+	private Integer authorId;
 	private Integer year;
-	private Short genre_id;
-	private Integer publisher_id; 	
+	private Short genreId;
+	private Integer publisherId; 	
 	private Integer price;
 	private Double rate;
-	private Integer admin_id;
-	private Date create_date;
+	private Integer adminId;
+	private Date createIate;
 	private String background;
 }
