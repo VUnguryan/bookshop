@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -21,9 +21,9 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="alert alert-dark" th:each="genre : ${genres}">
-<a href="#" th:text="${genre.name}"></a>
-</div>
+	<div class="alert alert-dark" th:each="genre : ${genres}">
+		<a href="#" th:text="${genre.name}"></a>
+	</div>
 
 </body>
 </html>
