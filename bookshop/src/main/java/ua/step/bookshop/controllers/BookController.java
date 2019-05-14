@@ -5,16 +5,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import ua.step.bookshop.models.Book;
 import ua.step.bookshop.repositories.BookRepository;
 
 @Controller
 public class BookController {
 	@Autowired
 	private BookRepository repo;
-	
+
 	@GetMapping("/books")
 	private String getBooks(Model model) {
 		model.addAttribute("books", repo.findAll());
 		return "books";
+	}
+
+	@GetMapping("/hello")
+	private String getHello(Model m) {
+		Book b = new Book();
+		b.getAdmin_id();
+
+		return new String("helloWorld");
 	}
 }
