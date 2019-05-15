@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ua.step.bookshop.models.Author;
 import ua.step.bookshop.repositories.AuthorRepository;
 
+/**
+ * 
+ * @author sergey 
+ * TODO Осталось доделать только пагинацию
+ *
+ */
 @Controller
 public class AuthorController {
 
