@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Header</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"
+		th:fragment="header">
+		<!-- Brand -->
+		<a class="navbar-brand" href="/index"><img th:src="@{images/logo.png}"
+			width="50"></a>
+
+		<!-- Links -->
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			<li class="nav-item"><a class="nav-link" href="/index">Главная</a></li>
+			<li class="nav-item"><a class="nav-link" href="/genres">Жанры</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">Оплата</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">Доставка</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">Контакты</a></li>
+		</ul>
+		<!-- Dropdown 
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown"> Жанры </a>
+				
+				<div class="dropdown-menu">
+				hello
+				<div th:each="genre : ${genres}">
+					<a  class="dropdown-item" href="#"> ${genre.name}</a>
+					hello
+					</div>
+					
+				</div></li>-->
+		<!-- Search -->
+		<form class="form-inline my-2 my-lg-0" action="">
+			<input name="search" type="text" class="form-control mr-sm-0"
+				id="usr" placeholder="Поиск">
+			<button class="btn btn-outline-secondary my-2 mr-sm-2" type="submit">Поиск</button>
+		</form>
+		<!-- Login in -->
+		<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Вход</button>
+	</nav>
+</body>
+</html>
