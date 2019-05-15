@@ -13,10 +13,13 @@ public class MainController {
 
 	@Autowired
 	private BookRepository repo;
+	@Autowired
+	private GenreRepository repoJ;
 
 	@GetMapping("/")
 	private String getIndex(Model model) {
 		model.addAttribute("books", repo.findAll());
+		model.addAttribute("genres", repoJ.findAll());
 		return "index";
 	}
 	
