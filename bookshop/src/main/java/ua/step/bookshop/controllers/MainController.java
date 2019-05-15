@@ -14,7 +14,7 @@ public class MainController {
 	@Autowired
 	private BookRepository repo;
 
-	@GetMapping("/index")
+	@GetMapping("/")
 	private String getIndex(Model model) {
 		model.addAttribute("books", repo.findAll());
 		return "index";
