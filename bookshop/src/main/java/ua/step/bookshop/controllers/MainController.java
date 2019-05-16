@@ -20,7 +20,29 @@ public class MainController {
 	private String getIndex(Model model) {
 		model.addAttribute("books", repo.findAll());
 		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("contentPage", "books");
 		return "index";
 	}
-	
+
+	@GetMapping("/payment")
+	private String getPayment(Model model) {
+		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("contentPage", "payment");
+		return "index";
+	}
+
+	@GetMapping("/delivery")
+	private String getDelivery(Model model) {
+		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("contentPage", "delivery");
+		return "index";
+	}
+
+	@GetMapping("/contacts")
+	private String getContacts(Model model) {
+		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("contentPage", "contacts");
+		return "index";
+	}
+
 }
