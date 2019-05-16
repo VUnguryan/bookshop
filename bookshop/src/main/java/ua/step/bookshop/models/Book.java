@@ -62,8 +62,8 @@ public class Book {
 	public void setPublisherId(Integer publisherId) {
 		this.publisherId = publisherId;
 	}
-	public Integer getPrice() {
-		return price;
+	public String getPrice() {
+		return "" + price/100 + "," + price%100 + " грн";
 	}
 	public void setPrice(Integer price) {
 		this.price = price;
