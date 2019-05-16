@@ -19,18 +19,21 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+
 </head>
 <body>
-    <div th:fragment="content">
-    <h3>Каталог</h3>
-	<div class="alert alert-dark" th:each="book : ${books}">
-		<div>
-			<a href="#"><img th:src="@{${book.background}}"></a>
+	<div th:fragment="content">
+		<h3>Каталог</h3>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg alert alert-dark" th:each="book : ${books}">
+					<div>
+						<a href="#"><img width="300px" th:src="@{${book.background}}"></a>
+					</div>
+					<div th:text="${book.name}"></div>
+					<div th:text="${book.price}"></div>
+				</div>
+			</div>
 		</div>
-		<div th:text="${book.name}"></div>
-		<div th:text="${book.price}"></div>
-	</div>
-	</div>
-
 </body>
 </html>
