@@ -21,11 +21,14 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div>
-		<ul class="list-group" th:each="authors : ${authors}">
-			<li class="list-group-item" th:text="${authors.name}"></li>
-		</ul>
+	<div class="container" th:fragment="content">
+		<div>
+			<ul class="list-group" th:each="authors : ${authors}">
+				<li class="list-group-item" th:text="${authors.name}"></li>
+			</ul>
+		</div>
+		<a class="btn btn-primary" href="/authors/add" role="button">Add</a>
+
 	</div>
-	<a class="btn btn-primary" href="/authors/add" role="button">Add</a>
 </body>
 </html>
