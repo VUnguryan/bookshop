@@ -40,5 +40,4 @@ public class Author {
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
-
 }

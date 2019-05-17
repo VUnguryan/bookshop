@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import ua.step.bookshop.repositories.BookRepository;
 import ua.step.bookshop.repositories.GenreRepository;
 
 @Controller
 public class MainController {
-
 	@Autowired
 	private BookRepository repo;
 	@Autowired
@@ -44,5 +42,4 @@ public class MainController {
 		model.addAttribute("contentPage", "contacts");
 		return "index";
 	}
-
 }

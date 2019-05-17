@@ -6,19 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import ua.step.bookshop.models.Author;
 import ua.step.bookshop.repositories.AuthorRepository;
 
-/**
- * 
- * @author sergey 
- * TODO Осталось доделать только пагинацию
- *
- */
 @Controller
 public class AuthorController {
-
 	@Autowired
 	private AuthorRepository authorRepository;
 
