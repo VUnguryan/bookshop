@@ -44,9 +44,12 @@ public class MainController {
 
 	@GetMapping("/contacts")
 	private String getContacts(Model model) {
+		//добавляем репозитарии которые есть в меню и нужны для отображения в контенте
 		model.addAttribute("genres", repoJ.findAll());
 		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("contentPage", "contacts");
-		return "index";
+		//на странице которую необходимо встроить есть th:fragment="content"
+		model.addAttribute("contentPage", "contacts"); 
+		// где contact название страницы html которую надо встроить на index
+		return "index"; //ссылка на гланую где есть место куда встаивается и меню и контент
 	}
 }
