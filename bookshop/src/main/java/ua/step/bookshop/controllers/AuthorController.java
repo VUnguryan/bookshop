@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.step.bookshop.models.Author;
 import ua.step.bookshop.repositories.AuthorRepository;
+import ua.step.bookshop.repositories.BookRepository;
+import ua.step.bookshop.repositories.GenreRepository;
+import ua.step.bookshop.repositories.PublisherRepository;
 
 /**
  * 
@@ -21,16 +24,35 @@ public class AuthorController {
 
 	@Autowired
 	private AuthorRepository authorRepository;
+	@Autowired
+	private BookRepository repo;
+	@Autowired
+	private GenreRepository repoJ;
+	@Autowired
+	private PublisherRepository repoP;
+/*	@Autowired
+	private AuthorRepository repoA;*/
 
 	@GetMapping("/authors")
 	private String getAuthors(Model model) {
 		model.addAttribute("authors", authorRepository.findAll());
-		return "authors";
+		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("publishers", repoP.findAll());
+		model.addAttribute("authors", authorRepository.findAll());
+		model.addAttribute("contentPage", "authors");
+		//return "authors";
+		return "index";
 	}
 
 	@GetMapping("/authors/add")
 	private String getAddAuthor(@ModelAttribute Author author, Model model) {
-		return "addAuthor";
+		model.addAttribute("authors", authorRepository.findAll());
+		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("publishers", repoP.findAll());
+		model.addAttribute("addAuthor", authorRepository.findAll());
+		model.addAttribute("contentPage", "addAuthor");
+		//return "addAuthor";
+		return "index";
 	}
 
 	@PostMapping("/authors/add")
@@ -45,8 +67,11 @@ public class AuthorController {
 		if (isEmty) {
 			authorRepository.saveAndFlush(author);
 			return "redirect:/authors";
+		//	return "redirect:/index";
 		} else {
-			return "addAuthor";
+		//	return "addAuthor";
+			return "redirect:/authors";
+			//return "authors";
 		}
 	}
 }
