@@ -1,10 +1,10 @@
 package ua.step.bookshop.models;
 
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
+
 import lombok.Data;
 
 @Entity
@@ -12,18 +12,29 @@ import lombok.Data;
 @Data
 public class Book {
 	@Id
-    @GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private Integer authorId; // потом заменю на List<author> authors
 	private Integer year;
-	private Short genreId; // потом заменю на List<Genre>
-	private Integer publisherId; 	// заменить на Publisher publisher
 	private Integer price;
 	private Double rate;
-	private Integer adminId; // заменить на Admin admin
 	private Date createDate;
 	private String background;
+
+	@ManyToOne
+	@JoinColumn
+	private User user;
+	@ManyToOne
+	@JoinColumn
+	private Publisher publisher;
+
+	@ManyToMany
+	private List<Genre> genreList;
+	@ManyToMany
+	private List<Author> authorList;
+
+	public Book() {
+	}
 
 	public Integer getId() {
 		return id;
@@ -41,14 +52,6 @@ public class Book {
 		this.name = name;
 	}
 
-	public Integer getAuthorId() {
-		return authorId;
-	}
-
-	public void setAuthorId(Integer authorId) {
-		this.authorId = authorId;
-	}
-
 	public Integer getYear() {
 		return year;
 	}
@@ -57,24 +60,16 @@ public class Book {
 		this.year = year;
 	}
 
-	public Short getGenreId() {
-		return genreId;
+	public Publisher getPublisher() {
+		return publisher;
 	}
 
-	public void setGenreId(Short genreId) {
-		this.genreId = genreId;
-	}
-
-	public Integer getPublisherId() {
-		return publisherId;
-	}
-
-	public void setPublisherId(Integer publisherId) {
-		this.publisherId = publisherId;
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
 	}
 
 	public String getPrice() {
-		return "" + price/100 + "," + price%100 + " грн";
+		return "" + price / 100 + "," + price % 100 + " грн";
 	}
 
 	public void setPrice(Integer price) {
@@ -89,20 +84,20 @@ public class Book {
 		this.rate = rate;
 	}
 
-	public Integer getAdminId() {
-		return adminId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setAdminId(Integer adminId) {
-		this.adminId = adminId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Date getCreateIate() {
-		return getCreateIate();
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreateIate(Date createIate) {
-		this.createDate = createIate;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public String getBackground() {
@@ -111,5 +106,21 @@ public class Book {
 
 	public void setBackground(String background) {
 		this.background = background;
+	}
+
+	public List<Genre> getGenreList() {
+		return genreList;
+	}
+
+	public void setGenreList(List<Genre> genreList) {
+		this.genreList = genreList;
+	}
+
+	public List<Author> getAuthorList() {
+		return authorList;
+	}
+
+	public void setAuthorList(List<Author> authorList) {
+		this.authorList = authorList;
 	}
 }
