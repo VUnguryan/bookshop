@@ -17,7 +17,6 @@ public class BookController {
 	@Autowired
 	private BookRepository repo;
 	private static int BOOKSONPAGE = 9;
-	List<Book> allBooks = repo.findAll();
 
 	@GetMapping("/books")
 	private String getBooks(Model model) {
@@ -30,6 +29,7 @@ public class BookController {
 	}
 
 	String getBooks(Model model, int page) {
+		List<Book> allBooks = repo.findAll();
 		List<Book> books = new ArrayList<>();
 
 		int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
