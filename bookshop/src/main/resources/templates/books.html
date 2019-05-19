@@ -23,7 +23,14 @@
 </head>
 <body>
 
-	<div th:fragment="content">
+	<div class="content-container" th:fragment="content">
+		<div>
+			<h3 class="list-group-item list-group-item-action active">Genres</h3>
+			<div class="list-group" th:each="genre : ${genres}">
+				<a class="list-group-item list-group-item-action" href="#"
+					th:text="${genre.name}"></a>
+			</div>
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg alert alert-dark" th:each="book : ${books}">
