@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Add Book</title>
@@ -10,7 +10,7 @@
 <body>
 <div class="container-fluid">
     <h1>Create Book Page</h1>
-    <form name="book" th:action="@{/addBook}" method="post">
+    <form name="book" th:action="@{/books/addBook}" enctype="multipart/form-data" method="post">
         <div class="form-group">
             <label for="name1"><b>Book name</b></label>
             <input type="text" class="form-control" name="name" id="name1"  placeholder="Enter book name">
@@ -20,19 +20,41 @@
             <input type="number" min="1900" max="2019" step="1" value=""  class="form-control" name="year" id="year1"  placeholder="Enter the year of publishing">
         </div>
         <div class="form-group">
+            <label for="price1"><b>Price book</b></label>
+            <input type="number" class="form-control" name="price" id="price1"  placeholder="Enter the price of the book in kopeks">
+        </div>
+        <div class="form-group">
             <label for="publisher1"><b>Publishers</b></label>
-            <input list="browsers" class="form-control" name="publisherId" id="publisher1"  placeholder="Enter User Password">
-            <select id="browsers" multiple name="hero[]">
-                <option value="Chrome">
-                <option value="Firefox">
-                <option value="Internet Explorer">
-                <option value="Opera">
-                <option value="Safari">
-                <option value="Microsoft Edge">
+            <select  class="form-control" id="publisher1" name="publishers">
+                <option th:each="publish : ${publishers}"
+                        th:value="${publish.id}"
+                        th:text="${publish.name}">Wireframe</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Save User</button>&nbsp;
-        <a href="/users"><input type="button" class="btn btn-success" value="Beck on Users List Page"/></a>
+        <div class="form-group">
+            <label for="genre1"><b>Genres</b></label>
+            <select  class="form-control" id="genre1" name="genres">
+                <option th:each="genre : ${genres}"
+                        th:value="${genre.id}"
+                        th:text="${genre.name}">Wireframe</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="author1"><b>Authors</b></label>
+            <select  class="form-control" id="author1" name="authors">
+                <option th:each="author : ${authors}"
+                        th:value="${author.id}"
+                        th:text="${author.name}">Wireframe</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="background1"><b>Background book</b></label>
+            <input type="file" class="form-control" name="file" id="background1" >
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Book</button>&nbsp;
+        <a href="/"><input type="button" class="btn btn-success" value="Beck on Books List Page"/></a>
     </form>
 
 </div>

@@ -25,10 +25,11 @@
     <h3>Каталог</h3>
 	<div class="alert alert-dark" th:each="book : ${books}">
 		<div>
-			<a href="#"><img th:src="@{${book.background}}"></a>
+			<a href="#"><img th:src="@{${'images/'+book.background}}"></a>
 		</div>
 		<div th:text="${book.name}"></div>
 		<div th:text="${book.price}"></div>
+		<div th:each="pub : ${book.genreList}"><label th:text="${pub.name}">,</label></div>
 	</div>
 	</div>
 

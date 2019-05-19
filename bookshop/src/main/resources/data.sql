@@ -13,8 +13,14 @@ INSERT INTO Publishers (id, name) VALUES (2, 'Махаон');
 INSERT INTO Publishers (id, name) VALUES (3, 'Москва');
 INSERT INTO Publishers (id, name) VALUES (4, 'Омск');
 
+
+INSERT INTO Authors (id, name, biography) VALUES (1, 'Author 1','biography text');
+INSERT INTO Authors (id, name, biography) VALUES (2, 'Author 2','biography text');
+INSERT INTO Authors (id, name, biography) VALUES (3, 'Author 3','biography text');
+INSERT INTO Authors (id, name, biography) VALUES (4, 'Author 4','biography text');
+
 INSERT INTO Books
 (id, name,  year,  price, rate, create_date, background)
 VALUES
-(1, 'Java: Руководство для начинающих', 2014, 90000, 5.0, now(), 'https://chytayka.com.ua/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/7/9/79650.jpg'),
-(2, 'Грамматика: сборник упражнений',  2002, 30000, 5.0, now(), 'http://ost-nvo.com.ua/wp-content/uploads/2015/04/zno_angliyska1.jpg');
+(1, 'Java: Руководство для начинающих', 2014, 90000, 5.0, now(), '79650.jpg'),
+(2, 'Грамматика: сборник упражнений',  2002, 30000, 5.0, now(), 'zno_angliyska1.jpg');
