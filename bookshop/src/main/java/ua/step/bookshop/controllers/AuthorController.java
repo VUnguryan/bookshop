@@ -23,55 +23,44 @@ import ua.step.bookshop.repositories.PublisherRepository;
 public class AuthorController {
 
 	@Autowired
-	private AuthorRepository authorRepository;
-	@Autowired
-	private BookRepository repo;
-	@Autowired
 	private GenreRepository repoJ;
 	@Autowired
 	private PublisherRepository repoP;
-/*	@Autowired
-	private AuthorRepository repoA;*/
+	@Autowired
+	private AuthorRepository repoA;
 
 	@GetMapping("/authors")
 	private String getAuthors(Model model) {
-		model.addAttribute("authors", authorRepository.findAll());
 		model.addAttribute("genres", repoJ.findAll());
 		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("authors", authorRepository.findAll());
+		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "authors");
-		//return "authors";
 		return "index";
 	}
 
 	@GetMapping("/authors/add")
 	private String getAddAuthor(@ModelAttribute Author author, Model model) {
-		model.addAttribute("authors", authorRepository.findAll());
 		model.addAttribute("genres", repoJ.findAll());
 		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("addAuthor", authorRepository.findAll());
+		model.addAttribute("addAuthor", repoA.findAll());
 		model.addAttribute("contentPage", "addAuthor");
-		//return "addAuthor";
 		return "index";
 	}
 
 	@PostMapping("/authors/add")
 	private String addAuthor(@ModelAttribute Author author) {
 		boolean isEmty = true;
-		List<Author> authors = authorRepository.findAll();
+		List<Author> authors = repoA.findAll();
 		for (int i = 0; i < authors.size(); i++) {
 			if (authors.get(i).getName().equals(author.getName())) {
 				isEmty = false;
 			}
 		}
 		if (isEmty) {
-			authorRepository.saveAndFlush(author);
+			repoA.saveAndFlush(author);
 			return "redirect:/authors";
-		//	return "redirect:/index";
 		} else {
-		//	return "addAuthor";
 			return "redirect:/authors";
-			//return "authors";
 		}
 	}
 }

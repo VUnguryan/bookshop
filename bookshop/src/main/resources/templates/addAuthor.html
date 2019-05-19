@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Add Author</title>
+<title>Add author</title>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
 	integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
@@ -26,7 +26,7 @@
 </head>
 <body>
 		<div class="container" th:fragment="content">
-			<h2>Добавление нового автора</h2>
+			<h2>Добавление нового автора </h2>
 			<div>
 				<form action="/authors" th:action="@{/authors/add}"
 					th:object="${author}" method="post">
@@ -47,7 +47,7 @@
 							placeholder="Biography" required="required"
 							th:value="${author.biography}" />
 					</div>
-					<button class="btn btn-primary" type="submit">Save</button>
+					<button class="btn btn-primary" type="submit">Сохранить</button>
 				</form>
 			</div>
 		</div>

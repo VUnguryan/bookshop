@@ -64,6 +64,7 @@ public class MainController {
 		return "index"; //ссылка на гланую где есть место куда встаивается и меню и контент
 	}
 	
+	
 /*	@GetMapping("/authors")
 	private String getAuthors(Model model) {
 		model.addAttribute("genres", repoJ.findAll());
