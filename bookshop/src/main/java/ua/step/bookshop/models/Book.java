@@ -14,13 +14,13 @@ public class Book {
 	@Id
 	private Integer id;
 	private String name;
-	private Integer author_id;
+	private Integer authorId; // потом заменю на List<author> authors
 	private Integer year;
-	private Short genre_id;
-	private Integer publisher_id; 	
+	private Short genreId; // потом заменю на List<Genre>
+	private Integer publisherId; 	// заменить на Publisher publisher
 	private Integer price;
 	private Double rate;
-	private Integer admin_id;
-	private Date create_date;
+	private Integer adminId; // заменить на Admin admin
+	private Date createDate;
 	private String background;
 }
