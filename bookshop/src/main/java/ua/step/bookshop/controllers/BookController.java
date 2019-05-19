@@ -14,7 +14,7 @@ public class BookController {
 
 	@GetMapping("/books")
 	private String getBooks(Model model) {
-		model.addAttribute("books", repo.findAll());
+		model.addAttribute("books", repo.findByOrderByCreateDate());
 		return "books";
 	}
 
