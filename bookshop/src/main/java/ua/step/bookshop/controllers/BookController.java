@@ -23,7 +23,7 @@ public class BookController {
 		return getBooks(model, 1);
 	}
 
-	@GetMapping( "/books/{page}")
+	@GetMapping("/books/lib/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
 		return getBooks(model, page);
 	}
