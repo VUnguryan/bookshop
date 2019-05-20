@@ -16,7 +16,7 @@
 <body>
 	<div th:fragment="footer">
 		<nav>
-			<ul class="pagination">
+			<ul class="pagination d-flex justify-content-center">
 				<li th:class="${curpage eq 1} ? 'page-item disabled' : 'page-item'">
 					<a th:if="${not (1 eq curpage)}" class="page-link"
 					th:href="@{/lib/{p}(p=${curpage-1})}">Previous</a> <span
