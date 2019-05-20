@@ -58,18 +58,8 @@ public class BookController {
 	}
 
 	@PostMapping("/books/addBook")
-	private String addBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book,
-								 @ModelAttribute("publishers") Short idP, @ModelAttribute("genres") Short idG,
-								 @ModelAttribute("authors") Integer idA) {
-
+	private String addBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
 		String name = null;
-		Book newBook = book;
-		Publisher publisher = repoP.getOne(idP);
-		Genre genre = repoG.getOne(idG);
-		newBook.setPublisher(publisher);
-		newBook.setGenreList(Arrays.asList(genre));
-		Author author = repoA.getOne(idA);
-		newBook.setAuthorList(Arrays.asList(author));
 
 		if (!file.isEmpty()) {
 			try {
@@ -79,24 +69,23 @@ public class BookController {
 
 				String rootPath = new File("").getAbsolutePath()+"\\src\\main\\webapp\\images";
 				File uploadedFile = new File(rootPath+ File.separator+ name);
-				newBook.setBackground(name);
+				book.setBackground(name);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
 				stream.write(bytes);
 				stream.flush();
 				stream.close();
 
 
-				repo.save(newBook);
-				//book.setBackground(name);
-				//repo.save(book);
-				//return "redirect:/books/addBook";
+				repo.save(book);
 				return "redirect:/";
 
 			} catch (Exception e) {
 				return "You failed to upload " + name + " => " + e.getMessage();
 			}
 		} else {
-			return "You failed to upload " + name + " because the file was empty.";
+			book.setBackground("no_image.png");
+			repo.save(book);
+			return "redirect:/";
 		}
 
 	}
