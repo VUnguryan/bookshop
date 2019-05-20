@@ -54,7 +54,6 @@ public class MainController {
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "books");
-
 		return "index";
 	}
 
@@ -85,7 +84,7 @@ public class MainController {
 		// где contact название страницы html которую надо встроить на index
 		return "index"; //ссылка на гланую где есть место куда встаивается и меню и контент
 	}
-	
+
 	
 /*	@GetMapping("/authors")
 	private String getAuthors(Model model) {
