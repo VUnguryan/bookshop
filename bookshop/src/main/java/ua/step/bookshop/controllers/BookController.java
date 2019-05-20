@@ -21,7 +21,10 @@ import ua.step.bookshop.repositories.PublisherRepository;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -60,7 +63,8 @@ public class BookController {
 	@PostMapping("/books/addBook")
 	private String addBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
 		String name = null;
-
+        book.setCreateDate(Calendar.getInstance().getTime());
+        //book.setUser();
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();

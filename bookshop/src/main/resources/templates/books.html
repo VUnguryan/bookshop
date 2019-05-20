@@ -30,6 +30,8 @@
 		<div th:text="${book.name}"></div>
 		<div th:text="${book.price}"></div>
 
+
+		<div th:text="${book.createDate}"></div>
 		<div th:each="pub : ${book.genreList}"><label th:text="${pub.name}"></label></div>
 		<div th:each="aut : ${book.authorList}"><label th:text="${aut.name}"></label></div>
 	</div>
