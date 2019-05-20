@@ -23,18 +23,30 @@
 <body>
 
 	<div class="content-container" th:fragment="content">
-		<div>
-			<h3 class="list-group-item list-group-item-action active">Genres</h3>
-			<div class="list-group" th:each="genre : ${genres}">
-				<a class="list-group-item list-group-item-action" href="#"
-					th:text="${genre.name}"></a>
+		<div class="btn-group dropright">
+			<button type="button" class="btn btn-secondary dropdown-toggle"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Фильтр</button>
+			<div class="dropdown-menu">
+				<div>
+					<b>Жанры</b>
+				</div>
+				<div class="dropdown-item" th:each="genre : ${genres}">
+					<a href="#" th:text="${genre.name}"></a>
+				</div>
+				<div>
+					<b>Издатели</b>
+				</div>
+				<div class="dropdown-item" th:each="publisher : ${publishers}">
+					<a href="#" th:text="${publisher.name}"></a>
+				</div>
 			</div>
 		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg alert alert-dark" th:each="book : ${books}">
 					<div>
-						<a href="#"><img width="300px" th:src="@{${'images/'+book.background}}"></a>
+						<a href="#"><img width="300px" th:src="@{${'../images/'+book.background}}"></a>
 					</div>
 					<div th:text="${book.name}"></div>
 					<div th:text="${book.price}"></div>
