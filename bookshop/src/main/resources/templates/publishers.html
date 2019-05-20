@@ -23,8 +23,8 @@
 <body>
   <div class="container" th:fragment="content">
 		<div>
-			<ul class="list-group" th:each="publishers : ${publishers}">
-				<li class="list-group-item" th:text="${publishers.name}"></li>
+			<ul class="list-group" th:each="publisher : ${publishers}">
+				<li class="list-group-item" th:text="${publisher.name}"></li>
 			</ul>
 		</div>
 		<a class="btn btn-primary" href="/publishers/add" role="button">Добавить издателя</a>

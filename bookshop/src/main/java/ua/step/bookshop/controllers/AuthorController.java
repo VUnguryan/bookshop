@@ -35,7 +35,7 @@ public class AuthorController {
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "authors");
-		return "index";
+		return "authors";
 	}
 
 	@GetMapping("/authors/add")
@@ -44,7 +44,7 @@ public class AuthorController {
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("addAuthor", repoA.findAll());
 		model.addAttribute("contentPage", "addAuthor");
-		return "index";
+		return "addAuthor";
 	}
 
 	@PostMapping("/authors/add")

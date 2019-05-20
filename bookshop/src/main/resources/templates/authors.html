@@ -23,8 +23,8 @@
 <body>
 	<div class="container" th:fragment="content">
 		<div>
-			<ul class="list-group" th:each="authors : ${authors}">
-				<li class="list-group-item" th:text="${authors.name}"></li>
+			<ul class="list-group" th:each="author : ${authors}">
+				<li class="list-group-item" th:text="${author.name}"></li>
 			</ul>
 		</div>
 		<a class="btn btn-primary" href="/authors/add" role="button">Добавить автора</a>

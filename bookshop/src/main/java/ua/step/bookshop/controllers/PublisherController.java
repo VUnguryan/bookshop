@@ -40,7 +40,7 @@ public class PublisherController {
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "publishers");
-		return "index";
+		return "publishers";
     }
 
     @GetMapping("/publishers/add")
