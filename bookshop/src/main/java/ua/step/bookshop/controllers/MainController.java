@@ -32,7 +32,7 @@ public class MainController {
 		return getBooksInPage(model, 1);
 	}
 
-	@GetMapping("/lib/{page}")
+	@GetMapping("/{page}")
 	private String getPaginatedIndex(Model model, @PathVariable int page) {
 		return getBooksInPage(model, page);
 	}

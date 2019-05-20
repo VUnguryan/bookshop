@@ -32,12 +32,9 @@ public class BookController {
 
 	private static int BOOKSONPAGE = 9;
 
-	@GetMapping("/books")
-	private String getBooks(Model model) {
-		return getBooks(model, 1);
-	}
+	//тут был метод на view books он пезполезен и потому был удален что бы не путал
 
-	@GetMapping("/books/lib/{page}")
+	@GetMapping("books/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
 		return getBooks(model, page);
 	}
