@@ -29,23 +29,6 @@
 		<!-- Links -->
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
-			<!--   Dropdown -->
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" href="#" id="navbardrop"
-				data-toggle="dropdown"> Жанры </a>
-				<div class="dropdown-menu">
-					<div th:each="genre : ${genres}">
-						<a class="dropdown-item" href="#" th:text="${genre.name}"></a>
-					</div>
-				</div></li>
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" href="#" id="navbardrop"
-				data-toggle="dropdown"> Издатели </a>
-				<div class="dropdown-menu">
-					<div th:each="publisher : ${publishers}">
-						<a class="dropdown-item" href="#" th:text="${publisher.name}"></a>
-					</div>
-				</div></li>
 			<li class="nav-item"><a class="nav-link" href="/authors">Автор</a></li>
 			<li class="nav-item"><a class="nav-link" href="/publishers">Издатель</a></li>
 			<li class="nav-item"><a class="nav-link" href="/payment">Оплата</a></li>
