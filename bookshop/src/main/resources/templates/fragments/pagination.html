@@ -19,8 +19,8 @@
 			<ul class="pagination d-flex justify-content-center">
 				<li th:class="${curpage eq 1} ? 'page-item disabled' : 'page-item'">
 					<a th:if="${not (1 eq curpage)}" class="page-link"
-					th:href="@{/{p}(p=${curpage-1})}">Предыдущия</a> <span
-					th:if="${1 eq curpage}" class="page-link">Предыдущия</span>
+					th:href="@{/{p}(p=${curpage-1})}">Предыдущая</a> <span
+					th:if="${1 eq curpage}" class="page-link">Предыдущая</span>
 				</li>
 				<li th:each="page : ${#numbers.sequence(1, pages)}"
 					th:class="${curpage eq page}? 'active page-item' : 'page-item'">
