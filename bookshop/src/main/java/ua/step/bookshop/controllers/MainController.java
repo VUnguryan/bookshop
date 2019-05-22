@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import ua.step.bookshop.models.Author;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.repositories.AuthorRepository;
 import ua.step.bookshop.repositories.BookRepository;
@@ -36,6 +39,16 @@ public class MainController {
 	private String getPaginatedIndex(Model model, @PathVariable int page) {
 		return getBooksInPage(model, page);
 	}
+	
+	/*@GetMapping("/")
+	private String getsIndex(Model model) {
+		return getAuthorsInPage(model, 1);
+	}
+	
+	@GetMapping("/{page}")
+	private String getPaginated(Model model, @PathVariable int page) {
+		return getAuthorsInPage(model, page);
+	}*/
 
 	String getBooksInPage(Model model, int page) {
 		List<Book> allBooks = repo.findAll();
@@ -56,6 +69,44 @@ public class MainController {
 		model.addAttribute("contentPage", "books");
 		return "index";
 	}
+	
+	/*String getAuthorsInPage(Model model, int page) {
+		List<Author> allAuthors = repoA.findAll();
+		List<Author> authors = new ArrayList<>();
+
+		int pages = (int) Math.ceil((double) allAuthors.size() / BOOKSONPAGE);
+
+		for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allAuthors.size(); i ++) {
+			authors.add(allAuthors.get(i));
+		}
+
+		model.addAttribute("curpage", page);
+		model.addAttribute("pages", pages);
+		model.addAttribute("authors", authors);
+		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("publishers", repoP.findAll());
+		model.addAttribute("authors", repoA.findAll());
+		model.addAttribute("contentPage", "authors");
+		return "index";
+	}
+	
+	@GetMapping("/authors")
+	private String getAuthors(Model model) {
+		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("publishers", repoP.findAll());
+		model.addAttribute("authors", repoA.findAll());
+		model.addAttribute("contentPage", "authors");
+		return "index";
+	}
+	
+	@GetMapping("/authors/add")
+	private String getAddAuthor(@ModelAttribute Author author, Model model) {
+		model.addAttribute("genres", repoJ.findAll());
+		model.addAttribute("publishers", repoP.findAll());
+		model.addAttribute("addAuthor", repoA.findAll());
+		model.addAttribute("contentPage", "addAuthor");
+		return "index";
+	}*/
 
 	@GetMapping("/payment")
 	private String getPayment(Model model) {
