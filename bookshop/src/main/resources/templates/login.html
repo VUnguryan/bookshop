@@ -4,6 +4,7 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <title>Log in</title>
+<link rel="stylesheet" href="css/mainStyle.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -21,32 +22,34 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<div class="main-form-container alert alert-primary">
-		<h2>Log in</h2>
-		<div class="alert alert-danger" th:if="${param.error}">Invalid
-			username or password.</div>
-		<div class="alert alert-danger" th:if="${param.logout}">You have
-			been logged out.</div>
-		<form th:action="@{/login}" method="post">
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
-			<div class="input-group mb-3">
-				<input type="text" class="form-control" placeholder="Username"
-					aria-label="Username" name="username"
-					aria-describedby="basic-addon1">
-			</div>
-			<div class="form-group">
-				<label for="exampleInputPassword1">Password</label> <input
-					type="password" class="form-control" name="password"
-					id="exampleInputPassword1" placeholder="Password">
-			</div>
-			<div class="btn-group" role="group" aria-label="Basic example">
-				<button type="submit" class="btn btn-primary">Submit</button>
-				<a class="btn btn-primary" href="/" role="button">Enter as guest</a>
-				<a class="btn btn-primary" href="/registration" role="button">Registration</a>
-			</div>
-		</form>
+	<div class="main-container">
+		<div class="main-form-container alert alert-primary">
+			<h2>Log in</h2>
+			<div class="alert alert-danger" th:if="${param.error}">Invalid
+				username or password.</div>
+			<div class="alert alert-danger" th:if="${param.logout}">You
+				have been logged out.</div>
+			<form th:action="@{/login}" method="post">
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" /> <label for="email">Login</label>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" placeholder="Username"
+						aria-label="Username" name="username"
+						aria-describedby="basic-addon1">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Password</label> <input
+						type="password" class="form-control" name="password"
+						id="exampleInputPassword1" placeholder="Password">
+				</div>
+				<div class="btn-group" role="group" aria-label="Basic example">
+					<button type="submit" class="btn btn-primary">Submit</button>
+					<a class="btn btn-primary" href="/" role="button">Enter as
+						guest</a> <a class="btn btn-primary" href="/registration"
+						role="button">Registration</a>
+				</div>
+			</form>
+		</div>
 	</div>
-
 </body>
 </html>

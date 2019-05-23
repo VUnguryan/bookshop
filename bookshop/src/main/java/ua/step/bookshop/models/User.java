@@ -1,7 +1,5 @@
 package ua.step.bookshop.models;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 import java.util.ArrayList;
@@ -10,10 +8,11 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
     protected Short id;
-    private String name;
+    private String login;
     private String email;
     private String password;
     
@@ -38,12 +37,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLogin(String name) {
+        this.login = name;
     }
 
     public String getEmail() {
