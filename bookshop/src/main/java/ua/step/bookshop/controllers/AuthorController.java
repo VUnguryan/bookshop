@@ -35,7 +35,7 @@ public class AuthorController {
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "authors");
-		return "authors";
+		return "index";
 	}
 
 	@GetMapping("/authors/add")
@@ -44,7 +44,7 @@ public class AuthorController {
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("addAuthor", repoA.findAll());
 		model.addAttribute("contentPage", "addAuthor");
-		return "addAuthor";
+		return "index";
 	}
 
 	@PostMapping("/authors/add")
@@ -60,7 +60,7 @@ public class AuthorController {
 			repoA.saveAndFlush(author);
 			return "redirect:/authors";
 		} else {
-			return "redirect:/authors";
+			return "redirect:/authors/add";
 		}
 	}
 }
