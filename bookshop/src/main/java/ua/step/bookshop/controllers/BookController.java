@@ -32,7 +32,7 @@ public class BookController {
 
 	private static int BOOKSONPAGE = 9;
 
-	//тут был метод на view books он пезполезен и потому был удален что бы не путал
+	//тут был метод на view books он безполезен и потому был удален что бы не путал
 
 	@GetMapping("books/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
@@ -94,6 +94,11 @@ public class BookController {
 			repo.saveAndFlush(book);
 			return "redirect:/";
 		}
+	}
 
+	@GetMapping("/books/show/{id}")
+	private String showBook(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("bookInf", repo.getOne(id));
+		return "showBook";
 	}
 }

@@ -46,7 +46,7 @@
 			<div class="row">
 				<div class="col-lg alert alert-dark" th:each="book : ${books}">
 					<div>
-						<a href="#"><img width="300px" th:src="@{${'../images/'+book.background}}"></a>
+						<a th:href="@{'/books/show/'+${book.id}}"><img width="300px" th:src="@{${'../images/'+book.background}}"></a>
 					</div>
 					<div th:text="${book.name}"></div>
 					<div th:text="${book.price}"></div>

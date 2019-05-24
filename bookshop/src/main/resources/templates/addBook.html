@@ -97,14 +97,14 @@
             <input type="text" class="form-control" name="name" id="name1"  placeholder="Введите название новой книги" required>
         </div>
         <div class="form-group">
-            <label for="year1"><b>Год книги должен быть не менее 1900 и не больше 2019</b></label>
+            <label for="year1"><b>Год книги должен быть не менее 1900 и не больше 2019 года</b></label>
             <input type="number" min="1900" max="2019" step="1" value=""  class="form-control" name="year" id="year1"
                    placeholder="Введите год публикации книги" required>
         </div>
         <br>
         <div class="form-group">
             <label for="price1"><b>Цена книги в копейках</b></label>
-            <input type="number" class="form-control" name="price" id="price1"  placeholder="Введите цену книги в копейках" required>
+            <input type="number" class="form-control" name="price" min="0" id="price1"  placeholder="Введите цену книги в копейках" required>
         </div>
         <br>
         <div class="form-group row">
