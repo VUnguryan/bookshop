@@ -1,168 +1,195 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" >
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        html, body {
-            height: 100%;
-            margin:0;
-            padding:0;
-        }
-        body {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        /* скрываем чекбоксы и блоки с содержанием */
-        .hide,
-        .hide + label ~ div {
-            display: none;
-        }
-        /* вид текста label */
-        .hide + label {
-            margin: 0;
-            padding: 0;
-            color: green;
-            cursor: pointer;
-            display: inline-block;
-        }
-        /* вид текста label при активном переключателе */
-        .hide:checked + label {
-            color: red;
-            border-bottom: 0;
-        }
-        /* когда чекбокс активен показываем блоки с содержанием  */
-        .hide:checked + label + div {
-            display: block;
-            background: #efefef;
-            -moz-box-shadow: inset 3px 3px 10px #7d8e8f;
-            -webkit-box-shadow: inset 3px 3px 10px #7d8e8f;
-            box-shadow: inset 3px 3px 10px #7d8e8f;
-            margin-left: 20px;
-            padding: 10px;
-            /* чуточку анимации при появлении */
-            -webkit-animation:fade ease-in 0.5s;
-            -moz-animation:fade ease-in 0.5s;
-            animation:fade ease-in 0.5s;
-        }
-        /* анимация при появлении скрытых блоков */
-        @-moz-keyframes fade {
-            from { opacity: 0; }
-            to { opacity: 1 }
-        }
-        @-webkit-keyframes fade {
-            from { opacity: 0; }
-            to { opacity: 1 }
-        }
-        @keyframes fade {
-            from { opacity: 0; }
-            to { opacity: 1 }
-        }
-        .hide + label:before {
-            background-color: #1e90ff;
-            color: #fff;
-            content: "\002B";
-            display: block;
-            float: left;
-            font-size: 14px;
-            font-weight: bold;
-            height: 16px;
-            line-height: 16px;
-            margin: 3px 5px;
-            text-align: center;
-            width: 16px;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
-        }
-        .hide:checked + label:before {
-            content: "\2212";
-        }
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
 
-        /* позиционирование*/
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.5;
+}
+/* скрываем чекбоксы и блоки с содержанием */
+.hide, .hide+label ~ div {
+	display: none;
+}
+/* вид текста label */
+.hide+label {
+	margin: 0;
+	padding: 0;
+	color: green;
+	cursor: pointer;
+	display: inline-block;
+}
+/* вид текста label при активном переключателе */
+.hide:checked+label {
+	color: red;
+	border-bottom: 0;
+}
+/* когда чекбокс активен показываем блоки с содержанием  */
+.hide:checked+label+div {
+	display: block;
+	background: #efefef;
+	-moz-box-shadow: inset 3px 3px 10px #7d8e8f;
+	-webkit-box-shadow: inset 3px 3px 10px #7d8e8f;
+	box-shadow: inset 3px 3px 10px #7d8e8f;
+	margin-left: 20px;
+	padding: 10px;
+	/* чуточку анимации при появлении */
+	-webkit-animation: fade ease-in 0.5s;
+	-moz-animation: fade ease-in 0.5s;
+	animation: fade ease-in 0.5s;
+}
+/* анимация при появлении скрытых блоков */
+@
+-moz-keyframes fade {from { opacity:0;
+	
+}
 
-    </style>
-    <title>Add Book</title>
+to {
+	opacity: 1
+}
+
+}
+@
+-webkit-keyframes fade {from { opacity:0;
+	
+}
+
+to {
+	opacity: 1
+}
+
+}
+@
+keyframes fade {from { opacity:0;
+	
+}
+
+to {
+	opacity: 1
+}
+
+}
+.hide+label:before {
+	background-color: #1e90ff;
+	color: #fff;
+	content: "\002B";
+	display: block;
+	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	height: 16px;
+	line-height: 16px;
+	margin: 3px 5px;
+	text-align: center;
+	width: 16px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.hide:checked+label:before {
+	content: "\2212";
+}
+
+/* позиционирование*/
+</style>
+<title>Add Book</title>
 </head>
 <body>
-<div class="container-fluid">
-    <h1>Создание новой книги</h1>
-    <form name="book" th:action="@{/books/addBook}" enctype="multipart/form-data" method="post">
-        <div class="form-group">
-            <label for="name1"><b>Название книги</b></label>
-            <input type="text" class="form-control" name="name" id="name1"  placeholder="Введите название новой книги" required>
-        </div>
-        <div class="form-group">
-            <label for="year1"><b>Год книги должен быть не менее 1900 и не больше 2019</b></label>
-            <input type="number" min="1900" max="2019" step="1" value=""  class="form-control" name="year" id="year1"
-                   placeholder="Введите год публикации книги" required>
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="price1"><b>Цена книги в копейках</b></label>
-            <input type="number" class="form-control" name="price" id="price1"  placeholder="Введите цену книги в копейках" required>
-        </div>
-        <br>
-        <div class="form-group row">
-            <div class="col-md-6">
-                <label for="publisher1"><b>Издатель</b></label>
-                <select  class="form-control" id="publisher1" name="publisher" >
-                <option th:each="publish : ${publishers}"
-                        th:value="${publish.id}"
-                        th:text="${publish.name}">Select Publish</option>
-            </select>
-            </div>
-            <div class="col-md-6">
-                <a class="form-control" href="/publishers/add"><input type="button" class="btn btn-info" value="Создать нового издателя"/></a>
-            </div>
-        </div>
-        <br>
-        <div class="form-group ">
-                <input class="hide" id="hd-1" type="checkbox">
-                <label for="hd-1"><b>Жанры</b></label>
-                <div>
-                    <div  th:each="genre : ${genres}" >
-                        <div class="btn btn-default btn-checkbox">
-                            <input type="checkbox" path="genreList" name="genreList"
-                                   th:value="${genre.id}"><label th:text="${genre.name}"></label>
-                        </div>
-                    </div>
-                    <div>
-                        <a class="form-control" href="/genres/add"><input type="button" class="btn btn-info" value="Создать новый жанр"/></a>
-                    </div>
-                </div>
-        </div>
-        <br>
-        <div class="form-group">
-            <input class="hide" id="hd-2" type="checkbox">
-            <label for="hd-2"><b>Авторы</b></label>
-            <div >
-                <div th:each="author : ${authors}" >
-                    <label class="btn btn-default btn-checkbox"  >
-                        <input type="checkbox" path="authorList" name="authorList" th:value="${author.id}"> <label th:text="${author.name}"></label>
-                        <br>
-                    </label>
-                </div>
-                <div>
-                    <a class="form-control" href="/authors/add"><input type="button" class="btn btn-info" value="Создать нового автора"/></a>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="background1"><b>Иконка книги</b></label>
-            <input type="file" class="form-control" name="file" id="background1" >
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Создать</button>&nbsp;
-        <a href="/"><input type="button" class="btn btn-success" value="К списку всех книг"/></a>
-    </form>
-    <br>
-    <br>
-</div>
+	<div class="container-fluid">
+		<h1>Создание новой книги</h1>
+		<form name="book" th:action="@{/books/addBook}"
+			enctype="multipart/form-data" method="post">
+			<div class="form-group">
+				<label for="name1"><b>Название книги</b></label> <input type="text"
+					class="form-control" name="name" id="name1"
+					placeholder="Введите название новой книги" required>
+			</div>
+			<div class="form-group">
+				<label for="year1"><b>Год книги должен быть не менее
+						1900 и не больше 2019</b></label> <input type="number" min="1900" max="2019"
+					step="1" value="" class="form-control" name="year" id="year1"
+					placeholder="Введите год публикации книги" required>
+			</div>
+			<br>
+			<div class="form-group">
+				<label for="price1"><b>Цена книги в копейках</b></label> <input
+					type="number" class="form-control" name="price" id="price1"
+					placeholder="Введите цену книги в копейках" required>
+			</div>
+			<br>
+			<div class="form-group row">
+				<div class="col-md-6">
+					<label for="publisher1"><b>Издатель</b></label> <select
+						class="form-control" id="publisher1" name="publisher">
+						<option th:each="publish : ${publishers}" th:value="${publish.id}"
+							th:text="${publish.name}">Select Publish</option>
+					</select>
+				</div>
+				<div class="col-md-6">
+					<a class="form-control" href="/publishers/add"><input
+						type="button" class="btn btn-info" value="Создать нового издателя" /></a>
+				</div>
+			</div>
+			<br>
+			<div class="form-group ">
+				<input class="hide" id="hd-1" type="checkbox"> <label
+					for="hd-1"><b>Жанры</b></label>
+				<div>
+					<div th:each="genre : ${genres}">
+						<div class="btn btn-default btn-checkbox">
+							<input type="checkbox" path="genreList" name="genreList"
+								th:value="${genre.id}"><label th:text="${genre.name}"></label>
+						</div>
+					</div>
+					<div>
+						<a class="form-control" href="/genres/add"><input
+							type="button" class="btn btn-info" value="Создать новый жанр" /></a>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="form-group">
+				<input class="hide" id="hd-2" type="checkbox"> <label
+					for="hd-2"><b>Авторы</b></label>
+				<div>
+					<div th:each="author : ${authors}">
+						<label class="btn btn-default btn-checkbox"> <input
+							type="checkbox" path="authorList" name="authorList"
+							th:value="${author.id}"> <label th:text="${author.name}"></label>
+							<br>
+						</label>
+					</div>
+					<div>
+						<a class="form-control" href="/authors/add"><input
+							type="button" class="btn btn-info" value="Создать нового автора" /></a>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="form-group">
+				<label for="background1"><b>Иконка книги</b></label> <input
+					type="file" class="form-control" name="file" id="background1">
+			</div>
+			<br>
+			<button type="submit" class="btn btn-primary">Создать</button>
+			&nbsp; <a href="/"><input type="button" class="btn btn-success"
+				value="К списку всех книг" /></a>
+		</form>
+		<br> <br>
+	</div>
 </body>
 </html>
