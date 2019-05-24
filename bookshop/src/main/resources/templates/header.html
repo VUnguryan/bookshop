@@ -24,8 +24,8 @@
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"
 		th:fragment="header">
 		<!-- Brand -->
-		<a class="navbar-brand" href="/"><img th:src="@{../images/logo.png}"
-			width="50"></a>
+		<a class="navbar-brand" href="/"><img
+			th:src="@{../images/logo.png}" width="50"></a>
 		<!-- Links -->
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
@@ -43,7 +43,9 @@
 			<button class="btn btn-outline-secondary my-2 mr-sm-2" type="submit">Поиск</button>
 		</form>
 		<!-- Login in -->
-		<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Вход</button>
+		<form th:action="@{/logout}" method="post">
+			<input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit" value="Sign Out" />
+		</form>
 	</nav>
 </body>
 </html>

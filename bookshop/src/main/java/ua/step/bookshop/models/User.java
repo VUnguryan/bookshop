@@ -1,21 +1,26 @@
 package ua.step.bookshop.models;
 
-import lombok.Data;
-
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "Users")
-@Data
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
     protected Short id;
-    private String name;
+    private String login;
     private String email;
     private String password;
-    private String status;
+    
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "users_has_roles", joinColumns = {
+			@JoinColumn(name = "users_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "roles_id", nullable = false, updatable = false) })
+	private List<Role> roles = new ArrayList<Role>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Book> bookList;
@@ -32,12 +37,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLogin(String name) {
+        this.login = name;
     }
 
     public String getEmail() {
@@ -56,11 +61,11 @@ public class User {
         this.password = password;
     }
 
-    public String getStatus() {
-        return status;
-    }
+    public List<Role> getRoles() {
+		return roles;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 }

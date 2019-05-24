@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.step.bookshop.models.Author;
 import ua.step.bookshop.repositories.AuthorRepository;
-import ua.step.bookshop.repositories.BookRepository;
 import ua.step.bookshop.repositories.GenreRepository;
 import ua.step.bookshop.repositories.PublisherRepository;
 
