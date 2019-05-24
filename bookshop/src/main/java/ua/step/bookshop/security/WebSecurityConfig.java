@@ -5,23 +5,38 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
-
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/","/authors","/publishers","/payment","/delivery","/contacts","/registration", "/css/mainStyle.css").permitAll()
-			.antMatchers("/authors/add","/publishers/add").hasAuthority("admin")
+			.antMatchers("/authors/add","/publishers/add").hasAuthority("ROLE_admin")
 			.anyRequest().fullyAuthenticated()
 		.and()
 			.exceptionHandling()
@@ -37,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.deleteCookies("remember-me")
 				.logoutSuccessUrl("/login")
 				.permitAll();
+		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 	}
 
 	/**
@@ -44,25 +60,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 *  Не трогай 
 	 * !!!УБЬЕТ!!!
 	 */
-	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance())
-				.usersByUsernameQuery("select login, password, id from users where login=?").authoritiesByUsernameQuery(
-						"select users.login, roles.roles from ((users inner join users_has_roles on users.id=users_has_roles.users_id)"
-								+ " inner join roles on roles.id=users_has_roles.roles_id) where users.login = ?");
-
-	}
-	
-//	@Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//             User.withDefaultPasswordEncoder()
-//                .username("user")
-//                .password("password")
-//                .roles("USER")
-//                .build();
+//	@Override
+//	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance())
+//				.usersByUsernameQuery("select login, password, id from users where login=?").authoritiesByUsernameQuery(
+//						"select users.login, roles.roles from ((users inner join users_has_roles on users.id=users_has_roles.users_id)"
+//								+ " inner join roles on roles.id=users_has_roles.roles_id) where users.login = ?");
 //
-//        return new InMemoryUserDetailsManager(user);
-//    }
+//	}
+	
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+	}
+	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 }
