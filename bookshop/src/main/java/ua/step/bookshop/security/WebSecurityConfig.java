@@ -3,6 +3,7 @@ package ua.step.bookshop.security;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,9 +20,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/","/authors","/publishers","/payment","/delivery","/contacts","/registration").permitAll()
+			.antMatchers("/","/authors","/publishers","/payment","/delivery","/contacts","/registration", "/css/mainStyle.css").permitAll()
 			.antMatchers("/authors/add","/publishers/add").hasAuthority("admin")
 			.anyRequest().fullyAuthenticated()
+		.and()
+			.exceptionHandling()
+			.accessDeniedPage("/login")
 		.and()
 			.formLogin()
 				.loginPage("/login")
@@ -48,4 +52,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 								+ " inner join roles on roles.id=users_has_roles.roles_id) where users.login = ?");
 
 	}
+	
+//	@Bean
+//    @Override
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user =
+//             User.withDefaultPasswordEncoder()
+//                .username("user")
+//                .password("password")
+//                .roles("USER")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 }
