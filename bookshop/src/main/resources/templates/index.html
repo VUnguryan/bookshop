@@ -21,12 +21,10 @@
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 </head>
-<body background="../images/sitebackground.png">
+<body>
 	<div class="container p-0 mb-0 bg-white text-dark h-100">
-		<div th:replace="../templates/header :: header">Header</div>
+		<div th:replace="fragments/header :: header">Header</div>
 		<div th:replace="${contentPage} :: content">Content</div>
 	</div>
-
-	
 </body>
 </html>
