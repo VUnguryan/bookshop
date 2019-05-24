@@ -40,7 +40,7 @@ public class PublisherController {
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "publishers");
-		return "publishers";
+		return "index";
     }
 
     @GetMapping("/publishers/add")
@@ -68,5 +68,4 @@ public class PublisherController {
             return "redirect:/publishers/add";
         }
     }
-
 }
