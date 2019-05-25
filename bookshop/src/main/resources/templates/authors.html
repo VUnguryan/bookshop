@@ -28,8 +28,8 @@
 				<li class="list-group-item" th:text="${author.name}"></li>
 			</ul>
 		</div>
-		<a sec:authorize="hasRole('ROLE_admin')" class="btn btn-primary" href="/authors/add" role="button">Добавить
-			автора</a>
+		<a sec:authorize="hasRole('admin')" class="btn btn-primary"
+			href="/authors/add" role="button">Добавить автора</a> 
 	</div>
 </body>
 </html>
