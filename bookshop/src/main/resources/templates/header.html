@@ -22,7 +22,7 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"
+	<nav class="navbar navbar-expand-sm rounded border shadow-sm"
 		th:fragment="header">
 		<!-- Brand -->
 		<a class="navbar-brand" href="/"><img
@@ -35,6 +35,8 @@
 			<li class="nav-item"><a class="nav-link" href="/payment">Оплата</a></li>
 			<li class="nav-item"><a class="nav-link" href="/delivery">Доставка</a></li>
 			<li class="nav-item"><a class="nav-link" href="/contacts">Контакты</a></li>
+			<li sec:authorize="hasRole('admin')" class="nav-item"><a
+				class="nav-link" href="/admin">Admin panel</a></li>
 
 		</ul>
 		<!-- Search -->

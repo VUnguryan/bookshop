@@ -53,7 +53,7 @@ public class MainController {
 		model.addAttribute("genres", repoJ.findAll());
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("authors", repoA.findAll());
-		model.addAttribute("contentPage", "books");
+		model.addAttribute("contentPage", "fragments/books");
 		return "index";
 	}
 
