@@ -3,11 +3,16 @@ package ua.step.bookshop.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.repositories.AuthorRepository;
 import ua.step.bookshop.repositories.BookRepository;
@@ -35,6 +40,14 @@ public class MainController {
 	@GetMapping("/{page}")
 	private String getPaginatedIndex(Model model, @PathVariable int page) {
 		return getBooksInPage(model, page);
+	}
+	
+	@PostMapping("/")
+	private String setBOOKSONPAGE(Model model, HttpSession session, HttpServletRequest request) {
+		
+		MainController.BOOKSONPAGE = Integer.valueOf(request.getParameter("booksOnPage"));
+		
+		return getBooksInPage(model, 1);
 	}
 
 	String getBooksInPage(Model model, int page) {
