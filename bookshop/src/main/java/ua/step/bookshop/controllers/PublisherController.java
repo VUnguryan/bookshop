@@ -49,7 +49,7 @@ public class PublisherController {
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("addPublisher", repoP.findAll());
 		model.addAttribute("contentPage", "addPublisher");
-		return "addPublisher";
+		return "index";
     }
 
     @PostMapping("/publishers/add")

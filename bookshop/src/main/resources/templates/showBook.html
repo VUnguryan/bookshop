@@ -3,113 +3,32 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        html, body {
-            height: 100%;
-            margin:0;
-            padding:0;
-        }
-        body {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        /* скрываем чекбоксы и блоки с содержанием */
-        .hide,
-        .hide + label ~ div {
-            display: none;
-        }
-        /* вид текста label */
-        .hide + label {
-            margin: 0;
-            padding: 0;
-            color: green;
-            cursor: pointer;
-            display: inline-block;
-        }
-        /* вид текста label при активном переключателе */
-        .hide:checked + label {
-            color: red;
-            border-bottom: 0;
-        }
-        /* когда чекбокс активен показываем блоки с содержанием  */
-        .hide:checked + label + div {
-            display: block;
-            background: #efefef;
-            -moz-box-shadow: inset 3px 3px 10px #7d8e8f;
-            -webkit-box-shadow: inset 3px 3px 10px #7d8e8f;
-            box-shadow: inset 3px 3px 10px #7d8e8f;
-            margin-left: 20px;
-            padding: 10px;
-            /* чуточку анимации при появлении */
-            -webkit-animation:fade ease-in 0.5s;
-            -moz-animation:fade ease-in 0.5s;
-            animation:fade ease-in 0.5s;
-        }
-        /* анимация при появлении скрытых блоков */
-        @-moz-keyframes fade {
-            from { opacity: 0; }
-            to { opacity: 1 }
-        }
-        @-webkit-keyframes fade {
-            from { opacity: 0; }
-            to { opacity: 1 }
-        }
-        @keyframes fade {
-            from { opacity: 0; }
-            to { opacity: 1 }
-        }
-        .hide + label:before {
-            background-color: #1e90ff;
-            color: #fff;
-            content: "\002B";
-            display: block;
-            float: left;
-            font-size: 14px;
-            font-weight: bold;
-            height: 16px;
-            line-height: 16px;
-            margin: 3px 5px;
-            text-align: center;
-            width: 16px;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
-        }
-        .hide:checked + label:before {
-            content: "\2212";
-        }
 
-        /* позиционирование*/
-
-    </style>
     <title>Инфо</title>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container" th:fragment="content">
+    <link rel="stylesheet" href="/css/addBookStyle.css">
     <h1>Информация о книге</h1>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text">Картинка</span>
             <img th:src="@{${'/images/'+bookInf.background}}" style="width:248px; height: 350px" alt="icon">
-        </div>
-        <form class="container align-self-center" th:action="@{/books/favorite}"  method="POST">
+
+        <form class="container" th:action="@{/books/favorite}"  method="POST">
             <input type="text" name="idbook" th:value="${bookInf.id}" hidden/>
 
         <div class="input-group-prepend form-check">
-            <input th:if="${flag}" style="width:30px; height: 30px;" name="check"
+            <input th:if="${flag}" style="width:25px; height: 25px;" name="check"
                    type="checkbox" class="form-check-input" checked/>
-            <input th:unless="${flag}" style="width:30px; height: 30px;" name="check"
+            <input th:unless="${flag}" style="width:25px; height: 25px;" name="check"
                    type="checkbox" class="form-check-input"/>
             &#8195;
-            <label style="font-size:30px" class="form-check-label" >Список Ваших избранных книг</label>
+            <label style="font-size:25px" class="form-check-label" >Список Ваших избранных книг</label>
         </div>
             <input type="submit" class=" btn btn-success" value="Сохранить">
         </form>
-
+        </div>
     </div>
 
     <div class="input-group mb-3">

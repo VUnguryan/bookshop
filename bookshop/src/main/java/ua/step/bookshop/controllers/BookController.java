@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Favorites;
 import ua.step.bookshop.repositories.*;
-import ua.step.bookshop.security.WebSecurityConfig;
+
 
 @Controller
 public class BookController {
@@ -65,7 +65,9 @@ public class BookController {
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("genres", repoG.findAll());
 		model.addAttribute("authors", repoA.findAll());
-		return "addBook";
+		model.addAttribute("contentPage", "addBook");
+		return "index";
+		//return "addBook";
 	}
 
 	@PostMapping("/books/addBook")
@@ -111,7 +113,9 @@ public class BookController {
 		model.addAttribute("flag", flag);
 		model.addAttribute("bookInf", repo.getOne(id));
 
-		return "showBook";
+		model.addAttribute("contentPage", "showBook");
+		return "index";
+		//return "showBook";
 	}
 
 	@PostMapping("/books/favorite")
