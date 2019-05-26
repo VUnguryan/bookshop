@@ -1,3 +1,13 @@
+INSERT INTO Roles(id, roles) VALUES (1,'admin');
+INSERT INTO Roles(id, roles) VALUES (2,'user');
+
+INSERT INTO Users (id, login, password) VALUES (1, 'admin', 'admin');
+INSERT INTO Users (id, login, password) VALUES (2, 'user', 'user');
+
+INSERT INTO users_has_roles(users_id, roles_id) VALUES (2, 2);
+INSERT INTO users_has_roles(users_id, roles_id) VALUES (1, 1);
+
+
 INSERT INTO Genres (id, name) VALUES (1, 'Романтика');
 INSERT INTO Genres (id, name) VALUES (2, 'Фантастика');
 INSERT INTO Genres (id, name) VALUES (3, 'Ужасы');
