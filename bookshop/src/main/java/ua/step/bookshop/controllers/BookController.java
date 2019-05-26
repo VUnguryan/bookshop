@@ -8,16 +8,17 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 import ua.step.bookshop.models.Book;
-import ua.step.bookshop.repositories.AuthorRepository;
-import ua.step.bookshop.repositories.BookRepository;
-import ua.step.bookshop.repositories.GenreRepository;
-import ua.step.bookshop.repositories.PublisherRepository;
+import ua.step.bookshop.models.Favorites;
+import ua.step.bookshop.repositories.*;
+import ua.step.bookshop.security.WebSecurityConfig;
 
 @Controller
 public class BookController {
@@ -29,8 +30,11 @@ public class BookController {
 	private PublisherRepository repoP;
 	@Autowired
 	private AuthorRepository repoA;
+	@Autowired
+	private FavoritRepository repoF;
 
 	private static int BOOKSONPAGE = 9;
+	private Object id;
 
 	//тут был метод на view books он безполезен и потому был удален что бы не путал
 
@@ -98,7 +102,34 @@ public class BookController {
 
 	@GetMapping("/books/show/{id}")
 	private String showBook(@PathVariable("id") Integer id, Model model) {
+		List<Favorites> favoritesList = repoF.findAll();
+		boolean flag =false;
+		for (int i =0; i<favoritesList.size(); i++) {
+			if(1 == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
+				flag =true;
+		}
+		model.addAttribute("flag", flag);
 		model.addAttribute("bookInf", repo.getOne(id));
+
 		return "showBook";
+	}
+
+	@PostMapping("/books/favorite")
+	private String favoriteBook(@RequestParam("idbook") Integer id, @RequestParam(value = "check", required = false) String check)
+	{
+		if(check != null){
+			Favorites favorites = new Favorites();
+			favorites.setIdUser((short) 1);
+			favorites.setIdBook(id);
+			repoF.save(favorites);
+		}else{
+			List<Favorites> favoritesList = repoF.findAll();
+			for (int i = 0; i<favoritesList.size(); i++){
+				if(favoritesList.get(i).getIdUser() == 1 && favoritesList.get(i).getIdBook() == id){
+					repoF.delete(favoritesList.get(i));
+				}
+			}
+		}
+		return "redirect:/books/show/"+id;
 	}
 }

@@ -94,8 +94,22 @@
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text">Картинка</span>
+            <img th:src="@{${'/images/'+bookInf.background}}" style="width:248px; height: 350px" alt="icon">
         </div>
-        <img th:src="@{${'/images/'+bookInf.background}}" alt="icon">
+        <form class="container align-self-center" th:action="@{/books/favorite}"  method="POST">
+            <input type="text" name="idbook" th:value="${bookInf.id}" hidden/>
+
+        <div class="input-group-prepend form-check">
+            <input th:if="${flag}" style="width:30px; height: 30px;" name="check"
+                   type="checkbox" class="form-check-input" checked/>
+            <input th:unless="${flag}" style="width:30px; height: 30px;" name="check"
+                   type="checkbox" class="form-check-input"/>
+            &#8195;
+            <label style="font-size:30px" class="form-check-label" >Список Ваших избранных книг</label>
+        </div>
+            <input type="submit" class=" btn btn-success" value="Сохранить">
+        </form>
+
     </div>
 
     <div class="input-group mb-3">
@@ -150,5 +164,6 @@
     <br>
     <br>
 </div>
+
 </body>
 </html>
