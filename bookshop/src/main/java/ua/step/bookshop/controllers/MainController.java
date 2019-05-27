@@ -84,37 +84,4 @@ public class MainController {
 		// где contact название страницы html которую надо встроить на index
 		return "index"; //ссылка на гланую где есть место куда встаивается и меню и контент
 	}
-
-	
-/*	@GetMapping("/authors")
-	private String getAuthors(Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("contentPage", "authors");
-		return "index";
-	}
-	@GetMapping("/authors/add")
-	private String getAddAuthor(@ModelAttribute Author author, Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("contentPage", "addAuthor");
-		return "index";
-	}
-	
-	@PostMapping("/authors/add")
-	private String addAuthor(@ModelAttribute Author author) {
-		boolean isEmty = true;
-		List<Author> authors = repoA.findAll();
-		for (int i = 0; i < authors.size(); i++) {
-			if (authors.get(i).getName().equals(author.getName())) {
-				isEmty = false;
-			}
-		}
-		if (isEmty) {
-			repoA.saveAndFlush(author);
-			return "redirect:/authors";
-		} else {
-			return "addAuthor";
-		}
-	}*/
 }
