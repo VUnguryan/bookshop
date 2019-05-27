@@ -42,15 +42,7 @@
 				</div>
 			</div>
 		</div>
-		<form role="form" id="sendAddress" th:action=@{/} method="post">
-        <select class="form-control" name="booksOnPage">
-            <option value="3">3</option>
-            <option value="6">6</option>
-            <option value="9">9</option>
-            <option value="12">12</option>
-        </select>
-        <input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit" value="Подтвердить" />
-    </form>
+		
 		<div class="container">
 			<div class="row">
 				<div class="col-lg alert alert-dark" th:each="book : ${books}">
