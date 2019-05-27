@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
+<link rel="stylesheet" href="css/mainStyle.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -35,8 +36,8 @@
 			<li class="nav-item"><a class="nav-link" href="/favorites">Избранное</a></li>
 			<li class="nav-item"><a class="nav-link" href="/delivery">Доставка</a></li>
 			<li class="nav-item"><a class="nav-link" href="/contacts">Контакты</a></li>
-			<li sec:authorize="hasRole('admin')" class="nav-item"><a
-				class="nav-link" href="/admin">Admin panel</a></li>
+			<li sec:authorize="hasRole('admin')" class="nav-item"><button
+				class="btn btn-primary" onclick="openNav()">Admin panel</button></li>
 
 		</ul>
 		<!-- Search -->
@@ -59,5 +60,6 @@
 			</form>
 		</th:block>
 	</nav>
+	
 </body>
 </html>
