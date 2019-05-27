@@ -140,4 +140,47 @@ public class BookController {
 		}
 		return "redirect:/books/show/"+id;
 	}
+	
+	@GetMapping("/books/editBook/{id}")
+	private String editBook(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("book", repo.getOne(id));
+		model.addAttribute("publishers", repoP.findAll());
+		model.addAttribute("genres", repoG.findAll());
+		model.addAttribute("authors", repoA.findAll());
+		model.addAttribute("genreChecked", repo.getOne(id).getGenreList());
+		model.addAttribute("authorsChecked", repo.getOne(id).getAuthorList());
+		model.addAttribute("publisherChecked", repo.getOne(id).getPublisher());
+		model.addAttribute("contentPage", "editBook");
+		return "index";
+
+	}
+	@PostMapping("/books/editBook")
+	private String editBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
+		String name = null;
+		book.setCreateDate(Calendar.getInstance().getTime());
+		if (!file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+				name = file.getOriginalFilename();
+				String rootPath = new File("").getAbsolutePath() + "\\src\\main\\webapp\\images";
+				File uploadedFile = new File(rootPath + File.separator + name);
+				book.setBackground(name);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+				stream.write(bytes);
+				stream.flush();
+				stream.close();
+
+				repo.save(book);
+				return "redirect:/";
+
+			} catch (Exception e) {
+				return "You failed to upload " + name + " => " + e.getMessage();
+			}
+		} else {
+			int idBook = book.getId();
+			book.setBackground(repo.getOne(idBook).getBackground());
+			repo.save(book);
+			return "redirect:/";
+		}
+	}
 }

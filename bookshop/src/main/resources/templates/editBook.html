@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Edit Book</title>
+</head>
+<div class="container" th:fragment="content">
+	<link rel="stylesheet" href="/css/addBookStyle.css">
+	<h1>Изменить книгу</h1>
+	<img th:src="@{${'/images/'+book.background}}"
+		style="width: 248px; height: 350px" alt="icon">
+
+	<form name="editBook" th:action="@{/books/editBook}"
+		enctype="multipart/form-data" method="post">
+		<div class="form-group">
+			<label for="id1"><b>ID:
+					<div th:text="${book.id}"></div>
+			</b></label> <input type="text" class="form-control" name="id" id="id1"
+				th:value="${book.id}" required>
+		</div>
+		<div class="form-group">
+			<label for="name1"><b>Название:</b></label> <input type="text"
+				class="form-control" name="name" id="name1" th:value="${book.name}"
+				required>
+		</div>
+		<div class="form-group">
+			<label for="year1"><b>Год:</b></label> <input type="number"
+				min="1900" max="2019" step="1" value="" class="form-control"
+				name="year" id="year1" th:value="${book.year}" required>
+		</div>
+		<br>
+		<div class="form-group">
+			<label for="price1"><b>Цена:</b></label> <input type="number"
+				class="form-control" name="price" min="0" id="price1"
+				th:value="${book.price}" required>
+		</div>
+		<br>
+		<div class="form-group row">
+			<div class="col-md-6">
+				<label for="publisher1"><b>Издатель:</b></label> <select
+					class="form-control" id="publisher1" th:name="publisher"
+					th:value="${publisherChecked.id}">
+					<option th:each="publish : ${publishers}" th:value="${publish.id}"
+						th:text="${publish.name}"
+						th:selected="${publisherChecked.id==publish.id}">Select
+						Publish</option>
+				</select>
+
+			</div>
+			<div class="col-md-6">
+				<a class="form-control" href="/publishers/add"><input
+					type="button" class="btn btn-info" value="Создать нового издателя" /></a>
+			</div>
+		</div>
+		<br>
+		<div class="form-group ">
+			<input class="hide" id="hd-1" type="checkbox"> <label
+				for="hd-1"><b>Жанры:</b></label>
+			<div>
+				<div th:each="genre : ${genres}">
+					<div class="btn btn-default btn-checkbox">
+						<input type="checkbox" path="genreList" th:name="genreList"
+							th:value="${genre.id}"
+							th:checked="${genreChecked.contains(genre)}"><label
+							th:text="${genre.name}"></label>
+					</div>
+				</div>
+				<div>
+					<a class="form-control" href="/genres/add"><input type="button"
+						class="btn btn-info" value="Создать новый жанр" /></a>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="form-group">
+			<input class="hide" id="hd-2" type="checkbox"> <label
+				for="hd-2"><b>Авторы:</b></label>
+			<div>
+				<div th:each="author : ${authors}">
+					<label class="btn btn-default btn-checkbox"> <input
+						type="checkbox" path="authorList" th:name="authorList"
+						th:value="${author.id}"
+						th:checked="${authorsChecked.contains(author)}"> <label
+						th:text="${author.name}"></label> <br>
+					</label>
+				</div>
+				<div>
+					<a class="form-control" href="/authors/add"><input
+						type="button" class="btn btn-info" value="Создать нового автора" /></a>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="background1"><b>Иконка книги:</b></label> <input
+				type="file" class="form-control" name="file" id="background1">
+		</div>
+		<br>
+		<button type="submit" class="btn btn-primary">Сохранить</button>
+	</form>
+</div>
+</body>
+</html>

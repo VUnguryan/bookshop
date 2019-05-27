@@ -74,3 +74,6 @@ body {
 .hide:checked + label:before {
     content: "\2212";
 }
+#id1{
+	display:none;
+}
