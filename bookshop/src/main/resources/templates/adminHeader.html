@@ -38,6 +38,17 @@
 			<li class="nav-item"><a class="nav-link" href="">Пользователи</a></li>
 
 		</ul>
+		
+		<form role="form" id="sendAddress" th:action=@{/} method="post">
+        <select class="form-control" name="booksOnPage">
+            <option value="3">3</option>
+            <option value="6">6</option>
+            <option value="9">9</option>
+            <option value="12">12</option>
+        </select>
+        <input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit" value="Подтвердить" />
+    </form>
+		
 		<!-- Search -->
 		<form class="form-inline my-2 my-lg-0" action="">
 			<input name="search" type="text" class="form-control mr-sm-0"
