@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
@@ -22,7 +21,7 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm rounded border shadow-sm"
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"
 		th:fragment="header">
 		<!-- Brand -->
 		<a class="navbar-brand" href="/"><img
@@ -35,8 +34,8 @@
 			<li class="nav-item"><a class="nav-link" href="/payment">Оплата</a></li>
 			<li class="nav-item"><a class="nav-link" href="/delivery">Доставка</a></li>
 			<li class="nav-item"><a class="nav-link" href="/contacts">Контакты</a></li>
-			<li sec:authorize="hasRole('admin')" class="nav-item"><a
-				class="nav-link" href="/admin">Admin panel</a></li>
+			<li class="nav-item"><a class="nav-link" href="/addBook">Добавить книгу</a></li>
+			<li class="nav-item"><a class="nav-link" href="">Пользователи</a></li>
 
 		</ul>
 		<!-- Search -->
@@ -46,18 +45,9 @@
 			<button class="btn btn-outline-secondary my-2 mr-sm-2" type="submit">Поиск</button>
 		</form>
 		<!-- Login in -->
-		<th:block sec:authorize="isAuthenticated()">
-			<form th:action="@{/logout}" method="post">
-				<input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
-					value="Sign Out" />
-			</form>
-		</th:block>
-		<th:block sec:authorize="isAnonymous()">
-			<form th:action="@{/logout}" method="post">
-				<input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
-					value="Sign In" />
-			</form>
-		</th:block>
+		<form th:action="@{/logout}" method="post">
+			<input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit" value="Sign Out" />
+		</form>
 	</nav>
 </body>
 </html>

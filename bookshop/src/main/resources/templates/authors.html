@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8">
 <title>Authors</title>
@@ -27,8 +28,8 @@
 				<li class="list-group-item" th:text="${author.name}"></li>
 			</ul>
 		</div>
-		<a class="btn btn-primary" href="/authors/add" role="button">Добавить
-			автора</a>
+		<a sec:authorize="hasRole('admin')" class="btn btn-primary"
+			href="/authors/add" role="button">Добавить автора</a>
 	</div>
 </body>
 </html>

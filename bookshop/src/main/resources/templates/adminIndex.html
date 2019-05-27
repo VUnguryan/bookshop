@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8">
 <title>Интернет магазин книг. Купить книгу с доставкой по
@@ -20,9 +21,11 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-</head>
-<body>
-		<div th:replace="../templates/header :: header">Header</div>
-		<div th:replace="${contentPage} :: content">Content</div>
+</head> 
+<body background="../images/sitebackground.png">
+	<div class="container p-0 mb-0 bg-white text-dark h-100">
+		<div th:replace="../templates/adminHeader :: header">Header</div>
+		<!-- <div th:replace="${contentPage} :: content">Content</div> -->
+	</div>
 </body>
 </html>

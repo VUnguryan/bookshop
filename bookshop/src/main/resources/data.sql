@@ -1,3 +1,13 @@
+INSERT INTO Roles(id, roles) VALUES (1,'admin');
+INSERT INTO Roles(id, roles) VALUES (2,'user');
+
+INSERT INTO Users (id, login, password) VALUES (1, 'admin', 'admin');
+INSERT INTO Users (id, login, password) VALUES (2, 'user', 'user');
+
+INSERT INTO users_has_roles(users_id, roles_id) VALUES (2, 2);
+INSERT INTO users_has_roles(users_id, roles_id) VALUES (1, 1);
+
+
 INSERT INTO Genres (id, name) VALUES (1, 'Романтика');
 INSERT INTO Genres (id, name) VALUES (2, 'Фантастика');
 INSERT INTO Genres (id, name) VALUES (3, 'Ужасы');
@@ -43,3 +53,8 @@ VALUES
 (8, 'Гравити Фолз. ежеДНЕВНИК', 2002,  33000, 2.0, now(), '71496220_images_10775113012.jpg'),
 (9, 'Зеленая миля', 2002,  130000, 2.8, now(), '6496168_images_1412822470.jpg'),
 (10, 'Шантарам', 2002,  3000, 5.0,  now(), '63063558_images_8942912781.jpg');
+
+INSERT INTO Favorites (id, id_book, id_user) VALUES (1, 1, 1), (2, 2, 1);
+
+
+

@@ -19,13 +19,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-	<!-- <style type="text/css">
-		.card {
-			display: flex;
-			justify-content: space-between !important;
-			flex-direction: column;
-		}
-	</style> -->
 </head>
 <body th:fragment="content">
 	<div class="btn-group">
@@ -48,11 +41,19 @@
 	</div>
 
 	<div class="d-flex flex-wrap justify-content-around">
-		<div class="card w-25 m-3 justify-content-between" th:each="book : ${books}">
+		<div class="shadow card w-25 m-3 justify-content-between" th:each="book : ${books}">
 			<div class="card-header" th:text="${book.name}"></div>
-			<a href="#"><img class="card-img"
+			<a th:href="@{'/books/show/'+${book.id}}"><img class="card-img"
 				th:src="@{${'../images/'+book.background}}" alt="book image"></a>
 			<div class="card-footer" th:text="${book.price}"></div>
+			<div class="card-footer">
+				<th:block th:each="favorite : ${favorites}">
+					<input id="h-1" type="checkbox" th:if="${book.id == favorite.idBook && 1 == favorite.idUser}"
+						   checked  disabled/>
+					<label th:if="${book.id == favorite.idBook && 1 == favorite.idUser}"
+						   for="h-1">Эта книга в избранном</label>
+				</th:block>
+			</div>
 		</div>
 	</div>
 	<div th:replace="fragments/pagination :: footer">...</div>

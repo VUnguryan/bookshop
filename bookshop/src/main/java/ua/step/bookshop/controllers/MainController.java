@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import ua.step.bookshop.models.Book;
-import ua.step.bookshop.repositories.AuthorRepository;
-import ua.step.bookshop.repositories.BookRepository;
-import ua.step.bookshop.repositories.GenreRepository;
-import ua.step.bookshop.repositories.PublisherRepository;
+import ua.step.bookshop.repositories.*;
 
 @Controller
 public class MainController {
@@ -29,6 +26,8 @@ public class MainController {
 	private PublisherRepository repoP;
 	@Autowired
 	private AuthorRepository repoA;
+	@Autowired
+	private FavoritRepository repoF;
 
 	private static int BOOKSONPAGE = 9;
 
@@ -63,10 +62,11 @@ public class MainController {
 		model.addAttribute("curpage", page);
 		model.addAttribute("pages", pages);
 		model.addAttribute("books", books);
+		model.addAttribute("favorites", repoF.findAll());
 		model.addAttribute("genres", repoJ.findAll());
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("authors", repoA.findAll());
-		model.addAttribute("contentPage", "books");
+		model.addAttribute("contentPage", "fragments/books");
 		return "index";
 	}
 

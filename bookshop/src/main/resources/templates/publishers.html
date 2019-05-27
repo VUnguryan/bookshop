@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8">
 <title>Publisher</title>
@@ -27,7 +28,7 @@
 				<li class="list-group-item" th:text="${publisher.name}"></li>
 			</ul>
 		</div>
-		<a class="btn btn-primary" href="/publishers/add" role="button">Добавить
+		<a sec:authorize="hasRole('admin')" class="btn btn-primary" href="/publishers/add" role="button">Добавить
 			издателя</a>
 	</div>
 </body>
