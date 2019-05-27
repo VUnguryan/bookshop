@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.repositories.*;
+import ua.step.bookshop.security.UserDetailsServiceImpl;
 
 @Controller
 public class MainController {
@@ -58,6 +59,9 @@ public class MainController {
 		for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allBooks.size(); i ++) {
 			books.add(allBooks.get(i));
 		}
+
+		Short idUs = UserDetailsServiceImpl.idUser;
+		model.addAttribute("userId",idUs);
 
 		model.addAttribute("curpage", page);
 		model.addAttribute("pages", pages);

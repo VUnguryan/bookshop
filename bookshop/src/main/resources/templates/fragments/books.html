@@ -25,7 +25,6 @@
 		<button type="button" class="btn btn-default dropdown-toggle"
 			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			Фильтр</button>
-
 		<div class="dropdown-menu">
 			<h5 class="dropdown-header">Жанры</h5>
 			<div class="dropdown-item" th:each="genre : ${genres}">
@@ -48,9 +47,9 @@
 			<div class="card-footer" th:text="${book.price}"></div>
 			<div class="card-footer">
 				<th:block th:each="favorite : ${favorites}">
-					<input id="h-1" type="checkbox" th:if="${book.id == favorite.idBook && 1 == favorite.idUser}"
+					<input id="h-1" type="checkbox" th:if="${book.id == favorite.idBook && userId == favorite.idUser}"
 						   checked  disabled/>
-					<label th:if="${book.id == favorite.idBook && 1 == favorite.idUser}"
+					<label th:if="${book.id == favorite.idBook && userId == favorite.idUser}"
 						   for="h-1">Эта книга в избранном</label>
 				</th:block>
 			</div>

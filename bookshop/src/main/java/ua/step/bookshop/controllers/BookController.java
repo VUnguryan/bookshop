@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Favorites;
+import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
+import ua.step.bookshop.security.UserDetailsServiceImpl;
 
 
 @Controller
@@ -32,11 +34,11 @@ public class BookController {
 	private AuthorRepository repoA;
 	@Autowired
 	private FavoritRepository repoF;
+	@Autowired
+	private UserRepository repoU;
 
 	private static int BOOKSONPAGE = 9;
-	private Object id;
 
-	//тут был метод на view books он безполезен и потому был удален что бы не путал
 
 	@GetMapping("books/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
@@ -46,16 +48,15 @@ public class BookController {
 	String getBooks(Model model, int page) {
 		List<Book> allBooks = repo.findAll();
 		List<Book> books = new ArrayList<>();
-
 		int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
 
 		for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allBooks.size(); i ++) {
 			books.add(allBooks.get(i));
 		}
-
 		model.addAttribute("curpage", page);
 		model.addAttribute("pages", pages);
 		model.addAttribute("books", books);
+
 
 		return "books";
 	}
@@ -73,8 +74,9 @@ public class BookController {
 	@PostMapping("/books/addBook")
 	private String addBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
 		String name = null;
+		Short idUs = UserDetailsServiceImpl.idUser;
 		book.setCreateDate(Calendar.getInstance().getTime());
-		//book.setUser();
+		book.setUser(repoU.getOne(idUs));
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
@@ -104,15 +106,16 @@ public class BookController {
 
 	@GetMapping("/books/show/{id}")
 	private String showBook(@PathVariable("id") Integer id, Model model) {
+		Short idUs = UserDetailsServiceImpl.idUser;
 		List<Favorites> favoritesList = repoF.findAll();
 		boolean flag =false;
 		for (int i =0; i<favoritesList.size(); i++) {
-			if(1 == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
+			if(idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
 				flag =true;
 		}
 		model.addAttribute("flag", flag);
 		model.addAttribute("bookInf", repo.getOne(id));
-
+		model.addAttribute("userId", idUs);
 		model.addAttribute("contentPage", "showBook");
 		return "index";
 		//return "showBook";
@@ -121,15 +124,16 @@ public class BookController {
 	@PostMapping("/books/favorite")
 	private String favoriteBook(@RequestParam("idbook") Integer id, @RequestParam(value = "check", required = false) String check)
 	{
+		Short idUs = UserDetailsServiceImpl.idUser;
 		if(check != null){
 			Favorites favorites = new Favorites();
-			favorites.setIdUser((short) 1);
+			favorites.setIdUser(idUs);
 			favorites.setIdBook(id);
 			repoF.save(favorites);
 		}else{
 			List<Favorites> favoritesList = repoF.findAll();
 			for (int i = 0; i<favoritesList.size(); i++){
-				if(favoritesList.get(i).getIdUser() == 1 && favoritesList.get(i).getIdBook() == id){
+				if(favoritesList.get(i).getIdUser() == idUs && favoritesList.get(i).getIdBook() == id){
 					repoF.delete(favoritesList.get(i));
 				}
 			}
