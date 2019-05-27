@@ -42,27 +42,30 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="container">
 			<div class="row">
 				<div class="col-lg alert alert-dark" th:each="book : ${books}">
 					<div>
-						<a th:href="@{'/books/show/'+${book.id}}"><img width="300px" height="420px" th:src="@{${'../images/'+book.background}}"></a>
+						<a th:href="@{'/books/show/'+${book.id}}"><img width="300px"
+							height="420px" th:src="@{${'../images/'+book.background}}"></a>
 					</div>
 					<div th:text="${book.name}"></div>
-					<div th:text="${book.price}"></div>
-					<div>
-						<th:block th:each="favorite : ${favorites}">
-							<input id="h-1" type="checkbox" th:if="${book.id == favorite.idBook && 1 == favorite.idUser}"
-								   checked  disabled/>
-							<label th:if="${book.id == favorite.idBook && 1 == favorite.idUser}"
-								   for="h-1">Эта книга в избранном</label>
-						</th:block>
-					</div>
+				<div th:text="${book.price}"></div> 
+				<div>
+					<th:block th:each="favorite : ${favorites}">
+						<input id="h-1" type="checkbox"
+							th:if="${book.id == favorite.idBook && 1 == favorite.idUser}"
+							checked disabled />
+						<label
+							th:if="${book.id == favorite.idBook && 1 == favorite.idUser}"
+							for="h-1">Эта книга в избранном</label>
+					</th:block>
 				</div>
 			</div>
 		</div>
-		<div th:replace="fragments/pagination :: footer">...</div>
+	</div>
+	<div th:replace="fragments/pagination :: footer">...</div>
 	</div>
 </body>
 </html>

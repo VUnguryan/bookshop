@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Favorites;
+import ua.step.bookshop.models.Publisher;
 import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
 import ua.step.bookshop.security.UserDetailsServiceImpl;
-
 
 @Controller
 public class BookController {
@@ -39,7 +39,6 @@ public class BookController {
 
 	private static int BOOKSONPAGE = 9;
 
-
 	@GetMapping("books/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
 		return getBooks(model, page);
@@ -50,13 +49,12 @@ public class BookController {
 		List<Book> books = new ArrayList<>();
 		int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
 
-		for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allBooks.size(); i ++) {
+		for (int i = (page - 1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allBooks.size(); i++) {
 			books.add(allBooks.get(i));
 		}
 		model.addAttribute("curpage", page);
 		model.addAttribute("pages", pages);
 		model.addAttribute("books", books);
-
 
 		return "books";
 	}
@@ -68,7 +66,7 @@ public class BookController {
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "addBook");
 		return "index";
-		//return "addBook";
+		// return "addBook";
 	}
 
 	@PostMapping("/books/addBook")
@@ -83,8 +81,8 @@ public class BookController {
 
 				name = file.getOriginalFilename();
 
-				String rootPath = new File("").getAbsolutePath()+"\\src\\main\\webapp\\images";
-				File uploadedFile = new File(rootPath+ File.separator+ name);
+				String rootPath = new File("").getAbsolutePath() + "\\src\\main\\webapp\\images";
+				File uploadedFile = new File(rootPath + File.separator + name);
 				book.setBackground(name);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
 				stream.write(bytes);
@@ -108,52 +106,58 @@ public class BookController {
 	private String showBook(@PathVariable("id") Integer id, Model model) {
 		Short idUs = UserDetailsServiceImpl.idUser;
 		List<Favorites> favoritesList = repoF.findAll();
-		boolean flag =false;
-		for (int i =0; i<favoritesList.size(); i++) {
-			if(idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
-				flag =true;
+		boolean flag = false;
+		for (int i = 0; i < favoritesList.size(); i++) {
+			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
+				flag = true;
 		}
 		model.addAttribute("flag", flag);
 		model.addAttribute("bookInf", repo.getOne(id));
 		model.addAttribute("userId", idUs);
 		model.addAttribute("contentPage", "showBook");
 		return "index";
-		//return "showBook";
+		// return "showBook";
 	}
 
 	@PostMapping("/books/favorite")
-	private String favoriteBook(@RequestParam("idbook") Integer id, @RequestParam(value = "check", required = false) String check)
-	{
+	private String favoriteBook(@RequestParam("idbook") Integer id,
+			@RequestParam(value = "check", required = false) String check) {
 		Short idUs = UserDetailsServiceImpl.idUser;
-		if(check != null){
+		if (check != null) {
 			Favorites favorites = new Favorites();
 			favorites.setIdUser(idUs);
 			favorites.setIdBook(id);
 			repoF.save(favorites);
-		}else{
+		} else {
 			List<Favorites> favoritesList = repoF.findAll();
-			for (int i = 0; i<favoritesList.size(); i++){
-				if(favoritesList.get(i).getIdUser() == idUs && favoritesList.get(i).getIdBook() == id){
+			for (int i = 0; i < favoritesList.size(); i++) {
+				if (favoritesList.get(i).getIdUser() == idUs && favoritesList.get(i).getIdBook() == id) {
 					repoF.delete(favoritesList.get(i));
 				}
 			}
 		}
-		return "redirect:/books/show/"+id;
+		return "redirect:/books/show/" + id;
 	}
-	
+
 	@GetMapping("/books/editBook/{id}")
 	private String editBook(@PathVariable("id") Integer id, Model model) {
+		if (repo.getOne(id).getPublisher() != null) {
+			model.addAttribute("publisherChecked", repo.getOne(id).getPublisher());
+		} else {
+
+			model.addAttribute("publisherChecked", repoP.getOne((short) 1));
+		}
 		model.addAttribute("book", repo.getOne(id));
 		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("genres", repoG.findAll());
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("genreChecked", repo.getOne(id).getGenreList());
 		model.addAttribute("authorsChecked", repo.getOne(id).getAuthorList());
-		model.addAttribute("publisherChecked", repo.getOne(id).getPublisher());
 		model.addAttribute("contentPage", "editBook");
 		return "index";
 
 	}
+
 	@PostMapping("/books/editBook")
 	private String editBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
 		String name = null;
