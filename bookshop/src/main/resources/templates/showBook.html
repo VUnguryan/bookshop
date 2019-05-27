@@ -80,7 +80,7 @@
                         <input type="text" path="genreList" class="form-control" th:value="${genre.name}" readonly>
                 </div>
         </div>
-    </div>
+    </div><a sec:authorize="hasRole('admin')" class="btn btn-info" th:href="@{'/books/editBook/' + ${bookInf.id}}">Изменить</a><br><br>
     <a href="/"><input type="button" class="btn btn-success" value="На главную"/></a>
     <br>
     <br>
