@@ -12,7 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
+import dto.BookDTO;
+import money.MoneyList;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.repositories.*;
 
@@ -30,6 +33,7 @@ public class MainController {
 	private FavoritRepository repoF;
 
 	private static int BOOKSONPAGE = 9;
+	private static String CURRENCYONPAGE = "UAN";
 
 	@GetMapping("/")
 	private String getIndex(Model model) {
@@ -40,23 +44,56 @@ public class MainController {
 	private String getPaginatedIndex(Model model, @PathVariable int page) {
 		return getBooksInPage(model, page);
 	}
+
 	
+	/*
+	 * // Павел
+	 * 
+	 * @PostMapping("/") private String setBOOKSONPAGE(Model model, HttpSession
+	 * session, HttpServletRequest request) {
+	 * 
+	 * MainController.BOOKSONPAGE =
+	 * Integer.valueOf(request.getParameter("booksOnPage"));
+	 * 
+	 * return getBooksInPage(model, 1); }
+	 */
+	 
+	
+	  // Константин
+	  
 	@PostMapping("/")
-	private String setBOOKSONPAGE(Model model, HttpSession session, HttpServletRequest request) {
-		
-		MainController.BOOKSONPAGE = Integer.valueOf(request.getParameter("booksOnPage"));
-		
+	private String setCURRENCYONPAGE(Model model, HttpSession session, HttpServletRequest request) {
+
+		if (request.getParameter("currencyOnPage") != null) {
+			MainController.CURRENCYONPAGE = String.valueOf(request.getParameter("currencyOnPage"));
+		} else {
+			MainController.BOOKSONPAGE = Integer.valueOf(request.getParameter("booksOnPage"));
+		}
+
 		return getBooksInPage(model, 1);
 	}
 
+	// Константин
 	String getBooksInPage(Model model, int page) {
 		List<Book> allBooks = repo.findAll();
-		List<Book> books = new ArrayList<>();
+		List<BookDTO> allDtoBooks = new ArrayList<>();
+		List<BookDTO> books = new ArrayList<>();
+
+		for (Book book : allBooks) {
+			BookDTO bookDto = new BookDTO();
+			bookDto.setId(book.getId());
+			bookDto.setName(book.getName());
+			bookDto.setBackground(book.getBackground());
+			// рассчитываем цену в валюте
+			String price = MoneyList.calcPrice(CURRENCYONPAGE, book.getPrice());
+			bookDto.setPrice(price);
+			allDtoBooks.add(bookDto);
+		}
 
 		int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
 
-		for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allBooks.size(); i ++) {
-			books.add(allBooks.get(i));
+		for (int i = (page - 1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allBooks.size(); i++) {
+			books.add(allDtoBooks.get(i));
 		}
 
 		model.addAttribute("curpage", page);
@@ -69,6 +106,24 @@ public class MainController {
 		model.addAttribute("contentPage", "fragments/books");
 		return "index";
 	}
+
+	/*
+	 * String getBooksInPage(Model model, int page) { List<Book> allBooks
+	 * =repo.findAll(); List<Book> books = new ArrayList<>();
+	 * 
+	 * int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
+	 * 
+	 * for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i <
+	 * allBooks.size(); i ++) { books.add(allBooks.get(i)); }
+	 * 
+	 * 
+	 * model.addAttribute("curpage", page); model.addAttribute("pages", pages);
+	 * model.addAttribute("books", books);
+	 * model.addAttribute("favorites",repoF.findAll()); model.addAttribute("genres",
+	 * repoJ.findAll()); model.addAttribute("publishers", repoP.findAll());
+	 * model.addAttribute("authors", repoA.findAll());
+	 * model.addAttribute("contentPage", "fragments/books"); return "index"; }
+	 */
 
 	@GetMapping("/payment")
 	private String getPayment(Model model) {
@@ -89,45 +144,31 @@ public class MainController {
 
 	@GetMapping("/contacts")
 	private String getContacts(Model model) {
-		//добавляем репозитарии которые есть в меню и нужны для отображения в контенте
+		// добавляем репозитарии которые есть в меню и нужны для отображения в контенте
 		model.addAttribute("genres", repoJ.findAll());
 		model.addAttribute("publishers", repoP.findAll());
-		//на странице которую необходимо встроить есть th:fragment="content"
-		model.addAttribute("contentPage", "contacts"); 
+		// на странице которую необходимо встроить есть th:fragment="content"
+		model.addAttribute("contentPage", "contacts");
 		// где contact название страницы html которую надо встроить на index
-		return "index"; //ссылка на гланую где есть место куда встаивается и меню и контент
+		return "index"; // ссылка на гланую где есть место куда встаивается и меню и контент
 	}
 
-	
-/*	@GetMapping("/authors")
-	private String getAuthors(Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("contentPage", "authors");
-		return "index";
-	}
-	@GetMapping("/authors/add")
-	private String getAddAuthor(@ModelAttribute Author author, Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("contentPage", "addAuthor");
-		return "index";
-	}
-	
-	@PostMapping("/authors/add")
-	private String addAuthor(@ModelAttribute Author author) {
-		boolean isEmty = true;
-		List<Author> authors = repoA.findAll();
-		for (int i = 0; i < authors.size(); i++) {
-			if (authors.get(i).getName().equals(author.getName())) {
-				isEmty = false;
-			}
-		}
-		if (isEmty) {
-			repoA.saveAndFlush(author);
-			return "redirect:/authors";
-		} else {
-			return "addAuthor";
-		}
-	}*/
+	/*
+	 * @GetMapping("/authors") private String getAuthors(Model model) {
+	 * model.addAttribute("genres", repoJ.findAll());
+	 * model.addAttribute("publishers", repoP.findAll());
+	 * model.addAttribute("contentPage", "authors"); return "index"; }
+	 * 
+	 * @GetMapping("/authors/add") private String getAddAuthor(@ModelAttribute
+	 * Author author, Model model) { model.addAttribute("genres", repoJ.findAll());
+	 * model.addAttribute("publishers", repoP.findAll());
+	 * model.addAttribute("contentPage", "addAuthor"); return "index"; }
+	 * 
+	 * @PostMapping("/authors/add") private String addAuthor(@ModelAttribute Author
+	 * author) { boolean isEmty = true; List<Author> authors = repoA.findAll(); for
+	 * (int i = 0; i < authors.size(); i++) { if
+	 * (authors.get(i).getName().equals(author.getName())) { isEmty = false; } } if
+	 * (isEmty) { repoA.saveAndFlush(author); return "redirect:/authors"; } else {
+	 * return "addAuthor"; } }
+	 */
 }

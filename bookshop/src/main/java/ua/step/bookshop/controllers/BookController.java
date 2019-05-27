@@ -19,7 +19,6 @@ import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Favorites;
 import ua.step.bookshop.repositories.*;
 
-
 @Controller
 public class BookController {
 	@Autowired
@@ -36,7 +35,7 @@ public class BookController {
 	private static int BOOKSONPAGE = 9;
 	private Object id;
 
-	//тут был метод на view books он безполезен и потому был удален что бы не путал
+	// тут был метод на view books он безполезен и потому был удален что бы не путал
 
 	@GetMapping("books/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
@@ -49,7 +48,7 @@ public class BookController {
 
 		int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
 
-		for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allBooks.size(); i ++) {
+		for (int i = (page - 1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i < allBooks.size(); i++) {
 			books.add(allBooks.get(i));
 		}
 
@@ -67,22 +66,22 @@ public class BookController {
 		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "addBook");
 		return "index";
-		//return "addBook";
+		// return "addBook";
 	}
 
 	@PostMapping("/books/addBook")
 	private String addBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
 		String name = null;
 		book.setCreateDate(Calendar.getInstance().getTime());
-		//book.setUser();
+		// book.setUser();
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
 
 				name = file.getOriginalFilename();
 
-				String rootPath = new File("").getAbsolutePath()+"\\src\\main\\webapp\\images";
-				File uploadedFile = new File(rootPath+ File.separator+ name);
+				String rootPath = new File("").getAbsolutePath() + "\\src\\main\\webapp\\images";
+				File uploadedFile = new File(rootPath + File.separator + name);
 				book.setBackground(name);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
 				stream.write(bytes);
@@ -105,35 +104,35 @@ public class BookController {
 	@GetMapping("/books/show/{id}")
 	private String showBook(@PathVariable("id") Integer id, Model model) {
 		List<Favorites> favoritesList = repoF.findAll();
-		boolean flag =false;
-		for (int i =0; i<favoritesList.size(); i++) {
-			if(1 == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
-				flag =true;
+		boolean flag = false;
+		for (int i = 0; i < favoritesList.size(); i++) {
+			if (1 == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
+				flag = true;
 		}
 		model.addAttribute("flag", flag);
 		model.addAttribute("bookInf", repo.getOne(id));
 
 		model.addAttribute("contentPage", "showBook");
 		return "index";
-		//return "showBook";
+		// return "showBook";
 	}
 
 	@PostMapping("/books/favorite")
-	private String favoriteBook(@RequestParam("idbook") Integer id, @RequestParam(value = "check", required = false) String check)
-	{
-		if(check != null){
+	private String favoriteBook(@RequestParam("idbook") Integer id,
+			@RequestParam(value = "check", required = false) String check) {
+		if (check != null) {
 			Favorites favorites = new Favorites();
 			favorites.setIdUser((short) 1);
 			favorites.setIdBook(id);
 			repoF.save(favorites);
-		}else{
+		} else {
 			List<Favorites> favoritesList = repoF.findAll();
-			for (int i = 0; i<favoritesList.size(); i++){
-				if(favoritesList.get(i).getIdUser() == 1 && favoritesList.get(i).getIdBook() == id){
+			for (int i = 0; i < favoritesList.size(); i++) {
+				if (favoritesList.get(i).getIdUser() == 1 && favoritesList.get(i).getIdBook() == id) {
 					repoF.delete(favoritesList.get(i));
 				}
 			}
 		}
-		return "redirect:/books/show/"+id;
+		return "redirect:/books/show/" + id;
 	}
 }

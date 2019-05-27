@@ -21,8 +21,8 @@ public class MoneyList {
 		if (ccy.equals("BTC")) {
 			double buy = 7636.0746;
 			double buy1 = price / 100 / buy;
-			buy1 = buy / usd;
-			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
+			buy1 = buy1 / usd;
+			stringPrice = String.format("%.5f ", buy1) + " " + ccy;
 			return stringPrice;
 		}
 		if (ccy.equals("UAN")) {
