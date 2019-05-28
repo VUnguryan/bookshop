@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Authors</title>
+<link rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous">
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"></script>
+</head>
+</head>
+<body>
+  <div th:fragment="footer">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination d-flex justify-content-center">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page"><a class="page-link"
+          href="@{/authors/(page=${'А'})}" th:text="${'A'}">А</a></li>
+        <li class="page-item"><a class="page-link" href="#">Б</a></li>
+        <li class="page"><a class="page-link"
+          href="@{/authors/{p}(p=${page})}" th:text="${'В'}">В</a></li>
+        <li class="page-item"><a class="page-link" href="#">Г</a></li>
+        <li class="page-item"><a class="page-link" href="#">Д</a></li>
+        <li class="page-item"><a class="page-link" href="#">Е</a></li>
+        <li class="page-item"><a class="page-link" href="#">Ё</a></li>
+        <li class="page-item"><a class="page-link" href="#">Ж</a></li>
+        <li class="page-item"><a class="page-link" href="#">З</a></li>
+        <li class="page-item"><a class="page-link" href="#">И</a></li>
+        <li class="page-item"><a class="page-link" href="#">Й</a></li>
+        <li class="page-item"><a class="page-link" href="#">К</a></li>
+        <li class="page"><a class="page-link"
+          href="@{/authors/'Л'}" th:text="${'Л'}">Л</a></li>
+        <li class="page-item"><a class="page-link" href="#">М</a></li>
+        <li class="page-item"><a class="page-link" href="#">Н</a></li>
+        <li class="page-item"><a class="page-link" href="#">О</a></li>
+        <li class="page-item"><a class="page-link" href="#">П</a></li>
+        <li class="page-item"><a class="page-link" href="#">Р</a></li>
+        <li class="page-item"><a class="page-link" href="#">С</a></li>
+        <li class="page-item"><a class="page-link" href="#">Т</a></li>
+        <li class="page-item"><a class="page-link" href="#">У</a></li>
+        <li class="page-item"><a class="page-link" href="#">Ф</a></li>
+        <li class="page-item"><a class="page-link" href="#">Х</a></li>
+        <li class="page-item"><a class="page-link" href="#">Ц</a></li>
+        <li class="page-item"><a class="page-link" href="#">Ч</a></li>
+        <li class="page-item"><a class="page-link" href="#">Щ</a></li>
+        <li class="page-item"><a class="page-link" href="#">Э</a></li>
+        <li class="page-item"><a class="page-link" href="#">Ю</a></li>
+        <li class="page-item"><a class="page-link" href="#">Я</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
+  </div>
+</body>
+</html>

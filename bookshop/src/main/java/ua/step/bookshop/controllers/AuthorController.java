@@ -35,11 +35,11 @@ public class AuthorController {
 	private AuthorRepository repoA;
 
 	private static int AUTHORSONPAGE = 9;
-	private static char LETTERPAGE = 'А';
+	private static char LETTERPAGE = 'С';
 
 	@GetMapping("/authors")
 	private String getIndex(Model model) {
-		return getAuthorsInPage(model, (char) 'А');
+		return getAuthorsInPage(model, (char) 'С');
 	}
 
 	@GetMapping("/authors/{page}")
@@ -61,7 +61,7 @@ public class AuthorController {
 		
 		
 		int pages = 20;
-		char letter = 'C';
+		char letter = 'С';
 		
 		/*switch (page) {
 		case 1:
