@@ -1,6 +1,7 @@
 package ua.step.bookshop.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -37,21 +38,31 @@ public class AuthorController {
 
 	@GetMapping("/authors")
 	private String getIndex(Model model) {
-		return getAuthorsInPage(model, 1);
+		return getAuthorsInPage(model, (char) 'А');
 	}
 
 	@GetMapping("authors/{page}")
-	private String getPaginatedIndex(Model model, @PathVariable int page) {
+	private String getPaginatedIndex(Model model, @PathVariable char page) {
 		return getAuthorsInPage(model, page);
 	}
 
-	String getAuthorsInPage(Model model, int page) {
+	String getAuthorsInPage(Model model, char page) {
 		ArrayList<Author> allAuthors = (ArrayList<Author>) repoA.findAll();
 		ArrayList<Author> authors = new ArrayList<>();
+		
+		//сортировка
+	/*	ArrayList<Author> list = new ArrayList<Author>();
+		Collections.sort(list, new Comparator<Author>() {
+			public int compare(Author o1, Author o2) {
+				return o1.toString().compareTo(o2.toString());
+			}
+		});*/
+		
+		
 		int pages = 20;
 		char letter = 'C';
 		
-		switch (page) {
+		/*switch (page) {
 		case 1:
 			letter = 'А';
 			break;
@@ -83,11 +94,11 @@ public class AuthorController {
 			letter = 'Г';
 			break;
 
-		}
+		}*/
 		/*for (int i = 0; i < authors.size(); i++) {*/
 
 			for (Author author : allAuthors) {
-				if (author.getName().charAt(0) == letter) {
+				if (author.getName().charAt(0) == page) {
 					authors.add(author);
 				}
 			}
