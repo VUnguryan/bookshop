@@ -21,6 +21,8 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+	<style type="text/css">
+	</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm rounded border shadow-sm"
@@ -36,8 +38,8 @@
 			<li class="nav-item"><a class="nav-link" href="/favorites">Избранное</a></li>
 			<li class="nav-item"><a class="nav-link" href="/delivery">Доставка</a></li>
 			<li class="nav-item"><a class="nav-link" href="/contacts">Контакты</a></li>
-			<li sec:authorize="hasRole('admin')" class="nav-item"><button
-				class="btn btn-primary" onclick="openNav()">Admin panel</button></li> 
+			<li sec:authorize="hasRole('admin')" class="nav-item"><a
+				class="nav-link" onclick="openNav()" href=#>Admin panel</a></li> 
 
 		</ul>
 
@@ -53,15 +55,15 @@
 		</form>
 
 		<!-- Search -->
-		<form class="form-inline my-2 my-lg-0" action="">
-			<input name="search" type="text" class="form-control mr-sm-0"
-				id="usr" placeholder="Поиск">&#8194;
-			<button class="btn btn-outline-secondary my-2 mr-sm-2" type="submit">Поиск</button>
+		<form class="d-flex align-item-center m-1" action="">
+			<input name="search" type="text" class="form-control mr-sm-0 p-0 m-0"
+				id="usr" placeholder="Поиск" style="min-width:150px;">&#8194;
+			<button class="btn btn-outline-secondary m-0" type="submit">Поиск</button>
 		</form>
 		<!-- Login in -->
 		<th:block sec:authorize="isAuthenticated()">
 			<form th:action="@{/logout}" method="post">
-				<input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
+				<input class="btn btn-outline-secondary my-2 mr-sm-2 m-0" type="submit"
 					value="Sign Out" />
 			</form>
 		</th:block>
@@ -72,6 +74,5 @@
 			</form>
 		</th:block>
 	</nav>
-	
 </body>
 </html>
