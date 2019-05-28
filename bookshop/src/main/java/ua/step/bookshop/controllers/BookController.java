@@ -112,11 +112,9 @@ public class BookController {
 		boolean flag = false;
 		for (int i = 0; i < favoritesList.size(); i++) {
 
-			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
-
-				if (1 == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
-
-					flag = true;
+			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook()){
+				flag = true;
+			}
 		}
 		model.addAttribute("flag", flag);
 		model.addAttribute("bookInf", repo.getOne(id));
@@ -141,11 +139,10 @@ public class BookController {
 			List<Favorites> favoritesList = repoF.findAll();
 			for (int i = 0; i < favoritesList.size(); i++) {
 
-				if (favoritesList.get(i).getIdUser() == idUs && favoritesList.get(i).getIdBook() == id) {
+				if (favoritesList.get(i).getIdUser() == idUs && 
+						favoritesList.get(i).getIdBook() == id) {
+					repoF.delete(favoritesList.get(i));
 
-					if (favoritesList.get(i).getIdUser() == 1 && favoritesList.get(i).getIdBook() == id) {
-						repoF.delete(favoritesList.get(i));
-					}
 				}
 			}
 		}

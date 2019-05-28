@@ -23,7 +23,7 @@
 <body>
 	<div class="container" th:fragment="content">
 			<div class="row">
-				<div class="col-lg alert alert-dark" th:each="book : ${books}">
+				<div class="col-lg alert alert-dark" th:each="book: ${favorites}">
 					<div>
 						<a th:href="@{'/books/show/'+${book.id}}"><img width="300px" th:src="@{${'../images/'+book.background}}"></a>
 					</div> 
