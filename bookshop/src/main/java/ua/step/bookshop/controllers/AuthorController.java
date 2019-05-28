@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,10 +39,20 @@ public class AuthorController {
 
 	private static int AUTHORSONPAGE = 9;
 	private static char LETTERPAGE = 'С';
+	
+	@PostMapping("/authors")
+	private String setLETTERPAGE(Model model, HttpSession session, HttpServletRequest request) {
+
+		
+		 String s = String.valueOf(request.getParameter("letterInPage"));
+		 AuthorController.LETTERPAGE = s.charAt(0);
+
+		return getAuthorsInPage(model, LETTERPAGE);
+	}
 
 	@GetMapping("/authors")
 	private String getIndex(Model model) {
-		return getAuthorsInPage(model, (char) 'С');
+		return getAuthorsInPage(model, LETTERPAGE);
 	}
 
 	@GetMapping("/authors/{page}")

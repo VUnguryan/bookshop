@@ -16,12 +16,40 @@
 </head>
 <body>
   <div th:fragment="footer">
-    <nav aria-label="Page navigation example">
+  <form role="form" id="sendAddress" th:action=@{/authors} method="post">
+			<select class="form-control" name="letterInPage">
+				<option value="А">А</option>
+				<option value="Б">Б</option>
+				<option value="В">В</option>
+				<option value="Г">Г</option>
+				<option value="Д">Д</option>
+				<option value="Е">Е</option>
+				<option value="Ж">Ж</option>
+				<option value="З">З</option>
+				<option value="И">И</option>
+				<option value="К">К</option>
+				<option value="Л">Л</option>
+				<option value="М">М</option>
+				<option value="Н">Н</option>
+				<option value="О">О</option>
+				<option value="П">П</option>
+				<option value="Р">Р</option>
+				<option value="С">С</option>
+				<option value="Т">Т</option>
+				<option value="У">У</option>
+				<option value="Ф">Ф</option>
+				<option value="Х">Х</option>
+				<option value="Ц">Ц</option>
+				<option value="Ч">Ч</option>
+			</select> <input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
+				value="Подтвердить" />
+		</form>
+    <!-- <nav aria-label="Page navigation example">
       <ul class="pagination d-flex justify-content-center">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
         <li class="page"><a class="page-link"
           href="@{/authors/(page=${'А'})}" th:text="${'A'}">А</a></li>
-        <li class="page-item"><a class="page-link" href="#">Б</a></li>
+        <li class="page-item"><a class="page-link" href="#" value="Б">Б</a></li>
         <li class="page"><a class="page-link"
           href="@{/authors/{p}(p=${page})}" th:text="${'В'}">В</a></li>
         <li class="page-item"><a class="page-link" href="#">Г</a></li>
@@ -53,7 +81,7 @@
         <li class="page-item"><a class="page-link" href="#">Я</a></li>
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
-    </nav>
+    </nav> -->
   </div>
 </body>
 </html>
