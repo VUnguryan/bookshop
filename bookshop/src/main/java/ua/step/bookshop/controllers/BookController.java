@@ -20,6 +20,7 @@ import ua.step.bookshop.models.Favorites;
 import ua.step.bookshop.models.Publisher;
 import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
+
 import ua.step.bookshop.security.UserDetailsServiceImpl;
 
 @Controller
@@ -38,6 +39,7 @@ public class BookController {
 	private UserRepository repoU;
 
 	private static int BOOKSONPAGE = 9;
+	private Object id;
 
 	@GetMapping("books/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
@@ -75,6 +77,7 @@ public class BookController {
 		Short idUs = UserDetailsServiceImpl.idUser;
 		book.setCreateDate(Calendar.getInstance().getTime());
 		book.setUser(repoU.getOne(idUs));
+
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
@@ -108,8 +111,12 @@ public class BookController {
 		List<Favorites> favoritesList = repoF.findAll();
 		boolean flag = false;
 		for (int i = 0; i < favoritesList.size(); i++) {
+
 			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
-				flag = true;
+
+				if (1 == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
+
+					flag = true;
 		}
 		model.addAttribute("flag", flag);
 		model.addAttribute("bookInf", repo.getOne(id));
@@ -122,7 +129,9 @@ public class BookController {
 	@PostMapping("/books/favorite")
 	private String favoriteBook(@RequestParam("idbook") Integer id,
 			@RequestParam(value = "check", required = false) String check) {
+
 		Short idUs = UserDetailsServiceImpl.idUser;
+
 		if (check != null) {
 			Favorites favorites = new Favorites();
 			favorites.setIdUser(idUs);
@@ -131,12 +140,17 @@ public class BookController {
 		} else {
 			List<Favorites> favoritesList = repoF.findAll();
 			for (int i = 0; i < favoritesList.size(); i++) {
+
 				if (favoritesList.get(i).getIdUser() == idUs && favoritesList.get(i).getIdBook() == id) {
-					repoF.delete(favoritesList.get(i));
+
+					if (favoritesList.get(i).getIdUser() == 1 && favoritesList.get(i).getIdBook() == id) {
+						repoF.delete(favoritesList.get(i));
+					}
 				}
 			}
 		}
 		return "redirect:/books/show/" + id;
+
 	}
 
 	@GetMapping("/books/editBook/{id}")

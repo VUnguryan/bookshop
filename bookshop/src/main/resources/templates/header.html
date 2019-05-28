@@ -40,6 +40,18 @@
 				class="btn btn-primary" onclick="openNav()">Admin panel</button></li> 
 
 		</ul>
+
+		<form role="form" id="sendAddress" th:action=@{/} method="post">
+			<select class="form-control" name="currencyOnPage">
+				<option value="UAN">UAN</option>
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+				<option value="RUR">RUR</option>
+				<option value="BTC">BTC</option>
+			</select> <input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
+				value="Подтвердить" />
+		</form>
+
 		<!-- Search -->
 		<form class="form-inline my-2 my-lg-0" action="">
 			<input name="search" type="text" class="form-control mr-sm-0"
