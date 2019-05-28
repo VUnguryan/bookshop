@@ -95,24 +95,6 @@ public class MainController {
 		return "index";
 	}
 
-	/*
-	 * String getBooksInPage(Model model, int page) { List<Book> allBooks
-	 * =repo.findAll(); List<Book> books = new ArrayList<>();
-	 * 
-	 * int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
-	 * 
-	 * for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i <
-	 * allBooks.size(); i ++) { books.add(allBooks.get(i)); }
-	 * 
-	 * 
-	 * model.addAttribute("curpage", page); model.addAttribute("pages", pages);
-	 * model.addAttribute("books", books);
-	 * model.addAttribute("favorites",repoF.findAll()); model.addAttribute("genres",
-	 * repoJ.findAll()); model.addAttribute("publishers", repoP.findAll());
-	 * model.addAttribute("authors", repoA.findAll());
-	 * model.addAttribute("contentPage", "fragments/books"); return "index"; }
-	 */
-
 	@GetMapping("/payment")
 	private String getPayment(Model model) {
 		model.addAttribute("genres", repoJ.findAll());

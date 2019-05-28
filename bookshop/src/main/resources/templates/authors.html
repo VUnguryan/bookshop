@@ -16,20 +16,26 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 	crossorigin="anonymous"></script>
-<script
+<!-- <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-</head>
+</head> -->
 <body>
-	<div class="container" th:fragment="content">
-		<div>
-			<ul class="list-group" th:each="author : ${authors}">
-				<li class="list-group-item" th:text="${author.name}"></li>
-			</ul>
+	<!-- div class="content-container" th:fragment="content"> -->
+		<div class="container" th:fragment="content">
+			<div>
+				<ul class="list-group" th:each="author : ${authors}">
+					<li class="list-group-item" th:text="${author.name}"></li>
+				</ul>
+			</div>
+			<a class="btn btn-primary" href="/authors/add" role="button">Добавить
+				автора</a>
 		</div>
 		<a sec:authorize="hasRole('admin')" class="btn btn-primary"
 			href="/authors/add" role="button">Добавить автора</a>
 	</div>
+<!-- 	</div> -->
+	<div th:replace="fragments/paginationAuthors :: footer">...</div>
 </body>
 </html>
