@@ -16,9 +16,9 @@ import ua.step.bookshop.repositories.UserRepository;
 @Controller
 public class RegistrationController {
 	@Autowired
-	private RoleRepository roleRepository;
+	private RoleRepository roleRepo;
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository userRepo;
 
 	@GetMapping(value = "/registration")
 	public String getRegistrationPage() {
@@ -29,7 +29,7 @@ public class RegistrationController {
 	private String addUser(@ModelAttribute User user) {
 		boolean isEmpty = true;
 
-		List<User> users = userRepository.findAll();
+		List<User> users = userRepo.findAll();
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getLogin().equals(user.getLogin())) {
 				isEmpty = false;
@@ -37,14 +37,14 @@ public class RegistrationController {
 			}
 		}
 		if (isEmpty) {
-			List<Role> userRole = roleRepository.findAll();
+			List<Role> userRole = roleRepo.findAll();
 			for (int i = 0; i < userRole.size(); i++) {
 				if (!userRole.get(i).getRole().equals("user")) {
 					userRole.remove(i);
 				}
 			}
 			user.setRoles(userRole);
-			userRepository.saveAndFlush(user);
+			userRepo.saveAndFlush(user);
 			return "redirect:/login";
 		}
 		return "registration";

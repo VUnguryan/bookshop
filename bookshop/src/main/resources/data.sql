@@ -62,5 +62,5 @@ VALUES
 (10, 'Шантарам', 2002,  3000, 5.0,  now(), '63063558_images_8942912781.jpg');
 
 
-INSERT INTO Favorites (id, id_book, id_user) VALUES (1, 1, 1), (2, 2, 1);
+INSERT INTO Favourites (id, id_book, id_user) VALUES (1, 1, 1), (2, 2, 1);
 

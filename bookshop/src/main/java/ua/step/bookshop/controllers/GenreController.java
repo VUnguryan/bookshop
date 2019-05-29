@@ -9,11 +9,11 @@ import ua.step.bookshop.repositories.GenreRepository;
 @Controller
 public class GenreController {
 	@Autowired
-	private GenreRepository repo;
+	private GenreRepository genreRepo;
 	
 	@GetMapping("/genres")
 	public String getGenres(Model model) {
-		model.addAttribute("genres", repo.findAll());	
+		model.addAttribute("genres", genreRepo.findAll());	
 		return "genres";
 	}
 }

@@ -4,9 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Edit Book</title>
+<link rel="stylesheet" href="/css/addBookStyle.css">
 </head>
 <div class="container" th:fragment="content">
-	<link rel="stylesheet" href="/css/addBookStyle.css">
 	<h1>Изменить книгу</h1>
 	<img th:src="@{${'/images/'+book.background}}"
 		style="width: 248px; height: 350px" alt="icon">
@@ -81,8 +81,8 @@
 					<label class="btn btn-default btn-checkbox"> <input
 						type="checkbox" path="authorList" th:name="authorList"
 						th:value="${author.id}"
-						th:checked="${authorsChecked.contains(author)}"> <label
-						th:text="${author.name}"></label> <br>
+						th:checked="${authorsChecked.contains(author)}">
+						<label th:text="${author.name}"></label> <br>
 					</label>
 				</div>
 				<div>

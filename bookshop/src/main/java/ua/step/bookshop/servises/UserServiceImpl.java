@@ -15,24 +15,24 @@ import ua.step.bookshop.repositories.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public void save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(roleRepository.findAllById(Collections.singleton(1L)));
-        userRepository.save(user);
-    }
+	@Override
+	public void save(User user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setRoles(roleRepository.findAllById(Collections.singleton(1L)));
+		userRepository.save(user);
+	}
 
-    @Override
-    public Optional<User> findByLogin(String login) {
-        return userRepository.findByLogin(login);
-    }
+	@Override
+	public Optional<User> findByLogin(String login) {
+		return userRepository.findByLogin(login);
+	}
 }

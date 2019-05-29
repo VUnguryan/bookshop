@@ -23,14 +23,13 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div th:replace="../templates/header :: header">Header</div>
-	<div th:replace="${contentPage} :: content">Content</div>
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 		<a href="#">Добавить книгу</a> <a href="#">Пользователи</a>
 		<p>Выберите кол-во отображаемых объектов на странице:</p>
 		<form role="form" id="sendAddress" th:action=@{/} method="post">
-			<select class="form-control" name="booksOnPage"  onchange='this.form.submit()'>
+			<select class="form-control" name="booksOnPage"
+				onchange='this.form.submit()'>
 				<option disabled selected>Книг на странице</option>
 				<option value="3">3</option>
 				<option value="6">6</option>
@@ -39,6 +38,8 @@
 			</select>
 		</form>
 	</div>
+	<div th:replace="../templates/header :: header">Header</div>
+	<div th:replace="${contentPage} :: content">Content</div>
 
 	<script>
 		function openNav() {

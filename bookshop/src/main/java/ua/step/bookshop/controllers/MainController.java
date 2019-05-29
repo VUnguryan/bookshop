@@ -2,18 +2,14 @@ package ua.step.bookshop.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-
 import dto.BookDTO;
 import money.MoneyList;
 import ua.step.bookshop.models.Book;
@@ -23,15 +19,15 @@ import ua.step.bookshop.security.UserDetailsServiceImpl;
 @Controller
 public class MainController {
 	@Autowired
-	private BookRepository repo;
+	private BookRepository bookRepo;
 	@Autowired
-	private GenreRepository repoJ;
+	private GenreRepository genreRepo;
 	@Autowired
-	private PublisherRepository repoP;
+	private PublisherRepository publisherRepo;
 	@Autowired
-	private AuthorRepository repoA;
+	private AuthorRepository authorRepo;
 	@Autowired
-	private FavoritRepository repoF;
+	private FavouriteRepository favouriteRepo;
 
 	private static int BOOKSONPAGE = 9;
 	private static String CURRENCYONPAGE = "UAN";
@@ -45,9 +41,9 @@ public class MainController {
 	private String getPaginatedIndex(Model model, @PathVariable int page) {
 		return getBooksInPage(model, page);
 	}
-	  
+
 	@PostMapping("/")
-	private String setCURRENCYONPAGE(Model model, HttpSession session, HttpServletRequest request) {
+	private String setCurrencyOnPage(Model model, HttpSession session, HttpServletRequest request) {
 
 		if (request.getParameter("currencyOnPage") != null) {
 			MainController.CURRENCYONPAGE = String.valueOf(request.getParameter("currencyOnPage"));
@@ -58,9 +54,8 @@ public class MainController {
 		return getBooksInPage(model, 1);
 	}
 
-	// Константин
 	String getBooksInPage(Model model, int page) {
-		List<Book> allBooks = repo.findAll();
+		List<Book> allBooks = bookRepo.findAll();
 		List<BookDTO> allDtoBooks = new ArrayList<>();
 		List<BookDTO> books = new ArrayList<>();
 
@@ -69,7 +64,6 @@ public class MainController {
 			bookDto.setId(book.getId());
 			bookDto.setName(book.getName());
 			bookDto.setBackground(book.getBackground());
-			// рассчитываем цену в валюте
 			String price = MoneyList.calcPrice(CURRENCYONPAGE, book.getPrice());
 			bookDto.setPrice(price);
 			allDtoBooks.add(bookDto);
@@ -82,45 +76,40 @@ public class MainController {
 		}
 
 		Short idUs = UserDetailsServiceImpl.idUser;
-		model.addAttribute("userId",idUs);
-
+		model.addAttribute("userId", idUs);
 		model.addAttribute("curpage", page);
 		model.addAttribute("pages", pages);
 		model.addAttribute("books", books);
-		model.addAttribute("favorites", repoF.findAll());
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("authors", repoA.findAll());
+		model.addAttribute("favorites", favouriteRepo.findAll());
+		model.addAttribute("genres", genreRepo.findAll());
+		model.addAttribute("publishers", publisherRepo.findAll());
+		model.addAttribute("authors", authorRepo.findAll());
 		model.addAttribute("contentPage", "fragments/books");
 		return "index";
 	}
 
 	@GetMapping("/payment")
 	private String getPayment(Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("authors", repoA.findAll());
+		model.addAttribute("genres", genreRepo.findAll());
+		model.addAttribute("publishers", publisherRepo.findAll());
+		model.addAttribute("authors", authorRepo.findAll());
 		model.addAttribute("contentPage", "payment");
 		return "index";
 	}
 
 	@GetMapping("/delivery")
 	private String getDelivery(Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
+		model.addAttribute("genres", genreRepo.findAll());
+		model.addAttribute("publishers", publisherRepo.findAll());
 		model.addAttribute("contentPage", "delivery");
 		return "index";
 	}
 
 	@GetMapping("/contacts")
 	private String getContacts(Model model) {
-		// добавляем репозитарии которые есть в меню и нужны для отображения в контенте
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		// на странице которую необходимо встроить есть th:fragment="content"
+		model.addAttribute("genres", genreRepo.findAll());
+		model.addAttribute("publishers", publisherRepo.findAll());
 		model.addAttribute("contentPage", "contacts");
-		// где contact название страницы html которую надо встроить на index
-		return "index"; // ссылка на гланую где есть место куда встаивается и меню и контент
+		return "index";
 	}
-
 }
