@@ -10,9 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import dto.BookDTO;
-import money.MoneyList;
+
+import ua.step.bookshop.MoneyList;
 import ua.step.bookshop.models.Book;
+import ua.step.bookshop.models.BookDTO;
 import ua.step.bookshop.repositories.*;
 import ua.step.bookshop.security.UserDetailsServiceImpl;
 

@@ -1,7 +1,8 @@
-package money;
+package ua.step.bookshop;
 
 import java.util.ArrayList;
 import java.util.List;
+import ua.step.bookshop.models.Money;
 
 public class MoneyList {
 	private static List<Money> money = new ArrayList<Money>();
@@ -18,54 +19,35 @@ public class MoneyList {
 	public static String calcPrice(String ccy, Integer price) {
 		String stringPrice = "";
 
-		if (ccy.equals("BTC")) {
+		switch (ccy) {
+		case "BTC":
 			double buy = 7636.0746;
 			double buy1 = price / 100 / buy;
 			buy1 = buy1 / usd;
 			stringPrice = String.format("%.5f ", buy1) + " " + ccy;
 			return stringPrice;
-		}
-		if (ccy.equals("UAN")) {
-			double buy = 1.0;
-			double buy1 = price / 100 / buy;
+		case "UAH":
+			buy = 1.0;
+			buy1 = price / 100 / buy;
 			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
 			return stringPrice;
-		}
-		if (ccy.equals("USD")) {
-			double buy = 26.10000;
-			double buy1 = price / 100 / buy;
+		case "USD":
+			buy = 26.10000;
+			buy1 = price / 100 / buy;
 			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
 			return stringPrice;
-		}
-
-		if (ccy.equals("EUR")) {
-			double buy = 29.00000;
-			double buy1 = price / 100 / buy;
+		case "EUR":
+			buy = 29.00000;
+			buy1 = price / 100 / buy;
 			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
 			return stringPrice;
-		}
-
-		if (ccy.equals("RUR")) {
-			double buy = 0.37000;
-			double buy1 = price / 100 / buy;
+		case "RUR":
+			buy = 0.37000;
+			buy1 = price / 100 / buy;
 			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
 			return stringPrice;
+		default:
+			return stringPrice + "нет цены";
 		}
-
-		/*
-		 * for (Money mon : money) {
-		 * 
-		 * if (ccy == "BTC") { double buy = Double.parseDouble(mon.getBuy()); double
-		 * buy1 = price / 100 / buy; buy1 = buy / usd; stringPrice =
-		 * String.format("%.2f ", buy1) + " " + mon.getCcy(); return stringPrice; } else
-		 * if (mon.getCcy().equals(ccy)) { double buy =
-		 * Double.parseDouble(mon.getBuy()); double buy1 = price / 100 / buy;
-		 * stringPrice = String.format("%.2f ", buy1) + " " + mon.getCcy(); return
-		 * stringPrice; }
-		 * 
-		 * }
-		 */
-
-		return stringPrice + "нет цены";
 	}
 }

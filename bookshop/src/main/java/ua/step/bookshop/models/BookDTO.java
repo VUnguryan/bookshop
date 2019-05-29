@@ -1,14 +1,11 @@
-package dto;
-
-
+package ua.step.bookshop.models;
 
 public class BookDTO {
 	private Integer id;
 	private String name;
 	private String price;
 	private String background;
-	
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -33,5 +30,4 @@ public class BookDTO {
 	public void setBackground(String background) {
 		this.background = background;
 	}
-	
 }
