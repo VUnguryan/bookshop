@@ -39,19 +39,18 @@
 			<li class="nav-item"><a class="nav-link" href="/delivery">Доставка</a></li>
 			<li class="nav-item"><a class="nav-link" href="/contacts">Контакты</a></li>
 			<li sec:authorize="hasRole('admin')" class="nav-item"><a
-				class="nav-link" onclick="openNav()" href=#>Admin panel</a></li> 
-
+				class="nav-link" onclick="openNav()" href="javascript:void(0)">Admin panel</a></li> 
 		</ul>
 
 		<form role="form" id="sendAddress" th:action=@{/} method="post">
-			<select class="form-control" name="currencyOnPage">
+			<select class="form-control" name="currencyOnPage" onchange='this.form.submit()'>
+				<option disabled selected>Валюта</option>
 				<option value="UAN">UAN</option>
 				<option value="USD">USD</option>
 				<option value="EUR">EUR</option>
 				<option value="RUR">RUR</option>
 				<option value="BTC">BTC</option>
-			</select> <input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
-				value="Подтвердить" />
+			</select>
 		</form>
 
 		<!-- Search -->

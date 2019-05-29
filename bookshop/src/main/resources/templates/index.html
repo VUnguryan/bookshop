@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>Интернет магазин книг. Купить книгу с доставкой по
 	Украине!</title>
-	<link rel="stylesheet" href="css/mainStyle.css">
+<link rel="stylesheet" href="css/mainStyle.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -23,33 +23,32 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-		<div th:replace="../templates/header :: header">Header</div>
-		<div th:replace="${contentPage} :: content">Content</div>
-		<div id="mySidenav" class="sidenav">
-  			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  			<a href="#">Добавить книгу</a>
- 			<a href="#">Пользователи</a>
- 			<p>Выберите кол-во отображаемых объектов на странице:</p>
-  			<form role="form" id="sendAddress" th:action=@{/} method="post">
-        <select class="form-control" name="booksOnPage">
-            <option value="3">3</option>
-            <option value="6">6</option>
-            <option value="9">9</option>
-            <option value="12">12</option>
-        </select>
-        <input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit" value="Подтвердить" />
-    </form>
-		</div>
-		<script>
-	function openNav() {
-		  document.getElementById("mySidenav").style.width = "250px";
-		  document.getElementById("mySidenav").classList.add("new"); 
+	<div th:replace="../templates/header :: header">Header</div>
+	<div th:replace="${contentPage} :: content">Content</div>
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a href="#">Добавить книгу</a> <a href="#">Пользователи</a>
+		<p>Выберите кол-во отображаемых объектов на странице:</p>
+		<form role="form" id="sendAddress" th:action=@{/} method="post">
+			<select class="form-control" name="booksOnPage"  onchange='this.form.submit()'>
+				<option disabled selected>Книг на странице</option>
+				<option value="3">3</option>
+				<option value="6">6</option>
+				<option value="9">9</option>
+				<option value="12">12</option>
+			</select>
+		</form>
+	</div>
+
+	<script>
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "250px";
+			document.getElementById("mySidenav").classList.add("new");
 		}
 
-		/* Set the width of the side navigation to 0 */
 		function closeNav() {
-		  document.getElementById("mySidenav").style.width = "0";
-		  document.getElementById("mySidenav").classList.remove("new");
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("mySidenav").classList.remove("new");
 		}
 	</script>
 </body>
