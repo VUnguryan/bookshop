@@ -19,7 +19,7 @@ public class OrderController {
 	private BookRepository repo;
 
 	@GetMapping("/order")
-	private String getFavorites(Model model) {
+	private String getOrder(Model model) {
 		// model.addAttribute("books", repo.findAll());
 		model.addAttribute("contentPage", "order"); 
 		return "index";
