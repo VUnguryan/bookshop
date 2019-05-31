@@ -28,7 +28,7 @@ public class OrderController {
 	@GetMapping("/order")
 	private String getFavorites(Model model) {
 		// model.addAttribute("books", repo.findAll());
-		model.addAttribute("contentPage", "order");
+		model.addAttribute("contentPage", "order"); 
 		return "index";
 	}
 }
