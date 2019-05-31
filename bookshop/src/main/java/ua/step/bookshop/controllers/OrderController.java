@@ -16,7 +16,7 @@ import ua.step.bookshop.repositories.BookRepository;
 @Controller
 public class OrderController {
 	@Autowired
-	private BookRepository repo;  
+	private BookRepository repo;
 
 	@GetMapping("/order")
 	private String getFavorites(Model model) {

@@ -21,13 +21,16 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
 	crossorigin="anonymous"></script>
+<style type="text/css">
+</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm rounded border shadow-sm"
 		th:fragment="header">
-		<!-- Brand -->
-		<a class="navbar-brand" href="/"><img th:src="@{'/images/logo.png'}" width="50"></a>
-		<!-- Links -->
+		<a class="navbar-brand" href="/"><img
+			th:src="@{'/images/logo.png'}" width="50">
+		</a>
+
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
 			<li class="nav-item"><a class="nav-link" href="/authors">Автор</a></li>
@@ -37,35 +40,39 @@
 			<li class="nav-item"><a class="nav-link" href="/delivery">Доставка</a></li>
 			<li class="nav-item"><a class="nav-link" href="/contacts">Контакты</a></li>
 			<li class="nav-item"><a class="nav-link" href="/order">Корзина</a></li> 
-			<li sec:authorize="hasRole('admin')" class="nav-item"><button
+			<li sec:authorize="hasRole('admin')" class="nav-item"><button 
 				class="btn btn-primary" onclick="openNav()">Admin panel</button></li> 
 
+			<li sec:authorize="hasRole('admin')" class="nav-item"><a
+				class="nav-link" onclick="openNav()" href="javascript:void(0)">Admin
+					panel</a></li>
 		</ul>
 
 		<form role="form" id="sendAddress" th:action=@{/} method="post">
-			<select class="form-control" name="currencyOnPage">
+			<select class="form-control" name="currencyOnPage"
+				onchange='this.form.submit()'>
+				<option disabled selected>Валюта</option>
 				<option value="UAN">UAN</option>
 				<option value="USD">USD</option>
 				<option value="EUR">EUR</option>
 				<option value="RUR">RUR</option>
 				<option value="BTC">BTC</option>
-			</select> <input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
-				value="Подтвердить" />
+			</select>
 		</form>
 
-		<!-- Search -->
-		<form class="form-inline my-2 my-lg-0" action="">
-			<input name="search" type="text" class="form-control mr-sm-0"
-				id="usr" placeholder="Поиск">&#8194;
-			<button class="btn btn-outline-secondary my-2 mr-sm-2" type="submit">Поиск</button>
+		<form class="d-flex align-item-center m-1" action="">
+			<input name="search" type="text" class="form-control mr-sm-0 p-0 m-0"
+				id="usr" placeholder="Поиск" style="min-width: 150px;">&#8194;
+			<button class="btn btn-outline-secondary m-0" type="submit">Поиск</button>
 		</form>
-		<!-- Login in -->
+
 		<th:block sec:authorize="isAuthenticated()">
 			<form th:action="@{/logout}" method="post">
-				<input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
-					value="Sign Out" />
+				<input class="btn btn-outline-secondary my-2 mr-sm-2 m-0"
+					type="submit" value="Sign Out" />
 			</form>
 		</th:block>
+
 		<th:block sec:authorize="isAnonymous()">
 			<form th:action="@{/logout}" method="post">
 				<input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
@@ -73,6 +80,5 @@
 			</form>
 		</th:block>
 	</nav>
-	
 </body>
 </html>
