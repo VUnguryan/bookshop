@@ -1,7 +1,12 @@
 package ua.step.bookshop.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.step.bookshop.models.Author;
-import ua.step.bookshop.repositories.AuthorRepository;
-import ua.step.bookshop.repositories.BookRepository;
-import ua.step.bookshop.repositories.GenreRepository;
-import ua.step.bookshop.repositories.PublisherRepository;
+import ua.step.bookshop.models.Book;
+import ua.step.bookshop.models.Favorites;
+import ua.step.bookshop.models.User;
+import ua.step.bookshop.repositories.*;
 
 /**
  * 
@@ -23,12 +28,36 @@ import ua.step.bookshop.repositories.PublisherRepository;
 @Controller
 public class FavoritesController {
 	@Autowired
-	private BookRepository repo;  
+	private BookRepository repo;
+	@Autowired
+	private FavoritRepository repoF;
+	@Autowired
+	private UserRepository repoU;
 
 	@GetMapping("/favorites")
 	private String getFavorites(Model model) {
 		model.addAttribute("books", repo.findAll());
+		Short idUser = getAuthUserId(repoU);
+		List<Book> favoritesList = new ArrayList<Book>();
+		List<Favorites> list = repoF.findAll();
+		for (int i = 0; i < list.size(); i++) {
+			if(idUser== list.get(i).getIdUser()) {
+				favoritesList.add(repo.getOne(list.get(i).getIdBook()));
+			}
+		}
+		model.addAttribute("favorites", favoritesList);
 		model.addAttribute("contentPage", "favorites");
 		return "index";
+	}
+
+	private Short getAuthUserId(UserRepository repo){
+		Short id = null;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		if(!name.equals("anonymousUser")){
+			Optional<User> user = repo.findByLogin(name);
+			id = user.get().getId();
+		}
+		return id;
 	}
 }
