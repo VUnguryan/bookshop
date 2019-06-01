@@ -42,10 +42,6 @@
 			<li class="nav-item"><a class="nav-link" href="/order">Корзина</a></li> 
 			<li sec:authorize="hasRole('admin')" class="nav-item"><button 
 				class="btn btn-primary" onclick="openNav()">Admin panel</button></li> 
-
-			<li sec:authorize="hasRole('admin')" class="nav-item"><a
-				class="nav-link" onclick="openNav()" href="javascript:void(0)">Admin
-					panel</a></li>
 		</ul>
 
 		<form role="form" id="sendAddress" th:action=@{/} method="post">
