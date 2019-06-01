@@ -27,28 +27,35 @@
 	<div class="container" th:fragment="content">
 	<link rel="stylesheet" href="/css/order.css"> 
 	 
-		<form>
+		<form action="http://formspree.io/chda98@bk.ru" method="post">
 		
+  			<div class="email">
+    			<div class="form-group col-md-6">
+      				<label for="inputEmail4"></label>
+      				<input type="email" class="form-control" id="inputEmail4" name="name" value="chda98@bk.ru">
+    			</div>
+  			</div>
+  			
   			<div class="form-row">
     			<div class="form-group col-md-6">
       				<label for="inputEmail4">ФИО получателя</label>
-      				<input type="email" class="form-control" id="inputEmail4" placeholder="Черёмушев Дмитрий Александрович">
+      				<input type="text" class="form-control" id="inputEmail4" name="fio" placeholder="Черёмушев Дмитрий Александрович">
     			</div>
   			</div>
   			
   			<div class="form-group">
     			<label for="inputAddress">Адрес получателя</label>
-    			<input type="text" class="form-control" id="inputAddress" placeholder="пер. Ботанический, 1, кв. 103">
+    			<input type="text" class="form-control" id="inputAddress" name="address" placeholder="пер. Ботанический, 1, кв. 103">
   			</div>
   			
   			<div class="form-row">
    				<div class="form-group col-md-6">
       				<label for="inputCity">Город</label>
-      				<input type="text" class="form-control" id="inputCity" placeholder="Одесса">
+      				<input type="text" class="form-control" id="inputCity" name="city" placeholder="Одесса">
     			</div>
     			<div class="form-group col-md-4">
      				<label for="inputState">Страна</label>
-      					<select id="inputState" class="form-control">
+      					<select id="inputState" class="form-control" name="country">
         					<option selected>Украина</option>
         					<option>Россия</option>
         					<option>Белорусь</option>
@@ -66,6 +73,7 @@
   			<div class="card">
  				<h4 class="card-title">Общая стоимость:</h4>
     			<h6 class="card-subtitle mb-2 text-muted">1</h6>
+    			<input type="hidden" id="inputAddress" name="total-sum" value="1">
 			</div>
 			
 			<div class="list-group">
@@ -75,6 +83,15 @@
   				<a href="#" class="list-group-item list-group-item-action">Книга 3</a>
   				<a href="#" class="list-group-item list-group-item-action disabled">Книга 4</a>
 			</div>
+			
+			<div class="selection">
+				<select name="chosen-books" size="4" multiple>
+    				<option selected value="Книга 1"></option>
+    				<option selected value="Книга 2"></option>
+    				<option selected value="Книга 3"></option>
+    				<option selected value="Книга 4"></option>
+   				</select>
+   			</div>
   			
   			<button type="submit" class="btn btn-primary">Оформить заказ</button>
   			
