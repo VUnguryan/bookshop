@@ -8,5 +8,4 @@ import ua.step.bookshop.models.Book;
 public interface BookRepository extends JpaRepository<Book, Integer> {
 	
 	List<Book> findByOrderByCreateDate();
-	
 }

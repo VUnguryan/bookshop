@@ -19,8 +19,6 @@ import ua.step.bookshop.repositories.UserRepository;
 @Transactional(readOnly = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    public static Short idUser;
-
     @Autowired
     private UserRepository usersRepository;
 
@@ -35,7 +33,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
         String[] userRoles = user.getRoles().stream().map(Role::getRole).map(s -> "ROLE_" + s).toArray(String[]::new);
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
-        idUser = user.getId();
         return authorities;
     }
 

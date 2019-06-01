@@ -27,7 +27,7 @@
 		<div th:replace="${contentPage} :: content">Content</div>
 		<div id="mySidenav" class="sidenav">
   			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  			<a href="#">Добавить книгу</a>
+  			<a href="books/addBook">Добавить книгу</a>
  			<a href="#">Пользователи</a>
  			<p>Выберите кол-во отображаемых объектов на странице:</p>
   			<form role="form" id="sendAddress" th:action=@{/} method="post">

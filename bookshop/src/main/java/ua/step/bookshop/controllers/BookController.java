@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,11 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Favorites;
-import ua.step.bookshop.models.Publisher;
 import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
 
-import ua.step.bookshop.security.UserDetailsServiceImpl;
 
 @Controller
 public class BookController {
@@ -39,7 +38,7 @@ public class BookController {
 	private UserRepository repoU;
 
 	private static int BOOKSONPAGE = 9;
-	private Object id;
+	//private Object id;
 
 	@GetMapping("books/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
@@ -74,7 +73,7 @@ public class BookController {
 	@PostMapping("/books/addBook")
 	private String addBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
 		String name = null;
-		Short idUs = UserDetailsServiceImpl.idUser;
+		Short idUs = getAuthUserId(repoU);
 		book.setCreateDate(Calendar.getInstance().getTime());
 		book.setUser(repoU.getOne(idUs));
 
@@ -107,16 +106,14 @@ public class BookController {
 
 	@GetMapping("/books/show/{id}")
 	private String showBook(@PathVariable("id") Integer id, Model model) {
-		Short idUs = UserDetailsServiceImpl.idUser;
+		Short idUs = getAuthUserId(repoU);
 		List<Favorites> favoritesList = repoF.findAll();
 		boolean flag = false;
 		for (int i = 0; i < favoritesList.size(); i++) {
 
-			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
-
-				if (1 == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook())
-
-					flag = true;
+			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook()) {
+				flag = true;
+			}
 		}
 		model.addAttribute("flag", flag);
 		model.addAttribute("bookInf", repo.getOne(id));
@@ -130,7 +127,7 @@ public class BookController {
 	private String favoriteBook(@RequestParam("idbook") Integer id,
 			@RequestParam(value = "check", required = false) String check) {
 
-		Short idUs = UserDetailsServiceImpl.idUser;
+		Short idUs = getAuthUserId(repoU);
 
 		if (check != null) {
 			Favorites favorites = new Favorites();
@@ -142,10 +139,7 @@ public class BookController {
 			for (int i = 0; i < favoritesList.size(); i++) {
 
 				if (favoritesList.get(i).getIdUser() == idUs && favoritesList.get(i).getIdBook() == id) {
-
-					if (favoritesList.get(i).getIdUser() == 1 && favoritesList.get(i).getIdBook() == id) {
 						repoF.delete(favoritesList.get(i));
-					}
 				}
 			}
 		}
@@ -200,5 +194,16 @@ public class BookController {
 			repo.save(book);
 			return "redirect:/";
 		}
+	}
+
+	private Short getAuthUserId(UserRepository repo){
+		Short id = null;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		if(!name.equals("anonymousUser")){
+			Optional<User> user = repo.findByLogin(name);
+			id = user.get().getId();
+		}
+		return id;
 	}
 }

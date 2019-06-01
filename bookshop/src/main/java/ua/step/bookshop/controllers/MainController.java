@@ -1,24 +1,24 @@
 package ua.step.bookshop.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import dto.BookDTO;
+import money.MoneyList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-
-import dto.BookDTO;
-import money.MoneyList;
 import ua.step.bookshop.models.Book;
+import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
-import ua.step.bookshop.security.UserDetailsServiceImpl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -32,6 +32,8 @@ public class MainController {
 	private AuthorRepository repoA;
 	@Autowired
 	private FavoritRepository repoF;
+    @Autowired
+    private UserRepository repoU;
 
 	private static int BOOKSONPAGE = 9;
 	private static String CURRENCYONPAGE = "UAN";
@@ -81,8 +83,7 @@ public class MainController {
 			books.add(allDtoBooks.get(i));
 		}
 
-		Short idUs = UserDetailsServiceImpl.idUser;
-		model.addAttribute("userId",idUs);
+		model.addAttribute("userId", getAuthUserId(repoU));
 
 		model.addAttribute("curpage", page);
 		model.addAttribute("pages", pages);
@@ -94,24 +95,6 @@ public class MainController {
 		model.addAttribute("contentPage", "fragments/books");
 		return "index";
 	}
-
-	/*
-	 * String getBooksInPage(Model model, int page) { List<Book> allBooks
-	 * =repo.findAll(); List<Book> books = new ArrayList<>();
-	 * 
-	 * int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
-	 * 
-	 * for(int i = (page-1) * BOOKSONPAGE; i < (page) * BOOKSONPAGE && i <
-	 * allBooks.size(); i ++) { books.add(allBooks.get(i)); }
-	 * 
-	 * 
-	 * model.addAttribute("curpage", page); model.addAttribute("pages", pages);
-	 * model.addAttribute("books", books);
-	 * model.addAttribute("favorites",repoF.findAll()); model.addAttribute("genres",
-	 * repoJ.findAll()); model.addAttribute("publishers", repoP.findAll());
-	 * model.addAttribute("authors", repoA.findAll());
-	 * model.addAttribute("contentPage", "fragments/books"); return "index"; }
-	 */
 
 	@GetMapping("/payment")
 	private String getPayment(Model model) {
@@ -141,4 +124,14 @@ public class MainController {
 		return "index"; // ссылка на гланую где есть место куда встаивается и меню и контент
 	}
 
+	private Short getAuthUserId(UserRepository repo){
+	    Short id = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        if(!name.equals("anonymousUser")){
+            Optional<User> user = repo.findByLogin(name);
+            id = user.get().getId();
+        }
+        return id;
+    }
 }
