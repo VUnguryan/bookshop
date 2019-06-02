@@ -46,7 +46,7 @@ public class BookController {
 	}
 
 	String getBooks(Model model, int page) {
-		List<Book> allBooks = repo.findAll();
+		List<Book> allBooks = repo.findByOrderByCreateDate();
 		List<Book> books = new ArrayList<>();
 		int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
 

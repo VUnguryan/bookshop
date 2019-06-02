@@ -36,7 +36,7 @@ public class FavoritesController {
 
 	@GetMapping("/favorites")
 	private String getFavorites(Model model) {
-		model.addAttribute("books", repo.findAll());
+		model.addAttribute("books", repo.findByOrderByCreateDate());
 		Short idUser = getAuthUserId(repoU);
 		List<Book> favoritesList = new ArrayList<Book>();
 		List<Favorites> list = repoF.findAll();
