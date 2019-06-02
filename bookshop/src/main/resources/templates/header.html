@@ -19,7 +19,7 @@
 	crossorigin="anonymous"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 <style type="text/css">
 </style>
@@ -28,8 +28,7 @@
 	<nav class="navbar navbar-expand-sm rounded border shadow-sm"
 		th:fragment="header">
 		<a class="navbar-brand" href="/"><img
-			th:src="@{'/images/logo.png'}" width="50">
-		</a>
+			th:src="@{'/images/logo.png'}" width="50"> </a>
 
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
@@ -39,9 +38,10 @@
 			<li class="nav-item"><a class="nav-link" href="/favorites">Избранное</a></li>
 			<li class="nav-item"><a class="nav-link" href="/delivery">Доставка</a></li>
 			<li class="nav-item"><a class="nav-link" href="/contacts">Контакты</a></li>
-			<li class="nav-item"><a class="nav-link" href="/order">Корзина</a></li> 
-			<li sec:authorize="hasRole('admin')" class="nav-item"><button 
-				class="btn btn-primary" onclick="openNav()">Admin panel</button></li> 
+			<li sec:authorize="isAuthenticated()" class="nav-item"><a
+				class="nav-link" href="/order">Корзина</a></li>
+			<li sec:authorize="hasRole('admin')" class="nav-item"><button
+					class="btn btn-primary" onclick="openNav()">Admin panel</button></li>
 		</ul>
 
 		<form role="form" id="sendAddress" th:action=@{/} method="post">

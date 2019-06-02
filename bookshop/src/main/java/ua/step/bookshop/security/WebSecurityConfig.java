@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**","/authors","/publishers","/payment","/delivery",
                         "/books","/contacts","/registration", "/css/mainStyle.css").permitAll()
                 .antMatchers("/authors/add","/publishers/add").hasAuthority("ROLE_admin")
+                .antMatchers("/basket","/order").hasAuthority("ROLE_user")
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .exceptionHandling()

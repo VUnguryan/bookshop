@@ -32,7 +32,8 @@ public class Book{
 	private List<Genre> genreList;
 	@ManyToMany
 	private List<Author> authorList;
-
+	@ManyToMany
+	private List<Basket> basket;
 
 	public Book() {
 	}
