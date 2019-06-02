@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,10 +19,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import dto.BookDTO;
+import money.MoneyList;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Favorites;
+import ua.step.bookshop.models.Rate;
 import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
+import ua.step.bookshop.servises.RateService;
+import ua.step.bookshop.servises.RateServiceImpl;
 
 
 @Controller
@@ -36,6 +45,8 @@ public class BookController {
 	private FavoritRepository repoF;
 	@Autowired
 	private UserRepository repoU;
+	@Autowired
+	private RateRepository repoR;
 
 	private static int BOOKSONPAGE = 9;
 	//private Object id;
@@ -103,7 +114,55 @@ public class BookController {
 			return "redirect:/";
 		}
 	}
+	
+	//@PostMapping("/books/show/{id}")
+	//private String changeRate(@PathVariable("id") Integer id, Model model, HttpSession session, HttpServletRequest request) {
+	@GetMapping("/books/show/{id}")
+	private String showBook(@PathVariable("id") Integer id, Model model,  HttpSession session, HttpServletRequest request) {	
+		RateService rateServise = new RateServiceImpl();
+		//double rate = rateServise.getRate(id);		
+		
+		BookDTO bookDto = new BookDTO();
+		bookDto.setId(repo.getOne(id).getId());
+		bookDto.setName(repo.getOne(id).getName());
+		bookDto.setBackground(repo.getOne(id).getBackground());
+		String price = MoneyList.calcPrice(String.valueOf(request.getParameter("currencyOnPage")), repo.getOne(id).getPrice());
+		//bookDto.setPrice(price);
+		bookDto.setPrice("" + repo.getOne(id).getPrice());
+		//bookDto.setRate(rate);
+		bookDto.setRate(4.0);
+		bookDto.setUser(repo.getOne(id).getUser());
+		bookDto.setPublisher(repo.getOne(id).getPublisher());
+		bookDto.setGenreList(repo.getOne(id).getGenreList());
+		bookDto.setAuthorList(repo.getOne(id).getAuthorList());
+		Short idUs = getAuthUserId(repoU);
+		repo.getOne(id).setRate(2.0);
+		List<Favorites> favoritesList = repoF.findAll();
+		
+		/*
+		 * if (request.getParameter("rateOnBook") != null) { return "index"; }
+		 */
+		
+		
+		
+		
+		
+		boolean flag = false;
+		for (int i = 0; i < favoritesList.size(); i++) {
 
+			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook()) {
+				flag = true;
+			}
+		}
+		model.addAttribute("flag", flag);
+		model.addAttribute("bookInf", repo.getOne(id));
+		model.addAttribute("userId", idUs);
+		model.addAttribute("contentPage", "showBook");
+		return "index";
+		// return "showBook";
+	}
+
+	/*
 	@GetMapping("/books/show/{id}")
 	private String showBook(@PathVariable("id") Integer id, Model model) {
 		Short idUs = getAuthUserId(repoU);
@@ -122,6 +181,7 @@ public class BookController {
 		return "index";
 		// return "showBook";
 	}
+	*/
 
 	@PostMapping("/books/favorite")
 	private String favoriteBook(@RequestParam("idbook") Integer id,

@@ -36,7 +36,7 @@ public class RateServiceImpl implements RateService{
 	}
 
 	@Override
-	public boolean isRateNotExist(Rate rate) { // ставил ли пользователь рейтинг етой книге
+	public boolean isRateNotExist(Rate rate) { // ставил ли пользователь рейтинг этой книге
 		for (Rate rate1 : rateRepository.findAll()) {
 			if (rate1.getUser().equals(rate)) {
 				return false; // пользователь уже поставил рейтинг этой книге
@@ -58,16 +58,30 @@ public class RateServiceImpl implements RateService{
 
 		return (double) rateGeneral / rateCount;
 	}
+	
+	@Override
+	public double getRate(Integer id) {
+		int rateCount = 0;
+		int rateGeneral = 0;
+		for (Rate rate : rateRepository.findAll()) {
+			if (rate.getId().equals(id)) {
+				rateCount++;
+				rateGeneral += rate.getRate();
+			}
+		}
+
+		return (double) rateGeneral / rateCount;
+	}
 
 	@Override
-	public Integer getRate(Book book, User user) {
+	public double getRate(Book book, User user) {
 		for (Rate rate : rateRepository.findAll()) {
 			if (rate.getBook().equals(book) && rate.getUser().equals(user)) {
 				return rate.getRate();
 			}
 		}
 
-		return -1;
+		return -1.;
 	}
 
 }
