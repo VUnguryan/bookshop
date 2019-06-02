@@ -69,7 +69,7 @@ public class MainController {
 		for (Book book : allBooks) {
 			BookDTO bookDto = new BookDTO();
 			bookDto.setId(book.getId());
-			bookDto.setName(book.getName());
+			bookDto.setName(book.getName());  
 			bookDto.setBackground(book.getBackground());
 			// рассчитываем цену в валюте
 			String price = MoneyList.calcPrice(CURRENCYONPAGE, book.getPrice());

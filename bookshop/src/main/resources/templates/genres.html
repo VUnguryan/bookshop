@@ -21,8 +21,24 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="alert alert-dark" th:each="genre : ${genres}">
-		<a href="#" th:text="${genre.name}"></a>
+	<div class="alert alert-dark" th:each="book : ${genres}">
+		<a th:href="@{'/books/show/'+${book.id}}"><img width="300px"
+			th:src="@{${'../images/'+book.background}}"></a>
 	</div>
+	<div th:text="${book.name}"></div>
+	<div th:text="${book.price}"></div>
+	<button class="btn btn-primary"
+		onclick="location.href='http://localhost:8080/'">Back</button>
+	<!-- 	<div class="container" th:fragment="content">
+			<div class="row">
+				<div class="col-lg alert alert-dark" th:each="book : ${genres}">
+					<div>
+						<a th:href="@{'/books/show/'+${book.id}}"><img width="300px" th:src="@{${'../images/'+book.background}}"></a>
+					</div> 
+					<div th:text="${book.name}"></div>
+					<div th:text="${book.price}"></div>
+				</div>
+			</div>
+		</div> -->
 </body>
 </html>
