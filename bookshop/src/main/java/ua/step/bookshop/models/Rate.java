@@ -20,7 +20,7 @@ public class Rate {
 	@ManyToOne
 	@JoinColumn
 	private User user;
-	private Integer rate; 
+	private Double rate; 
 	
 	public Integer getId() {
 		return id;
@@ -40,10 +40,10 @@ public class Rate {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Integer getRate() {
+	public Double getRate() {
 		return rate;
 	}
-	public void setRate(Integer rate) {
+	public void setRate(Double rate) {
 		this.rate = rate;
 	}
 

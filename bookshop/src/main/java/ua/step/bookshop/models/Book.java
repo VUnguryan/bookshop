@@ -19,7 +19,7 @@ public class Book{
 	private Integer price;
 	private Double rate;
 	private Date createDate;
-	private String background; //private byte[] background;
+	private String background; 
 
 	@ManyToOne
 	@JoinColumn

@@ -1,12 +1,24 @@
 package dto;
 
+import java.util.List;
 
+import javax.persistence.ManyToMany;
+
+import ua.step.bookshop.models.Author;
+import ua.step.bookshop.models.Genre;
+import ua.step.bookshop.models.Publisher;
+import ua.step.bookshop.models.User;
 
 public class BookDTO {
 	private Integer id;
 	private String name;
 	private String price;
 	private String background;
+	private String rate;
+	private User user;
+	private Publisher publisher;
+	private List<Genre> genreList;
+	private List<Author> authorList;
 	
 	
 	public Integer getId() {
@@ -32,6 +44,36 @@ public class BookDTO {
 	}
 	public void setBackground(String background) {
 		this.background = background;
+	}
+	public String getRate() {
+		return rate;
+	}
+	public void setRate(Double rate) {
+		this.rate = "" + rate;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Publisher getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
+	public List<Genre> getGenreList() {
+		return genreList;
+	}
+	public void setGenreList(List<Genre> genreList) {
+		this.genreList = genreList;
+	}
+	public List<Author> getAuthorList() {
+		return authorList;
+	}
+	public void setAuthorList(List<Author> authorList) {
+		this.authorList = authorList;
 	}
 	
 }
