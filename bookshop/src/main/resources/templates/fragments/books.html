@@ -28,7 +28,7 @@
 		<div class="dropdown-menu">
 			<h5 class="dropdown-header">Жанры</h5>
 			<div class="dropdown-item" th:each="genre : ${genres}">
-				<a href="/sortByGenre" th:text="${genre.name}"></a>
+				<a th:href="@{'/sortByGenre/' + ${genre.id}}" th:text="${genre.name}"></a>
 			</div>
 			<div class="dropdown-divider"></div>
 
