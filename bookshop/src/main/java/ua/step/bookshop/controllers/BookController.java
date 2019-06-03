@@ -70,37 +70,12 @@ public class BookController {
 	}
 
 	@PostMapping("/books/addBook")
-	private String addBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
-		String name = null;
+	private String addBookSubmit(@ModelAttribute("book") Book book) {
 		Short idUs = getAuthUserId(userRepo);
 		book.setCreateDate(Calendar.getInstance().getTime());
 		book.setUser(userRepo.getOne(idUs));
-
-		if (!file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
-
-				name = file.getOriginalFilename();
-
-				String rootPath = new File("").getAbsolutePath() + "\\src\\main\\webapp\\images";
-				File uploadedFile = new File(rootPath + File.separator + name);
-				book.setBackground(name);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-				stream.write(bytes);
-				stream.flush();
-				stream.close();
-
-				bookRepo.saveAndFlush(book);
-				return "redirect:/";
-
-			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
-			}
-		} else {
-			book.setBackground("no_image.png");
-			bookRepo.saveAndFlush(book);
-			return "redirect:/";
-		}
+		bookRepo.saveAndFlush(book);
+		return "redirect:/";
 	}
 
 	@GetMapping("/books/show/{id}")
@@ -114,8 +89,8 @@ public class BookController {
 		bookDto.setRate(4.0);
 		bookDto.setUser(bookRepo.getOne(id).getUser());
 		bookDto.setPublisher(bookRepo.getOne(id).getPublisher());
-		bookDto.setGenreList(bookRepo.getOne(id).getGenreList());
-		bookDto.setAuthorList(bookRepo.getOne(id).getAuthorList());
+		bookDto.setGenreList(bookRepo.getOne(id).getGenres());
+		bookDto.setAuthorList(bookRepo.getOne(id).getAuthors());
 		Short idUs = getAuthUserId(userRepo);
 		bookRepo.getOne(id).setRate(2.0);
 		List<Favorites> favoritesList = favouriteRepo.findAll();
@@ -169,8 +144,8 @@ public class BookController {
 		model.addAttribute("publishers", publisherRepo.findAll());
 		model.addAttribute("genres", genreRepo.findAll());
 		model.addAttribute("authors", authorRepo.findAll());
-		model.addAttribute("genreChecked", bookRepo.getOne(id).getGenreList());
-		model.addAttribute("authorsChecked", bookRepo.getOne(id).getAuthorList());
+		model.addAttribute("genreChecked", bookRepo.getOne(id).getGenres());
+		model.addAttribute("authorsChecked", bookRepo.getOne(id).getAuthors());
 		model.addAttribute("contentPage", "editBook");
 		return "index";
 

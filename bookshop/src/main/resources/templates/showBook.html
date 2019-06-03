@@ -97,7 +97,7 @@
 			<input class="hide" id="hd-1" type="checkbox"> <label
 				for="hd-1"><b>Авторы</b></label>
 			<div>
-				<div th:each="author : ${bookInf.authorList}">
+				<div th:each="author : ${bookInf.authors}">
 					<input type="text" class="form-control" th:value="${author.name}"
 						readonly>
 				</div>
@@ -107,8 +107,8 @@
 			<input class="hide" id="hd-2" type="checkbox"> <label
 				for="hd-2"><b>Жанры</b></label>
 			<div>
-				<div th:each="genre : ${bookInf.genreList}">
-					<input type="text" path="genreList" class="form-control"
+				<div th:each="genre : ${bookInf.genres}">
+					<input type="text" path="genres" class="form-control"
 						th:value="${genre.name}" readonly>
 				</div>
 			</div>

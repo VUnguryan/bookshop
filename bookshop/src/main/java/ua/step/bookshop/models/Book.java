@@ -29,11 +29,11 @@ public class Book {
 	private Publisher publisher;
 
 	@ManyToMany
-	private List<Genre> genreList;
+	private List<Genre> genres;
 	@ManyToMany
-	private List<Author> authorList;
+	private List<Author> authors;
 	@ManyToMany
-	private List<Basket> basket;
+	private List<Basket> baskets;
 
 	public Book() {
 	}
@@ -110,20 +110,20 @@ public class Book {
 		this.background = background;
 	}
 
-	public List<Genre> getGenreList() {
-		return genreList;
+	public List<Genre> getGenres() {
+		return genres;
 	}
 
-	public void setGenreList(List<Genre> genreList) {
-		this.genreList = genreList;
+	public void setGenres(List<Genre> genres) {
+		this.genres = genres;
 	}
 
-	public List<Author> getAuthorList() {
-		return authorList;
+	public List<Author> getAuthors() {
+		return authors;
 	}
 
-	public void setAuthorList(List<Author> authorList) {
-		this.authorList = authorList;
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
 	}
 
 }
