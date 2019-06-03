@@ -47,20 +47,23 @@ public class AuthorController {
 	}
     @GetMapping(value = "/authors", params = { "search"})
 	private String getSearchAuthor(Model model, String search) {
+	    int count = 0;
         List<Author> authorList = authorRepo.findAll();
         List<Author> searchList = null;
-        if (search.isEmpty()) {
-            model.addAttribute("authors", searchList);
-            model.addAttribute("contentPage", "/fragments/searchResultNull");
-        } else {
+        if (!search.isEmpty() && count == 0) {
             searchList = new ArrayList<Author>();
             for (int i = 0; i< authorList.size(); i++){
                 if(authorList.get(i).getName().regionMatches(true,0, search, 0, search.length())){
                     searchList.add(authorList.get(i));
+                    count++;
                 }
             }
             model.addAttribute("authors", searchList);
             model.addAttribute("contentPage", "authors");
+        }
+        if(search.isEmpty() || count == 0){
+            model.addAttribute("authors", searchList);
+            model.addAttribute("contentPage", "/fragments/searchResultNull");
         }
 		return "index";
 	}
