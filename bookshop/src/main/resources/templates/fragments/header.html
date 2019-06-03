@@ -21,12 +21,12 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <style type="text/css">
 </style>
 </head>
-<body>
-	<nav class="navbar navbar-expand-sm rounded border shadow-sm"
-		th:fragment="header">
+<body th:fragment="header">
+	<nav class="navbar navbar-expand-sm rounded border shadow-sm" >
 		<a class="navbar-brand" href="/"><img
 			th:src="@{'/images/logo.png'}" width="50"> </a>
 
@@ -40,7 +40,7 @@
 			<li class="nav-item"><a class="nav-link" href="/contacts">Контакты</a></li>
 			<li sec:authorize="isAuthenticated()" class="nav-item"><a
 				class="nav-link" href="/order">Корзина</a></li>
-			<li sec:authorize="hasRole('admin')" class="nav-item"><button
+			<li sec:authorize="hasRole('admin')" class="nav-item" id="adminButton"><button
 					class="btn btn-primary" onclick="openNav()">Admin panel</button></li>
 		</ul>
 
