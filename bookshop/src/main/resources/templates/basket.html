@@ -22,11 +22,10 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="container" th:fragment="content">
-
-	<div>
-		<ul class="list-group" th:each="book : ${book}">
-			<li class="list-group-item" th:text="${book.name}">Корзина пуста</li>
+	<div class="container  mt-5" th:fragment="content">
+		<h2>Мои книги в корзине</h2>
+		<ul class="list-group mt-3">
+			<li class="list-group-item mb-1"th:each="book : ${books}" th:text="${book.name}"></li>
 		</ul>
 	</div>
 </body>

@@ -36,7 +36,7 @@ public class BasketController extends SecurityContextHolder {
 				books.add(userBaskets.get(i).getBooks().get(j));
 			}
 		}
-		model.addAttribute("book", books);
+		model.addAttribute("books", books);
 		model.addAttribute("contentPage", "basket");
 		return "index";
 	}

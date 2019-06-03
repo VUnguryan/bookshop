@@ -109,7 +109,7 @@ public class BookController {
 		return "index";
 	}
 
-	@PostMapping("/books/favorite")
+	@PostMapping("/books/favourite")
 	private String favoriteBook(@RequestParam("idbook") Integer id,
 			@RequestParam(value = "check", required = false) String check) {
 		Short idUs = getAuthUserId(userRepo);
@@ -137,7 +137,6 @@ public class BookController {
 		if (bookRepo.getOne(id).getPublisher() != null) {
 			model.addAttribute("publisherChecked", bookRepo.getOne(id).getPublisher());
 		} else {
-
 			model.addAttribute("publisherChecked", publisherRepo.getOne((short) 1));
 		}
 		model.addAttribute("book", bookRepo.getOne(id));
@@ -152,33 +151,10 @@ public class BookController {
 	}
 
 	@PostMapping("/books/editBook")
-	private String editBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
-		String name = null;
+	private String editBookSubmit(@ModelAttribute("book") Book book) {
 		book.setCreateDate(Calendar.getInstance().getTime());
-		if (!file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
-				name = file.getOriginalFilename();
-				String rootPath = new File("").getAbsolutePath() + "\\src\\main\\webapp\\images";
-				File uploadedFile = new File(rootPath + File.separator + name);
-				book.setBackground(name);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-				stream.write(bytes);
-				stream.flush();
-				stream.close();
-
-				bookRepo.save(book);
-				return "redirect:/";
-
-			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
-			}
-		} else {
-			int idBook = book.getId();
-			book.setBackground(bookRepo.getOne(idBook).getBackground());
-			bookRepo.save(book);
-			return "redirect:/";
-		}
+		bookRepo.save(book);
+		return "redirect:/";
 	}
 
 	private Short getAuthUserId(UserRepository repo) {
