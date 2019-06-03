@@ -43,18 +43,15 @@ VALUES
 INSERT INTO Books 
 (id, name, year, price, rate, create_date, background)
 VALUES 
-(1, 'Java: Руководство для начинающих', 2014, 90000, 5.0,  now(), '79650.jpg'),
-(2, 'Грамматика: сборник упражнений', 2002, 30000, 5.0, now(), 'zno_angliyska1.jpg'),
-(3, 'Случайная вакансия', 2016,  12000, 1.1, now(), 'azbuka_9785389079878_images_2140869641.jpg'),
-(4, 'Harry Potter and the Philosophers Stone', 2014, 45000, 5.0, now(), '54829080_images_12099178356.jpg'),
-(5, 'Sapiens. Краткая история человечества', 2002, 15000, 4.1, now(), '78677876_images_11494291616.jpg'),
-(6, 'Хранители', 2012, 78000, 5.0, now(), '6498520_images_1417882113.jpg'),
-(7, 'Атлант розправив плечі. Комплект з трьох книг у футлярі',  2002,  142000, 3.0, now(), 'nash_format_9786177279357_images_11294607738.jpg'),
-(8, 'Гравити Фолз. ежеДНЕВНИК', 2002,  33000, 2.0, now(), '71496220_images_10775113012.jpg'),
-(9, 'Зеленая миля', 2002,  130000, 2.8, now(), '6496168_images_1412822470.jpg'),
-(10, 'Шантарам', 2002,  3000, 5.0,  now(), '63063558_images_8942912781.jpg');
+(1, 'Java: Руководство для начинающих', 2014, 90000, 5.0,  now(), 'https://www.booklya.ua/content/upload/product/188k/188598/800x800/593179/java-rukovodstvo-dlya-nachinayuschih.jpg'),
+(2, 'Грамматика: сборник упражнений', 2002, 30000, 5.0, now(), 'https://www.moscowbooks.ru/image/book/568/w600/i568595.jpg'),
+(3, 'Случайная вакансия', 2016,  12000, 1.1, now(), 'https://i.livelib.ru/boocover/1000597596/200/9e56/Dzh._K._Rouling__Sluchajnaya_vakansiya.jpg'),
+(4, 'Harry Potter and the Philosophers Stone', 2014, 45000, 5.0, now(), 'https://img.yakaboo.ua/media/catalog/product/cache/1/image/398x565/234c7c011ba026e66d29567e1be1d1f7/4/8/483720_11873905.jpg'),
+(5, 'Sapiens. Краткая история человечества', 2002, 15000, 4.1, now(), 'https://i2.rozetka.ua/goods/4247630/38927136_images_4247630896.jpg'),
+(6, 'Хранители', 2012, 78000, 5.0, now(), 'https://cosmic.com.ua/content/images/36/khraniteli_absolutnoe_izdanie-22078386433709.jpg'),
+(7, 'Атлант розправив плечі. Комплект з трьох книг у футлярі',  2002,  142000, 3.0, now(), 'https://img.yakaboo.ua/media/catalog/product/cache/1/image/398x565/234c7c011ba026e66d29567e1be1d1f7/4/9/497069_69650593.jpg'),
+(8, 'Гравити Фолз. ежеДНЕВНИК', 2002,  33000, 2.0, now(), 'https://cdn.eksmo.ru/v2/ITD000000000893880/COVER/cover1__w600.jpg'),
+(9, 'Зеленая миля', 2002,  130000, 2.8, now(), 'https://img.yakaboo.ua/media/catalog/product/cache/1/image/398x565/234c7c011ba026e66d29567e1be1d1f7/4/5/456618_92757735.jpg'),
+(10, 'Шантарам', 2002,  3000, 5.0,  now(), 'https://plunix.ru/f/knigi/shantaram-kniga_big.jpg');
 
 INSERT INTO Favorites (id, id_book, id_user) VALUES (1, 1, 1), (2, 2, 1);
-
-
-

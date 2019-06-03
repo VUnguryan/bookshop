@@ -43,7 +43,7 @@
 		<div class="shadow card w-25 m-3 justify-content-between" th:each="book : ${books}">
 			<div class="card-header" th:text="${book.name}"></div>
 			<a th:href="@{'/books/show/'+${book.id}}"><img class="card-img"
-				th:src="@{${'../images/'+book.background}}" alt="book image"></a>
+				th:src="@{${book.background}}" alt="book image"></a>
 			<div class="card-footer" th:text="${book.price}"></div>
 			<div class="card-footer">
 				<th:block th:each="favorite : ${favorites}">
