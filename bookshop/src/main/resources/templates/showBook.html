@@ -9,13 +9,12 @@
 </head>
 <body>
 	<div class="container" th:fragment="content">
-		<link rel="stylesheet" href="/css/addBookStyle.css">
 		<h1>Информация о книге</h1>
 
 		<div class="input-group mb-3  ">
 			<div class="input-group-prepend">
 				<span class="input-group-text">Картинка</span> <img
-					th:src="@{${'/images/'+bookInf.background}}"
+					th:src="@{${bookInf.background}}"
 					style="width: 248px; height: 350px" alt="icon">
 				<div class="flex-column">
 					<form class="container" th:action="@{/books/favorite}"
