@@ -5,13 +5,23 @@ import java.util.List;
 public class BookDTO {
 	private Integer id;
 	private String name;
+	private Integer year;
 	private String price;
 	private String background;
 	private String rate;
 	private User user;
 	private Publisher publisher;
-	private List<Genre> genreList;
-	private List<Author> authorList;
+	private List<Genre> genres;
+	private List<Author> authors;
+	private List<Basket> baskets;
+
+	public List<Basket> getBaskets() {
+		return baskets;
+	}
+
+	public void setBaskets(List<Basket> baskets) {
+		this.baskets = baskets;
+	}
 
 	public Integer getId() {
 		return id;
@@ -70,18 +80,30 @@ public class BookDTO {
 	}
 
 	public List<Genre> getGenreList() {
-		return genreList;
+		return genres;
 	}
 
 	public void setGenreList(List<Genre> genreList) {
-		this.genreList = genreList;
+		this.genres = genreList;
 	}
 
 	public List<Author> getAuthorList() {
-		return authorList;
+		return authors;
 	}
 
 	public void setAuthorList(List<Author> authorList) {
-		this.authorList = authorList;
+		this.authors = authorList;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public void setRate(String rate) {
+		this.rate = rate;
 	}
 }

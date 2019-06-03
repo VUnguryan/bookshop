@@ -8,47 +8,47 @@ public class MoneyList {
 	private static double usd = 26.10000;
 
 	static {
-		money.add(new Money("UAN", "UAN", "1", "1"));
-		money.add(new Money("USD", "UAN", "26.10000", "26.50000"));
-		money.add(new Money("EUR", "UAN", "29.00000", "29.65000"));
-		money.add(new Money("RUR", "UAN", "0.37000", "0.41000"));
+		money.add(new Money("UAH", "UAH", "1", "1"));
+		money.add(new Money("USD", "UAH", "26.10000", "26.50000"));
+		money.add(new Money("EUR", "UAH", "29.00000", "29.65000"));
+		money.add(new Money("RUR", "UAH", "0.37000", "0.41000"));
 		money.add(new Money("BTC", "USD", "7636.0746", "8439.8720"));
 	}
 
-	public static String calcPrice(String ccy, Integer price) {
+	public static String calcPrice(String currency, Integer price) {
 		String stringPrice = "";
 
-		if (ccy.equals("BTC")) {
+		if (currency.equals("BTC")) {
 			double buy = 7636.0746;
 			double buy1 = price / 100 / buy;
 			buy1 = buy1 / usd;
-			stringPrice = String.format("%.5f ", buy1) + " " + ccy;
+			stringPrice = String.format("%.5f ", buy1) + " ฿";
 			return stringPrice;
 		}
-		if (ccy.equals("UAN")) {
+		if (currency.equals("UAH")) {
 			double buy = 1.0;
 			double buy1 = price / 100 / buy;
-			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
+			stringPrice = String.format("%.2f ", buy1) + " ₴";
 			return stringPrice;
 		}
-		if (ccy.equals("USD")) {
+		if (currency.equals("USD")) {
 			double buy = 26.10000;
 			double buy1 = price / 100 / buy;
-			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
+			stringPrice = String.format("%.2f ", buy1) + " $";
 			return stringPrice;
 		}
 
-		if (ccy.equals("EUR")) {
+		if (currency.equals("EUR")) {
 			double buy = 29.00000;
 			double buy1 = price / 100 / buy;
-			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
+			stringPrice = String.format("%.2f ", buy1) + " €";
 			return stringPrice;
 		}
 
-		if (ccy.equals("RUR")) {
+		if (currency.equals("RUR")) {
 			double buy = 0.37000;
 			double buy1 = price / 100 / buy;
-			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
+			stringPrice = String.format("%.2f ", buy1) + " ₽";
 			return stringPrice;
 		}
 

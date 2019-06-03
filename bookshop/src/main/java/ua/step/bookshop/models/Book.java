@@ -35,6 +35,14 @@ public class Book {
 	@ManyToMany
 	private List<Basket> baskets;
 
+	public List<Basket> getBaskets() {
+		return baskets;
+	}
+
+	public void setBaskets(List<Basket> baskets) {
+		this.baskets = baskets;
+	}
+
 	public Book() {
 	}
 

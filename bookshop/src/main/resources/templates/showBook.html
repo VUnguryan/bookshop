@@ -37,9 +37,9 @@
 							<input type="submit" class=" btn btn-success"
 								value="Добавить в корзину">
 						</form>
-					</th:block>
 					<form role="form" class="my-lg-4" id="sendAddress"
-						th:action=@{/books/show/} method="post">
+						th:action=@{/books/addRate} method="post">
+						<input type="text" name="idbook" th:value="${bookInf.id}" hidden />
 						<select class="form-control" name="rateOnBook"
 							onchange='this.form.submit()'>
 							<option disabled selected>Поставить рейтинг книги</option>
@@ -50,6 +50,7 @@
 							<option value="5">5</option>
 						</select>
 					</form>
+					</th:block>
 				</div>
 
 			</div>

@@ -34,7 +34,7 @@ public class MainController {
 	private PublisherRepository publisherRepo;
 
 	private static int BOOKSONPAGE = 9;
-	private static String CURRENCYONPAGE = "UAN";
+	private static String CURRENCYONPAGE = "UAH";
 
 	@GetMapping("/")
 	private String getIndex(Model model) {
@@ -47,7 +47,7 @@ public class MainController {
 	}
 
 	@PostMapping("/")
-	private String setCURRENCYONPAGE(Model model, HttpSession session, HttpServletRequest request) {
+	private String setCurrencyOnPage(Model model, HttpSession session, HttpServletRequest request) {
 
 		if (request.getParameter("currencyOnPage") != null) {
 			MainController.CURRENCYONPAGE = String.valueOf(request.getParameter("currencyOnPage"));

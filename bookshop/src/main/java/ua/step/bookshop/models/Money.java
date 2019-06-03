@@ -1,14 +1,14 @@
 package ua.step.bookshop.models;
 
 public class Money {
-	private String ccy;
-	private String base_ccy;
+	private String currency;
+	private String baseCurrency;
 	private String buy;
 	private String sale;
 
-	public Money(String ccy, String base_ccy, String buy, String sale) {
-		this.ccy = ccy;
-		this.base_ccy = base_ccy;
+	public Money(String currency, String baseCurrency, String buy, String sale) {
+		this.currency = currency;
+		this.baseCurrency = baseCurrency;
 		this.buy = buy;
 		this.sale = sale;
 	}
@@ -16,20 +16,20 @@ public class Money {
 	public Money() {
 	}
 
-	public String getCcy() {
-		return ccy;
+	public String getCurrency() {
+		return currency;
 	}
 
-	public void setCcy(String ccy) {
-		this.ccy = ccy;
+	public void setCurrency(String baseCurrency) {
+		this.currency = currency;
 	}
 
-	public String getBase_ccy() {
-		return base_ccy;
+	public String getBaseCurrency() {
+		return baseCurrency;
 	}
 
-	public void setBase_ccy(String base_ccy) {
-		this.base_ccy = base_ccy;
+	public void setBase_ccy(String baseCurrency) {
+		this.baseCurrency = baseCurrency;
 	}
 
 	public String getBuy() {
