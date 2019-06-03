@@ -20,29 +20,36 @@ public class Rate {
 	@ManyToOne
 	@JoinColumn
 	private User user;
-	private Double rate; 
-	
+	private Double rate;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Book getBook() {
 		return book;
 	}
+
 	public void setBook(Book book) {
 		this.book = book;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public Double getRate() {
 		return rate;
 	}
+
 	public void setRate(Double rate) {
 		this.rate = rate;
 	}

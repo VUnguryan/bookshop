@@ -10,27 +10,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import ua.step.bookshop.models.Author;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Favorites;
 import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
 
-/**
- * 
- * @author sergey TODO Осталось доделать только пагинацию
- *
- */
-
 @Controller
-public class FavoritesController {
+public class FavouritesController {
 	@Autowired
 	private BookRepository repo;
 	@Autowired
-	private FavoritRepository repoF;
+	private FavouriteRepository repoF;
 	@Autowired
 	private UserRepository repoU;
 
@@ -41,7 +31,7 @@ public class FavoritesController {
 		List<Book> favoritesList = new ArrayList<Book>();
 		List<Favorites> list = repoF.findAll();
 		for (int i = 0; i < list.size(); i++) {
-			if(idUser== list.get(i).getIdUser()) {
+			if (idUser == list.get(i).getIdUser()) {
 				favoritesList.add(repo.getOne(list.get(i).getIdBook()));
 			}
 		}
@@ -50,14 +40,15 @@ public class FavoritesController {
 		return "index";
 	}
 
-	private Short getAuthUserId(UserRepository repo){
+	private Short getAuthUserId(UserRepository repo) {
 		Short id = null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
-		if(!name.equals("anonymousUser")){
+		if (!name.equals("anonymousUser")) {
 			Optional<User> user = repo.findByLogin(name);
 			id = user.get().getId();
 		}
+
 		return id;
 	}
 }

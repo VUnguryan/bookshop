@@ -5,44 +5,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Rate;
 import ua.step.bookshop.models.User;
-import ua.step.bookshop.repositories.BookRepository;
 import ua.step.bookshop.repositories.RateRepository;
-import ua.step.bookshop.repositories.UserRepository;
 
-public class RateServiceImpl implements RateService{
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private BookRepository bookRepository;
+public class RateServiceImpl implements RateService {
 
 	@Autowired
 	private RateRepository rateRepository;
-	
-	
+
+	@SuppressWarnings("unused")
 	@Override
-	public void setRate(Rate rate, Book book) {// добавляет оценку в список оценок или редактирует ее
+	public void setRate(Rate rate, Book book) {
 		if (rate.getBook().getName() == book.getName()) {
-			if (isRateNotExist(rate)) { // если оценка от пользователя еще не существует - новая оценка добавляется в
-										// список
+			if (isRateNotExist(rate)) {
 				rateRepository.save(rate);
 			} else {
-				for (Rate rate1 : rateRepository.findAll()) { // если уже существует - оценка изменянт свое значение
-					// rate
+				for (Rate rate1 : rateRepository.findAll()) {
 				}
 			}
 		}
 	}
 
 	@Override
-	public boolean isRateNotExist(Rate rate) { // ставил ли пользователь рейтинг этой книге
+	public boolean isRateNotExist(Rate rate) {
 		for (Rate rate1 : rateRepository.findAll()) {
 			if (rate1.getUser().equals(rate)) {
-				return false; // пользователь уже поставил рейтинг этой книге
+				return false;
 			}
 		}
-		return true; // пользователь не ставил рейтинг этой книге
+		return true;
 	}
 
 	@Override
@@ -58,7 +48,7 @@ public class RateServiceImpl implements RateService{
 
 		return (double) rateGeneral / rateCount;
 	}
-	
+
 	@Override
 	public double getRate(Integer id) {
 		int rateCount = 0;
@@ -83,5 +73,4 @@ public class RateServiceImpl implements RateService{
 
 		return -1.;
 	}
-
 }

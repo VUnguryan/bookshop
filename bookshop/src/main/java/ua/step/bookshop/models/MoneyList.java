@@ -1,4 +1,4 @@
-package money;
+package ua.step.bookshop.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,20 +51,6 @@ public class MoneyList {
 			stringPrice = String.format("%.2f ", buy1) + " " + ccy;
 			return stringPrice;
 		}
-
-		/*
-		 * for (Money mon : money) {
-		 * 
-		 * if (ccy == "BTC") { double buy = Double.parseDouble(mon.getBuy()); double
-		 * buy1 = price / 100 / buy; buy1 = buy / usd; stringPrice =
-		 * String.format("%.2f ", buy1) + " " + mon.getCcy(); return stringPrice; } else
-		 * if (mon.getCcy().equals(ccy)) { double buy =
-		 * Double.parseDouble(mon.getBuy()); double buy1 = price / 100 / buy;
-		 * stringPrice = String.format("%.2f ", buy1) + " " + mon.getCcy(); return
-		 * stringPrice; }
-		 * 
-		 * }
-		 */
 
 		return stringPrice + "нет цены";
 	}

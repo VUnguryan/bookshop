@@ -9,39 +9,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.step.bookshop.models.Author;
 import ua.step.bookshop.repositories.AuthorRepository;
-import ua.step.bookshop.repositories.GenreRepository;
-import ua.step.bookshop.repositories.PublisherRepository;
-
-/**
- * 
- * @author sergey TODO Осталось доделать только пагинацию
- *
- */
 
 @Controller
 public class AuthorController {
-
 	@Autowired
-	private GenreRepository repoJ;
-	@Autowired
-	private PublisherRepository repoP;
-	@Autowired
-	private AuthorRepository repoA;
+	private AuthorRepository authorRepo;
 
 	@GetMapping("/authors")
 	private String getAuthors(Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("authors", repoA.findAll());
+		model.addAttribute("authors", authorRepo.findAll());
 		model.addAttribute("contentPage", "authors");
 		return "index";
 	}
 
 	@GetMapping("/authors/add")
 	private String getAddAuthor(@ModelAttribute Author author, Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("addAuthor", repoA.findAll());
 		model.addAttribute("contentPage", "addAuthor");
 		return "index";
 	}
@@ -49,14 +31,14 @@ public class AuthorController {
 	@PostMapping("/authors/add")
 	private String addAuthor(@ModelAttribute Author author) {
 		boolean isEmty = true;
-		List<Author> authors = repoA.findAll();
+		List<Author> authors = authorRepo.findAll();
 		for (int i = 0; i < authors.size(); i++) {
 			if (authors.get(i).getName().equals(author.getName())) {
 				isEmty = false;
 			}
 		}
 		if (isEmty) {
-			repoA.saveAndFlush(author);
+			authorRepo.saveAndFlush(author);
 			return "redirect:/authors";
 		} else {
 			return "redirect:/authors/add";

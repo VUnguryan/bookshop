@@ -1,7 +1,6 @@
 package ua.step.bookshop.security;
 
 import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import ua.step.bookshop.models.Role;
 import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.UserRepository;
@@ -18,7 +16,6 @@ import ua.step.bookshop.repositories.UserRepository;
 @Service
 @Transactional(readOnly = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
-
     @Autowired
     private UserRepository usersRepository;
 
@@ -35,5 +32,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
         return authorities;
     }
-
 }

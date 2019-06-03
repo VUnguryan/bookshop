@@ -1,7 +1,5 @@
 package ua.step.bookshop.controllers;
 
-import dto.BookDTO;
-import money.MoneyList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.step.bookshop.models.Book;
+import ua.step.bookshop.models.BookDTO;
+import ua.step.bookshop.models.MoneyList;
 import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
 
@@ -23,17 +23,11 @@ import java.util.Optional;
 @Controller
 public class MainController {
 	@Autowired
-	private BookRepository repo;
+	private BookRepository bookRepo;
 	@Autowired
-	private GenreRepository repoJ;
+	private FavouriteRepository favouriteRepo;
 	@Autowired
-	private PublisherRepository repoP;
-	@Autowired
-	private AuthorRepository repoA;
-	@Autowired
-	private FavoritRepository repoF;
-    @Autowired
-    private UserRepository repoU;
+	private UserRepository userRepo;
 
 	private static int BOOKSONPAGE = 9;
 	private static String CURRENCYONPAGE = "UAN";
@@ -47,7 +41,7 @@ public class MainController {
 	private String getPaginatedIndex(Model model, @PathVariable int page) {
 		return getBooksInPage(model, page);
 	}
-	  
+
 	@PostMapping("/")
 	private String setCURRENCYONPAGE(Model model, HttpSession session, HttpServletRequest request) {
 
@@ -60,9 +54,8 @@ public class MainController {
 		return getBooksInPage(model, 1);
 	}
 
-	// Константин
 	String getBooksInPage(Model model, int page) {
-		List<Book> allBooks = repo.findAll();
+		List<Book> allBooks = bookRepo.findAll();
 		List<BookDTO> allDtoBooks = new ArrayList<>();
 		List<BookDTO> books = new ArrayList<>();
 
@@ -71,7 +64,6 @@ public class MainController {
 			bookDto.setId(book.getId());
 			bookDto.setName(book.getName());
 			bookDto.setBackground(book.getBackground());
-			// рассчитываем цену в валюте
 			String price = MoneyList.calcPrice(CURRENCYONPAGE, book.getPrice());
 			bookDto.setPrice(price);
 			allDtoBooks.add(bookDto);
@@ -83,55 +75,43 @@ public class MainController {
 			books.add(allDtoBooks.get(i));
 		}
 
-		model.addAttribute("userId", getAuthUserId(repoU));
+		model.addAttribute("userId", getAuthUserId(userRepo));
 
 		model.addAttribute("curpage", page);
 		model.addAttribute("pages", pages);
 		model.addAttribute("books", books);
-		model.addAttribute("favorites", repoF.findAll());
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("authors", repoA.findAll());
+		model.addAttribute("favorites", favouriteRepo.findAll());
 		model.addAttribute("contentPage", "fragments/books");
 		return "index";
 	}
 
 	@GetMapping("/payment")
 	private String getPayment(Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("authors", repoA.findAll());
 		model.addAttribute("contentPage", "payment");
 		return "index";
 	}
 
 	@GetMapping("/delivery")
 	private String getDelivery(Model model) {
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
 		model.addAttribute("contentPage", "delivery");
 		return "index";
 	}
 
 	@GetMapping("/contacts")
 	private String getContacts(Model model) {
-		// добавляем репозитарии которые есть в меню и нужны для отображения в контенте
-		model.addAttribute("genres", repoJ.findAll());
-		model.addAttribute("publishers", repoP.findAll());
-		// на странице которую необходимо встроить есть th:fragment="content"
 		model.addAttribute("contentPage", "contacts");
-		// где contact название страницы html которую надо встроить на index
-		return "index"; // ссылка на гланую где есть место куда встаивается и меню и контент
+		return "index";
 	}
 
-	private Short getAuthUserId(UserRepository repo){
-	    Short id = null;
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        if(!name.equals("anonymousUser")){
-            Optional<User> user = repo.findByLogin(name);
-            id = user.get().getId();
-        }
-        return id;
-    }
+	private Short getAuthUserId(UserRepository repo) {
+		Short id = null;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		if (!name.equals("anonymousUser")) {
+			Optional<User> user = repo.findByLogin(name);
+			id = user.get().getId();
+		}
+
+		return id;
+	}
 }

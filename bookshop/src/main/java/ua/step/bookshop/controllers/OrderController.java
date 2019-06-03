@@ -8,18 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import ua.step.bookshop.models.Basket;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.User;
-import ua.step.bookshop.repositories.BookRepository;
 import ua.step.bookshop.repositories.UserRepository;
-
-/**
- * 
- * @author sergey TODO Осталось доделать только пагинацию
- *
- */
 
 @Controller
 public class OrderController extends SecurityContextHolder {
@@ -41,6 +33,7 @@ public class OrderController extends SecurityContextHolder {
 		for (int i = 0; i < books.size(); i++) {
 			price += books.get(i).getPrice();
 		}
+
 		model.addAttribute("book", books);
 		model.addAttribute("price", price);
 		model.addAttribute("contentPage", "basket");

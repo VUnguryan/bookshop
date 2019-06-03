@@ -1,7 +1,5 @@
 package ua.step.bookshop.security;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,52 +13,39 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/**","/authors","/publishers","/payment","/delivery",
-                        "/books","/contacts","/registration", "/css/mainStyle.css").permitAll()
-                .antMatchers("/authors/add","/publishers/add").hasAuthority("ROLE_admin")
-                .antMatchers("/basket","/order").hasAuthority("ROLE_user")
-                .anyRequest().fullyAuthenticated()
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/login")
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("remember-me")
-                .logoutSuccessUrl("/login")
-                .permitAll();
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+				.antMatchers("/**", "/authors", "/publishers", "/payment", "/delivery", "/books", "/contacts",
+						"/registration", "/css/mainStyle.css")
+				.permitAll().antMatchers("/authors/add", "/publishers/add").hasAuthority("ROLE_admin")
+				.antMatchers("/basket", "/order").hasAuthority("ROLE_user").anyRequest().fullyAuthenticated().and()
+				.exceptionHandling().accessDeniedPage("/login").and().formLogin().loginPage("/login")
+				.failureUrl("/login?error").permitAll().and().logout().logoutUrl("/logout").deleteCookies("remember-me")
+				.logoutSuccessUrl("/login").permitAll();
+		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+	}
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
-    }
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+	}
 
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 }

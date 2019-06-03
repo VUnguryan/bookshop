@@ -8,5 +8,4 @@ import ua.step.bookshop.models.User;
 
 public interface UserRepository extends JpaRepository<User, Short> {
     Optional<User> findByLogin(String login);
-
 }

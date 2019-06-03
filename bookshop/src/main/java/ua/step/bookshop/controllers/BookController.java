@@ -7,49 +7,38 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.multipart.MultipartFile;
 
-import dto.BookDTO;
-import money.MoneyList;
 import ua.step.bookshop.models.Book;
+import ua.step.bookshop.models.BookDTO;
 import ua.step.bookshop.models.Favorites;
-import ua.step.bookshop.models.Rate;
 import ua.step.bookshop.models.User;
 import ua.step.bookshop.repositories.*;
-import ua.step.bookshop.servises.RateService;
-import ua.step.bookshop.servises.RateServiceImpl;
-
 
 @Controller
 public class BookController {
 	@Autowired
-	private BookRepository repo;
+	private BookRepository bookRepo;
 	@Autowired
-	private GenreRepository repoG;
+	private GenreRepository genreRepo;
 	@Autowired
-	private PublisherRepository repoP;
+	private PublisherRepository publisherRepo;
 	@Autowired
-	private AuthorRepository repoA;
+	private AuthorRepository authorRepo;
 	@Autowired
-	private FavoritRepository repoF;
+	private FavouriteRepository favouriteRepo;
 	@Autowired
-	private UserRepository repoU;
-	@Autowired
-	private RateRepository repoR;
+	private UserRepository userRepo;
 
 	private static int BOOKSONPAGE = 9;
-	//private Object id;
 
 	@GetMapping("books/{page}")
 	private String getPagedBooks(Model model, @PathVariable int page) {
@@ -57,7 +46,7 @@ public class BookController {
 	}
 
 	String getBooks(Model model, int page) {
-		List<Book> allBooks = repo.findByOrderByCreateDate();
+		List<Book> allBooks = bookRepo.findByOrderByCreateDate();
 		List<Book> books = new ArrayList<>();
 		int pages = (int) Math.ceil((double) allBooks.size() / BOOKSONPAGE);
 
@@ -73,20 +62,19 @@ public class BookController {
 
 	@GetMapping("/books/addBook")
 	private String addBook(Model model) {
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("genres", repoG.findAll());
-		model.addAttribute("authors", repoA.findAll());
+		model.addAttribute("publishers", publisherRepo.findAll());
+		model.addAttribute("genres", genreRepo.findAll());
+		model.addAttribute("authors", authorRepo.findAll());
 		model.addAttribute("contentPage", "addBook");
 		return "index";
-		// return "addBook";
 	}
 
 	@PostMapping("/books/addBook")
 	private String addBookSubmit(@RequestParam("file") MultipartFile file, @ModelAttribute("book") Book book) {
 		String name = null;
-		Short idUs = getAuthUserId(repoU);
+		Short idUs = getAuthUserId(userRepo);
 		book.setCreateDate(Calendar.getInstance().getTime());
-		book.setUser(repoU.getOne(idUs));
+		book.setUser(userRepo.getOne(idUs));
 
 		if (!file.isEmpty()) {
 			try {
@@ -102,7 +90,7 @@ public class BookController {
 				stream.flush();
 				stream.close();
 
-				repo.saveAndFlush(book);
+				bookRepo.saveAndFlush(book);
 				return "redirect:/";
 
 			} catch (Exception e) {
@@ -110,43 +98,28 @@ public class BookController {
 			}
 		} else {
 			book.setBackground("no_image.png");
-			repo.saveAndFlush(book);
+			bookRepo.saveAndFlush(book);
 			return "redirect:/";
 		}
 	}
-	
-	//@PostMapping("/books/show/{id}")
-	//private String changeRate(@PathVariable("id") Integer id, Model model, HttpSession session, HttpServletRequest request) {
+
 	@GetMapping("/books/show/{id}")
-	private String showBook(@PathVariable("id") Integer id, Model model,  HttpSession session, HttpServletRequest request) {	
-		RateService rateServise = new RateServiceImpl();
-		//double rate = rateServise.getRate(id);		
-		
+	private String showBook(@PathVariable("id") Integer id, Model model, HttpSession session,
+			HttpServletRequest request) {
 		BookDTO bookDto = new BookDTO();
-		bookDto.setId(repo.getOne(id).getId());
-		bookDto.setName(repo.getOne(id).getName());
-		bookDto.setBackground(repo.getOne(id).getBackground());
-		String price = MoneyList.calcPrice(String.valueOf(request.getParameter("currencyOnPage")), repo.getOne(id).getPrice());
-		//bookDto.setPrice(price);
-		bookDto.setPrice("" + repo.getOne(id).getPrice());
-		//bookDto.setRate(rate);
+		bookDto.setId(bookRepo.getOne(id).getId());
+		bookDto.setName(bookRepo.getOne(id).getName());
+		bookDto.setBackground(bookRepo.getOne(id).getBackground());
+		bookDto.setPrice("" + bookRepo.getOne(id).getPrice());
 		bookDto.setRate(4.0);
-		bookDto.setUser(repo.getOne(id).getUser());
-		bookDto.setPublisher(repo.getOne(id).getPublisher());
-		bookDto.setGenreList(repo.getOne(id).getGenreList());
-		bookDto.setAuthorList(repo.getOne(id).getAuthorList());
-		Short idUs = getAuthUserId(repoU);
-		repo.getOne(id).setRate(2.0);
-		List<Favorites> favoritesList = repoF.findAll();
-		
-		/*
-		 * if (request.getParameter("rateOnBook") != null) { return "index"; }
-		 */
-		
-		
-		
-		
-		
+		bookDto.setUser(bookRepo.getOne(id).getUser());
+		bookDto.setPublisher(bookRepo.getOne(id).getPublisher());
+		bookDto.setGenreList(bookRepo.getOne(id).getGenreList());
+		bookDto.setAuthorList(bookRepo.getOne(id).getAuthorList());
+		Short idUs = getAuthUserId(userRepo);
+		bookRepo.getOne(id).setRate(2.0);
+		List<Favorites> favoritesList = favouriteRepo.findAll();
+
 		boolean flag = false;
 		for (int i = 0; i < favoritesList.size(); i++) {
 
@@ -155,72 +128,49 @@ public class BookController {
 			}
 		}
 		model.addAttribute("flag", flag);
-		model.addAttribute("bookInf", repo.getOne(id));
+		model.addAttribute("bookInf", bookRepo.getOne(id));
 		model.addAttribute("userId", idUs);
 		model.addAttribute("contentPage", "showBook");
 		return "index";
-		// return "showBook";
 	}
-
-	/*
-	@GetMapping("/books/show/{id}")
-	private String showBook(@PathVariable("id") Integer id, Model model) {
-		Short idUs = getAuthUserId(repoU);
-		List<Favorites> favoritesList = repoF.findAll();
-		boolean flag = false;
-		for (int i = 0; i < favoritesList.size(); i++) {
-
-			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook()) {
-				flag = true;
-			}
-		}
-		model.addAttribute("flag", flag);
-		model.addAttribute("bookInf", repo.getOne(id));
-		model.addAttribute("userId", idUs);
-		model.addAttribute("contentPage", "showBook");
-		return "index";
-		// return "showBook";
-	}
-	*/
 
 	@PostMapping("/books/favorite")
 	private String favoriteBook(@RequestParam("idbook") Integer id,
 			@RequestParam(value = "check", required = false) String check) {
-
-		Short idUs = getAuthUserId(repoU);
+		Short idUs = getAuthUserId(userRepo);
 
 		if (check != null) {
 			Favorites favorites = new Favorites();
 			favorites.setIdUser(idUs);
 			favorites.setIdBook(id);
-			repoF.save(favorites);
+			favouriteRepo.save(favorites);
 		} else {
-			List<Favorites> favoritesList = repoF.findAll();
+			List<Favorites> favoritesList = favouriteRepo.findAll();
 			for (int i = 0; i < favoritesList.size(); i++) {
 
 				if (favoritesList.get(i).getIdUser() == idUs && favoritesList.get(i).getIdBook() == id) {
-						repoF.delete(favoritesList.get(i));
+					favouriteRepo.delete(favoritesList.get(i));
 				}
 			}
 		}
-		return "redirect:/books/show/" + id;
 
+		return "redirect:/books/show/" + id;
 	}
 
 	@GetMapping("/books/editBook/{id}")
 	private String editBook(@PathVariable("id") Integer id, Model model) {
-		if (repo.getOne(id).getPublisher() != null) {
-			model.addAttribute("publisherChecked", repo.getOne(id).getPublisher());
+		if (bookRepo.getOne(id).getPublisher() != null) {
+			model.addAttribute("publisherChecked", bookRepo.getOne(id).getPublisher());
 		} else {
 
-			model.addAttribute("publisherChecked", repoP.getOne((short) 1));
+			model.addAttribute("publisherChecked", publisherRepo.getOne((short) 1));
 		}
-		model.addAttribute("book", repo.getOne(id));
-		model.addAttribute("publishers", repoP.findAll());
-		model.addAttribute("genres", repoG.findAll());
-		model.addAttribute("authors", repoA.findAll());
-		model.addAttribute("genreChecked", repo.getOne(id).getGenreList());
-		model.addAttribute("authorsChecked", repo.getOne(id).getAuthorList());
+		model.addAttribute("book", bookRepo.getOne(id));
+		model.addAttribute("publishers", publisherRepo.findAll());
+		model.addAttribute("genres", genreRepo.findAll());
+		model.addAttribute("authors", authorRepo.findAll());
+		model.addAttribute("genreChecked", bookRepo.getOne(id).getGenreList());
+		model.addAttribute("authorsChecked", bookRepo.getOne(id).getAuthorList());
 		model.addAttribute("contentPage", "editBook");
 		return "index";
 
@@ -242,7 +192,7 @@ public class BookController {
 				stream.flush();
 				stream.close();
 
-				repo.save(book);
+				bookRepo.save(book);
 				return "redirect:/";
 
 			} catch (Exception e) {
@@ -250,20 +200,21 @@ public class BookController {
 			}
 		} else {
 			int idBook = book.getId();
-			book.setBackground(repo.getOne(idBook).getBackground());
-			repo.save(book);
+			book.setBackground(bookRepo.getOne(idBook).getBackground());
+			bookRepo.save(book);
 			return "redirect:/";
 		}
 	}
 
-	private Short getAuthUserId(UserRepository repo){
+	private Short getAuthUserId(UserRepository repo) {
 		Short id = null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
-		if(!name.equals("anonymousUser")){
+		if (!name.equals("anonymousUser")) {
 			Optional<User> user = repo.findByLogin(name);
 			id = user.get().getId();
 		}
+
 		return id;
 	}
 }

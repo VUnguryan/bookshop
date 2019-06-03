@@ -20,18 +20,15 @@ public class AuthorRepositoryTest {
 
 	@Autowired
 	private AuthorRepository repository;
-	
+
 	@Test
 	public void testAuthorSave() {
 		Author author = new Author();
 		author.setId(1);
 		author.setName("abc");
 		author.setBiography("qwerty");
-		// сохраняем
 		this.entityManager.persist(author);
-		// получаем
 		author = this.repository.getOne(1);
-		// проверяем
 		assertThat(author.getName()).isEqualTo("abc");
 		assertThat(author.getBiography()).isEqualTo("qwerty");
 	}
