@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"  class="h-100">
 <head>
 <title>Log in</title>
 <link rel="stylesheet" href="css/mainStyle.css">
@@ -21,34 +21,32 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 </head>
-<body>
-	<div class="main-container">
-		<div class="main-form-container alert alert-primary">
-			<h2>Log in</h2>
-			<div class="alert alert-danger" th:if="${param.error}">Invalid
-				username or password.</div>
-			<div class="alert alert-danger" th:if="${param.logout}">You
-				have been logged out.</div>
-			<form th:action="@{/login}" method="post">
-				<input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}" /> <label for="email">Login</label>
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" placeholder="Username"
-						aria-label="Username" name="username"
-						aria-describedby="basic-addon1">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label> <input
-						type="password" class="form-control" name="password"
-						id="exampleInputPassword1" placeholder="Password">
-				</div>
-				<div class="btn-group" role="group" aria-label="Basic example">
-					<button type="submit" class="btn btn-primary">Submit</button>
-					<a class="btn btn-primary" href="/" role="button">Enter as
-						guest</a> <a class="btn btn-primary" href="/registration"
-						role="button">Registration</a>
-				</div>
-			</form>
+<body class="container d-flex justify-content-center h-100 align-items-center">
+	<div class="card" style="max-height:500px; width:400px">
+		<div class="card-header">
+			<h2>Афторизация</h2>
+			<div class="alert alert-danger" th:if="${param.error}">Неверное
+				имя пользователя или пароль</div>
+			<div class="alert alert-danger" th:if="${param.logout}">Вы
+				вышли из системы</div>
 		</div>
+		<form th:action="@{/login}" method="post" class="card-body">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<div class="form-group">
+				<label for="name">Имя пользователя</label>
+				<input type="text" class="form-control" id="name" name="username">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="password">
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		<div class="card-footer">
+			<a href="/" role="button">Enter as guest</a>
+			<br>
+			<a href="/registration" role="button">Registration</a>
+		</div>
+	</div>
 </body>
 </html>

@@ -24,7 +24,7 @@ public class FavouritesController {
 	@Autowired
 	private UserRepository repoU;
 
-	@GetMapping("/favorites")
+	@GetMapping("/favourites")
 	private String getFavorites(Model model) {
 		model.addAttribute("books", repo.findByOrderByCreateDate());
 		Short idUser = getAuthUserId(repoU);
@@ -35,8 +35,8 @@ public class FavouritesController {
 				favoritesList.add(repo.getOne(list.get(i).getIdBook()));
 			}
 		}
-		model.addAttribute("favorites", favoritesList);
-		model.addAttribute("contentPage", "favorites");
+		model.addAttribute("favourites", favoritesList);
+		model.addAttribute("contentPage", "favourites");
 		return "index";
 	}
 

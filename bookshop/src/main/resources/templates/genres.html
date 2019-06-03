@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -21,8 +22,13 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="alert alert-dark" th:each="genre : ${genres}">
-		<a href="#" th:text="${genre.name}"></a>
+	<div class="container  mt-5" th:fragment="content">
+		<h2>Жанры</h2>
+		<ul class="list-group mt-3">
+			<li class="list-group-item mb-1"th:each="genre : ${genres}" th:text="${genre.name}"></li>
+		</ul>
+		<a sec:authorize="hasRole('admin')" class="btn btn-primary mt-2"
+			href="/genres/add" role="button">Добавить жанр</a>
 	</div>
 </body>
 </html>

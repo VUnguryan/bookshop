@@ -13,7 +13,8 @@ public class GenreController {
 
 	@GetMapping("/genres")
 	public String getGenres(Model model) {
-		model.addAttribute("genres", repo.findAll());	
-		return "genres";
+		model.addAttribute("genres", repo.findAll());
+		model.addAttribute("contentPage", "genres");
+		return "index";
 	}
 }

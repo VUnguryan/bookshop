@@ -20,17 +20,25 @@
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 </head>
-<body>
-	<div class="container" th:fragment="content">
-			<div class="row">
-				<div class="col-lg alert alert-dark" th:each="book : ${favorites}">
-					<div>
-						<a th:href="@{'/books/show/'+${book.id}}"><img width="300px" th:src="@{${'../images/'+book.background}}"></a>
-					</div> 
-					<div th:text="${book.name}"></div>
-					<div th:text="${book.price}"></div>
-				</div>
+<body th:fragment="content">
+	<div class="d-flex flex-wrap justify-content-around">
+		<div class="shadow card w-25 m-3 justify-content-between"
+			th:each="book : ${favourites}">
+			<div class="card-header" th:text="${book.name}"></div>
+			<a th:href="@{'/books/show/'+${book.id}}"><img class="card-img"
+				th:src="@{${book.background}}" alt="book image"></a>
+			<div class="card-footer" th:text="${book.price}"></div>
+			<div class="card-footer">
+				<th:block th:each="favorite : ${favorites}">
+					<input id="h-1" type="checkbox"
+						th:if="${book.id == favorite.idBook && userId == favorite.idUser}"
+						checked disabled />
+					<label
+						th:if="${book.id == favorite.idBook && userId == favorite.idUser}"
+						for="h-1">Эта книга в избранном</label>
+				</th:block>
 			</div>
 		</div>
+	</div>
 </body>
 </html>
