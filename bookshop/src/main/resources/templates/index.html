@@ -23,8 +23,35 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-		<div th:replace="fragments/header :: header">Header</div>
+		<!--div th:replace="../templates/header :: header (~{ :: .spells})">Header</div-->
+		<div th:insert="fragments/header :: header(~{ :: .spells})">Header</div>
 		<div th:replace="${contentPage} :: content">Content</div>
-		<div th:replace="fragments/adminPanel :: panel">Header</div>
+		<div id="mySidenav" class="sidenav">
+  			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  			<a href="books/addBook">Добавить книгу</a>
+ 			<a href="#">Пользователи</a>
+ 			<p>Выберите кол-во отображаемых объектов на странице:</p>
+  			<form role="form" id="sendAddress" th:action=@{/} method="post">
+        <select class="form-control" name="booksOnPage">
+            <option value="3">3</option>
+            <option value="6">6</option>
+            <option value="9">9</option>
+            <option value="12">12</option>
+        </select>
+        <input class="btn btn-outline-secondary my-2 mr-sm-2" type="submit" value="Подтвердить" />
+    </form>
+		</div>
+		<script>
+	function openNav() {
+		  document.getElementById("mySidenav").style.width = "250px";
+		  document.getElementById("mySidenav").classList.add("new"); 
+		}
+
+		/* Set the width of the side navigation to 0 */
+		function closeNav() {
+		  document.getElementById("mySidenav").style.width = "0";
+		  document.getElementById("mySidenav").classList.remove("new");
+		}
+	</script>
 </body>
 </html>

@@ -1,12 +1,13 @@
 package ua.step.bookshop.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.step.bookshop.models.Author;
 import ua.step.bookshop.repositories.AuthorRepository;
 
@@ -43,5 +44,24 @@ public class AuthorController {
 		} else {
 			return "redirect:/authors/add";
 		}
+	}
+    @GetMapping(value = "/authors", params = { "search"})
+	private String getSearchAuthor(Model model, String search) {
+        List<Author> authorList = authorRepo.findAll();
+        List<Author> searchList = null;
+        if (search.isEmpty()) {
+            model.addAttribute("authors", searchList);
+            model.addAttribute("contentPage", "/fragments/searchResultNull");
+        } else {
+            searchList = new ArrayList<Author>();
+            for (int i = 0; i< authorList.size(); i++){
+                if(authorList.get(i).getName().regionMatches(true,0, search, 0, search.length())){
+                    searchList.add(authorList.get(i));
+                }
+            }
+            model.addAttribute("authors", searchList);
+            model.addAttribute("contentPage", "authors");
+        }
+		return "index";
 	}
 }
