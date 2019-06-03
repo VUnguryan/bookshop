@@ -28,6 +28,10 @@ public class MainController {
 	private FavouriteRepository favouriteRepo;
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private GenreRepository genreRepo;
+	@Autowired
+	private PublisherRepository publisherRepo;
 
 	private static int BOOKSONPAGE = 9;
 	private static String CURRENCYONPAGE = "UAN";
@@ -87,6 +91,8 @@ public class MainController {
 		model.addAttribute("pages", pages);
 		model.addAttribute("books", books);
 		model.addAttribute("favorites", favouriteRepo.findAll());
+		model.addAttribute("genres", genreRepo.findAll());
+		model.addAttribute("publishers", publisherRepo.findAll());
 		model.addAttribute("contentPage", "fragments/books");
 		return "index";
 	}
