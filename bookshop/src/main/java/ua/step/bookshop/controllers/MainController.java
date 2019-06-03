@@ -54,6 +54,12 @@ public class MainController {
 		return getBooksInPage(model, 1);
 	}
 
+	/**
+	 * возвращает книги, которые должны отображаться на данной странице
+	 * @author Andrew
+	 * @param model - модель, в которую вставляются параметры
+	 * @param page - номер страницы
+	*/
 	String getBooksInPage(Model model, int page) {
 		List<Book> allBooks = bookRepo.findAll();
 		List<BookDTO> allDtoBooks = new ArrayList<>();

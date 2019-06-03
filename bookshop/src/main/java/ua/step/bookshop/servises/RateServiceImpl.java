@@ -15,7 +15,7 @@ public class RateServiceImpl implements RateService {
 	@SuppressWarnings("unused")
 	@Override
 	public void setRate(Rate rate, Book book) {
-		if (rate.getBook().getName() == book.getName()) {
+		if (rate.getBook().getName().equals(book.getName())) {
 			if (isRateNotExist(rate)) {
 				rateRepository.save(rate);
 			} else {
