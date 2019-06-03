@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.Genre;
@@ -27,8 +27,8 @@ public class GenreController {
 		return "genres";
 	}*/
 
-	@PostMapping("/sortByGenre/{id}")
-	private String getGenres(@RequestParam("id") Short id, Model model) {
+	@GetMapping("/sortByGenre/{id}")
+	private String getGenres(@PathVariable("id") Short id, Model model) {
 		List<Book> allBooks = repoB.findAll();
 		List<Book> sortsdByGenres = new ArrayList<Book>();
 		List<Genre> genresList;
@@ -44,6 +44,7 @@ public class GenreController {
 		}
 		model.addAttribute("books", sortsdByGenres);
 		model.addAttribute("contentPage", "genres");
-		return "redirect:/books/" + id;
+		return "index";
+		//return "redirect:/books/" + id;
 	}
 }

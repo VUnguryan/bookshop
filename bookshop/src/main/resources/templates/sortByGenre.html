@@ -23,9 +23,10 @@
 <body>
 	<div class="container" th:fragment="content">
 			<div class="row">
-				<div class="col-lg alert alert-dark" th:each="book : ${genres}">
+				<div class="col-lg alert alert-dark" th:each="genre : ${genres}">
 					<div>
-						<a th:href="@{'/books/show/'+${book.id}}"><img width="300px" th:src="@{${'../images/'+book.background}}"></a>
+					 <a th:href="@{'/sortByGenre/' + ${genre.id}}" th:text="${genre.name}"></a>
+						<!-- <a th:href="@{'/books/show/'+${book.id}}"><img width="300px" th:src="@{${'../images/'+book.background}}"></a> -->
 					</div> 
 					<div th:text="${book.name}"></div>
 					<div th:text="${book.price}"></div>
