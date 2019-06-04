@@ -16,7 +16,7 @@
 					th:src="@{${bookInf.background}}"
 					style="width: 248px; height: 350px" alt="icon">
 				<div class="flex-column">
-					<form class="container" th:action="@{/books/favorite}"
+					<form class="container" th:action="@{/books/favourite}"
 						method="POST">
 						<input type="text" name="idbook" th:value="${bookInf.id}" hidden />
 
