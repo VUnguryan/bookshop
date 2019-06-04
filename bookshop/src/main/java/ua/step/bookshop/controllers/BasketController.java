@@ -12,49 +12,72 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import ua.step.bookshop.models.Basket;
 import ua.step.bookshop.models.Book;
 import ua.step.bookshop.models.User;
-import ua.step.bookshop.repositories.BasketRepository;
 import ua.step.bookshop.repositories.UserRepository;
 
+/**
+ * 
+ * @author sergey Класс выполняет операции над корзиной
+ *
+ */
 @Controller
 public class BasketController extends SecurityContextHolder {
-	@Autowired
-	private BasketRepository basketRepository;
+
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * 
+	 * @param model
+	 * @return страница корзины
+	 */
 	@GetMapping(value = "/basket")
 	public String getBasketPage(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userRepository.findByLogin(auth.getName()).orElse(new User());
-		List<Book> books = new ArrayList<Book>();
-		List<Basket> userBaskets = user.getBasket();
-		for (int i = 0; i < userBaskets.size(); i++) {
-			for (int j = 0; j < userBaskets.get(i).getBooks().size(); j++) {
-				books.add(userBaskets.get(i).getBooks().get(j));
-			}
-		}
-		model.addAttribute("books", books);
+		model.addAttribute("books", user.getBooks());
 		model.addAttribute("contentPage", "basket");
 		return "index";
 	}
 
+	/**
+	 * 
+	 * @param book
+	 * @return Добавляет книгу в корзину пользователя
+	 */
 	@PostMapping(value = "/basket/add")
-	public String addBookToBasket(@ModelAttribute("book") Book book, @ModelAttribute Basket basket) {
+	public String addBookToBasket(@ModelAttribute("book") Book book) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		List<User> user = new ArrayList<User>();
-		user.add(userRepository.findByLogin(auth.getName()).orElse(new User()));
-		List<Book> books = new ArrayList<Book>();
+		User user = userRepository.findByLogin(auth.getName()).orElse(new User());
+		List<Book> books = user.getBooks();
 		books.add(book);
-		basket.setUsers(user);
-		basket.setBooks(books);
-		basketRepository.save(basket);
-		List<Basket> baskets = new ArrayList<Basket>();
-		baskets.add(basket);
-		user.get(0).setBasket(baskets);
-		userRepository.save(user.get(0));
+		user.setBooks(books);
+		userRepository.save(user);
 		return "redirect:/";
+	}
+
+	/**
+	 * 
+	 * @param book
+	 * @param model
+	 * @return Удаляет книгу из корзины пользователя
+	 */
+	@PostMapping(value = "/basket/remove")
+	public String removeBookFromBasket(@ModelAttribute("book") Book book, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findByLogin(auth.getName()).orElse(new User());
+		user.setBooks(user.bookRemove(user.getBooks(), book));
+		userRepository.save(user);
+		List<Book> books = user.getBooks();
+		int price = 0;
+		for (int i = 0; i < books.size(); i++) {
+			price += books.get(i).getPrice();
+		}
+		model.addAttribute("book", user.getBooks());
+		model.addAttribute("price", price);
+		model.addAttribute("contentPage", "basket");
+		model.addAttribute("contentPage", "order");
+		return "index";
 	}
 }

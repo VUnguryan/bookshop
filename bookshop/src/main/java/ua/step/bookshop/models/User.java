@@ -2,11 +2,14 @@ package ua.step.bookshop.models;
 
 import javax.persistence.*;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "Users")
+@Data
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +28,8 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Book> bookList;
 
-	@ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
-	private List<Basket> basket;
+	@ManyToMany
+	private List<Book> books;
 
 	public User() {
 	}
@@ -79,12 +82,8 @@ public class User {
 		this.bookList = bookList;
 	}
 
-	public List<Basket> getBasket() {
-		return basket;
+	public List<Book> bookRemove(List<Book> books, Book book) {
+		books.remove(book);
+		return books;
 	}
-
-	public void setBasket(List<Basket> basket) {
-		this.basket = basket;
-	}
-
 }

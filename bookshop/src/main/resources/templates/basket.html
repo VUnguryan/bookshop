@@ -24,9 +24,16 @@
 <body>
 	<div class="container  mt-5" th:fragment="content">
 		<h2>Мои книги в корзине</h2>
-		<ul class="list-group mt-3">
-			<li class="list-group-item mb-1"th:each="book : ${books}" th:text="${book.name}"></li>
-		</ul>
+		<div class="list-group mt-3">
+			<div class="list-group-item mb-1" th:each="book : ${books}">
+				<div th:text="${book.name}"></div>
+				<form th:action="@{/basket/remove}" method="post">
+					<input type="text" name="book" th:value="${book.id}" hidden /> <input
+						class="btn btn-outline-secondary my-2 mr-sm-2" type="submit"
+						value="X" />
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

@@ -13,15 +13,6 @@ public class BookDTO {
 	private Publisher publisher;
 	private List<Genre> genres;
 	private List<Author> authors;
-	private List<Basket> baskets;
-
-	public List<Basket> getBaskets() {
-		return baskets;
-	}
-
-	public void setBaskets(List<Basket> baskets) {
-		this.baskets = baskets;
-	}
 
 	public Integer getId() {
 		return id;
