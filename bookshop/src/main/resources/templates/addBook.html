@@ -29,21 +29,21 @@
 					<option th:each="publisher : ${publishers}" th:value="${publisher.id}" th:text="${publisher.name}"/>
 				</select>
 			</div>
-			<a href="/publishers/add" class="form-group btn btn-primary mb-4">Жобавить нового издателя</a>
+			<a href="/publishers/add" class="form-group btn btn-primary mb-4">Добавить нового издателя</a>
 			<div class="form-group">
 				<label for="authors">Автор(ы) книги</label>
 				<select class="form-control selectpicker" multiple data-live-search="true" id="authors" name="authors">
 					<option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}"/>
 				</select>
 			</div>
-			<a href="/authors/add" class="form-group btn btn-primary mb-4">Жобавить нового автора</a>
+			<a href="/authors/add" class="form-group btn btn-primary mb-4">Добавить нового автора</a>
 			<div class="form-group">
 				<label for="genres">Жанр(ы) книги</label>
 				<select class="form-control selectpicker" multiple data-live-search="true" id="genres" name="genres">
 					<option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}"/>
 				</select>
 			</div>
-			<a href="/genres/add" class="form-group btn btn-primary mb-4">Жобавить новый жанр</a>
+			<a href="/genres/add" class="form-group btn btn-primary mb-4">Добавить новый жанр</a>
 			<div class="form-group">
 				<label for="image">Картинка книги</label>
 				<input type="url" class="form-control" id="image" name="background">
