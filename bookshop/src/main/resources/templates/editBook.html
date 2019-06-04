@@ -37,7 +37,7 @@
 					th:selected="${book.publisher eq publisher}" />
 			</select>
 		</div>
-		<a href="/publishers/add" class="form-group btn btn-primary mb-4">Жобавить
+		<a href="/publishers/add" class="form-group btn btn-primary mb-4">Добавить
 			нового издателя</a>
 		<div class="form-group">
 			<label for="authors">Автор(ы) книги</label> <select
@@ -48,7 +48,7 @@
 					th:selected="${#lists.contains(book.authors, author)}"/>
 			</select>
 		</div>
-		<a href="/authors/add" class="form-group btn btn-primary mb-4">Жобавить
+		<a href="/authors/add" class="form-group btn btn-primary mb-4">Добавить
 			нового автора</a>
 		<div class="form-group">
 			<label for="genres">Жанр(ы) книги</label> <select
@@ -59,7 +59,7 @@
 					th:selected="${#lists.contains(book.genres, genre)}"/>
 			</select>
 		</div>
-		<a href="/genres/add" class="form-group btn btn-primary mb-4">Жобавить
+		<a href="/genres/add" class="form-group btn btn-primary mb-4">Добавить
 			новый жанр</a>
 		<div class="form-group">
 			<label for="image">Картинка книги</label> <input type="url"
