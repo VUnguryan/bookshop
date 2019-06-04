@@ -36,7 +36,6 @@ public class BookController {
 	private UserRepository userRepo;
 	@Autowired
 	private RateRepository rateRepository;
-	
 
 	private static int BOOKSONPAGE = 9;
 
@@ -79,61 +78,60 @@ public class BookController {
 	}
 
 	// Константин
-		@GetMapping("/books/show/{id}")
-		private String showBook(@PathVariable("id") Integer id, Model model) {		
-			Short idUs = getAuthUserId(userRepo);
-			List<Favorites> favoritesList = favouriteRepo.findAll();
-			boolean flag = false;
-			for (int i = 0; i < favoritesList.size(); i++) {
-				if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook()) {
-					flag = true;
-				}
+	@GetMapping("/books/show/{id}")
+	private String showBook(@PathVariable("id") Integer id, Model model) {
+		Short idUs = getAuthUserId(userRepo);
+		List<Favorites> favoritesList = favouriteRepo.findAll();
+		boolean flag = false;
+		for (int i = 0; i < favoritesList.size(); i++) {
+			if (idUs == favoritesList.get(i).getIdUser() && id == favoritesList.get(i).getIdBook()) {
+				flag = true;
 			}
-			Book book = bookRepo.getOne(id);	
-			model.addAttribute("flag", flag);
-			model.addAttribute("bookInf", book);
-			model.addAttribute("userId", idUs);
-			model.addAttribute("contentPage", "showBook");
-			return "index";
 		}
-		
-		// Константин
-			@PostMapping("/books/addRate")
-			private String changeRate( @RequestParam("idbook") Integer idbook,
-					@RequestParam(value = "rateOnBook") Integer rate) {		
-				addRate(rate, idbook, getAuthUserId(userRepo));	
-				return "redirect:/books/show/" + idbook;
+		Book book = bookRepo.getOne(id);
+		model.addAttribute("flag", flag);
+		model.addAttribute("bookInf", book);
+		model.addAttribute("userId", idUs);
+		model.addAttribute("contentPage", "showBook");
+		return "index";
+	}
+
+	// Константин
+	@PostMapping("/books/addRate")
+	private String changeRate(@RequestParam("idbook") Integer idbook,
+			@RequestParam(value = "rateOnBook") Integer rate) {
+		addRate(rate, idbook, getAuthUserId(userRepo));
+		return "redirect:/books/show/" + idbook;
+	}
+
+	private void addRate(Integer rate, Integer idbook, Short idUs) {
+		Rate newRate = new Rate();
+		newRate.setIdBook(idbook);
+		newRate.setIdUser(idUs);
+		newRate.setRate((double) rate);
+		newRate.setReplace(true);
+		rateRepository.save(newRate);
+
+		List<Rate> rates = rateRepository.findAll();
+		List<Rate> rates2 = new ArrayList<>();
+		for (Rate rate2 : rates) {
+			boolean rateHasTheSameBook = rate2.getIdBook().equals(idbook);
+
+			if (rateHasTheSameBook) {
+				rates2.add(rate2);
 			}
-		
-			private void addRate(Integer rate, Integer idbook, Short idUs) {
-				Rate newRate = new Rate();
-				newRate.setIdBook(idbook);
-				newRate.setIdUser(idUs);
-				newRate.setRate((double) rate);
-				newRate.setReplace(true);
-				rateRepository.save(newRate);
-				
-				List<Rate> rates = rateRepository.findAll();
-				List<Rate> rates2 = new ArrayList<>();
-				for(Rate rate2 : rates) {
-					boolean rateHasTheSameBook = rate2.getIdBook().equals(idbook);
-					
-					if (rateHasTheSameBook) {
-						rates2.add(rate2);
-					}
-				}
-				
-				Double d = 0.0;
-				for (Rate rate2 : rates2) {
-				 d += rate2.getRate();
-				}
-				
-				Book book = new Book();
-				book = bookRepo.getOne(idbook);
-				book.setRate(d / rates.size());
-				bookRepo.save(book);
-			}
-		
+		}
+
+		Double d = 0.0;
+		for (Rate rate2 : rates2) {
+			d += rate2.getRate();
+		}
+
+		Book book = new Book();
+		book = bookRepo.getOne(idbook);
+		book.setRate(d / rates2.size());
+		bookRepo.save(book);
+	}
 
 	@PostMapping("/books/favourite")
 	private String favoriteBook(@RequestParam("idbook") Integer id,
