@@ -41,14 +41,14 @@
 			<li class="nav-item"><a class="nav-link" href="/basket">Корзина</a></li>
 			<li class="nav-item"><a class="nav-link" href="/order">Оформить заказ</a></li>
 			<li sec:authorize="hasRole('admin')" class="nav-item"><button
-					class="btn btn-primary" onclick="openNav()">Admin panel</button></li>
+					class="btn btn-primary" onclick="openNav()">Панель администратора</button></li>
 		</ul>
 
 		<form role="form" id="sendAddress" th:action=@{/} method="post">
 			<select class="form-control" name="currencyOnPage"
 				onchange='this.form.submit()'>
 				<option disabled selected>Валюта</option>
-				<option value="UAH">Гривня</option>
+				<option value="UAH">Гривна</option>
 				<option value="USD">Доллар</option>
 				<option value="EUR">Евро</option>
 				<option value="RUR">Рубль</option>
